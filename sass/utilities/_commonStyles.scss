@@ -1,0 +1,319 @@
+.question-title h1 {
+  margin-top: 0;
+}
+
+#title {
+  font-weight: 700;
+  display: block;
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+.content_1 {
+  padding: 2rem 10rem;
+  height: 100%;
+}
+
+.dark-bg {
+  background-color: $dark;
+}
+
+.darkgrey-bg {
+  background-color: $darkgrey;
+}
+
+.blue-bg {
+  background-color: $blue;
+}
+
+.green-bg {
+  background-color: $green;
+}
+
+.half-rounded-corners {
+  border-radius: 2rem 0rem;
+}
+
+.text-box {
+  padding: 1rem 2rem;
+}
+
+.wrong-mark {
+  display: inline-block;
+  background-image: url('../img/ui/wrong.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: middle;
+}
+
+.correct-mark {
+  display: inline-block;
+  background-image: url('../img/ui/correct.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: middle;
+}
+
+.double-arrow {
+  display: inline-block;
+  width: 2rem;
+  vertical-align: middle;
+
+  &.small {
+    height: 1.2rem;
+    width: 1.2rem;
+    margin-top: 0.2rem;
+  }
+}
+
+.arrow {
+  display: inline-block;
+  position: relative;
+  width: 0.5rem;
+  height: 2.4rem;
+}
+
+.arrow.small {
+  display: inline-block;
+  position: relative;
+  width: 0.2rem;
+  height: 1.2rem;
+}
+
+.arrow::after,
+.arrow::before {
+  content: '';
+  position: absolute;
+  border-radius: 0 0 0.2rem 0;
+  background: $green;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  transform: skew(30deg);
+  height: 1.2rem;
+  width: 0.5rem;
+}
+
+.arrow.small::after,
+.arrow.small::before {
+  content: '';
+  position: absolute;
+  border-radius: 0 0 0.2rem 0;
+  background: $green;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  transform: skew(40deg);
+  height: 0.6rem;
+  width: 0.3rem;
+}
+
+.arrow::after {
+  top: 1.1rem;
+  border-radius: 0 0.2rem 0 0;
+  transform: skew(-30deg);
+}
+
+.arrow.small::after {
+  top: 0.5rem;
+  border-radius: 0 0.2rem 0 0;
+  transform: skew(-40deg);
+}
+
+.arrow.blue::after,
+.arrow.blue::before {
+  background: $lightblue;
+}
+
+.arrow.white::after,
+.arrow.white::before {
+  background: white;
+}
+.btnForward,
+.btnNext,
+.btnPrev,
+.backToMenu,
+.btnNavigation {
+  cursor: pointer;
+  height: 4rem;
+  width: 4rem;
+
+  &.green-arrow {
+    background-image: url('../img/ui/btnForward-green.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  &.white-arrow {
+    background-image: url('../img/ui/btnForward-white.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  &.grey-arrow {
+    background-image: url('../img/ui/btnForward-grey.png');
+    background-size : cover;
+    background-repeat: no-repeat;
+
+    &.face-left {
+      transform: rotate(180deg);
+    }
+  }
+
+  //border-radius: 50%;
+   // background : $lightgrey;
+}
+
+.hide {
+  display: none !important;
+}
+
+.faint {
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.invisible {
+  transition: 0.66s;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.invisible-non-animated {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.disabled {
+  cursor: default;
+
+  &.pointer-e-none,
+  &.backToMenu:active,
+  &.btnForward:active {
+    pointer-events: none;
+  }
+}
+
+.pos-relative {
+  position: relative;
+}
+
+.animate {
+  transition: 1s;
+}
+
+.link-wrapper {
+  margin: 1rem 0rem;
+
+  .dot {
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: $green;
+    transform: translateZ(0);
+    vertical-align: middle;
+
+    &.animation-part {
+      position: absolute;
+    }
+  }
+
+  a {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+  }
+
+  &.indented {
+    margin-top: -0.8rem;
+    margin-bottom: -0.6rem;
+    margin-left: 1rem;
+
+    .link {
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+  }
+}
+
+/* This is just used to align inline-blocks to the middle of the box
+when any of the inline-blocks don't completely fill the box's height*/
+
+.vertical-aligner {
+  height: 100%;
+  width: 0;
+  margin-right: -0.4rem;
+  display: inline-block;
+  vertical-align: middle;
+  user-select: none;
+}
+
+.wide-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 800;
+  border-radius: 1rem 0 1rem 0;
+  cursor: pointer;
+
+  &.disabled {
+    background-color: #c3c3c3;
+    user-select: none;
+    cursor: default;
+  }
+  &.transparent {
+    background-color: transparent;
+    color: $green;
+  }
+  &.green {
+    background-color: $green;
+  }
+}
+
+.highlight-elem {
+  // position: absolute;
+  // transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 0 rgba(76, 77, 79, 1);
+}
+.highlight-elem.green-shadow {
+  box-shadow: 0 0 0 0 rgba(80, 185, 72, 1);
+}
+
+.overlay-color {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+  z-index: 10;
+}
+
+.popup-window {
+  display: inline-block;
+  position: absolute;
+  top: 49%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1rem 2rem;
+  text-align: center;
+  z-index: 11;
+}
+
+#large-arrow {
+  position: absolute;
+  top: 50%;
+  left: -10rem;
+  height: 100%;
+  opacity: 0.33;
+  transform: translate(0, -50%)
+}

@@ -1,0 +1,14 @@
+body::after{
+    position:absolute; width:0; height:0; overflow:hidden; z-index:-1;
+    content:
+    url('../img/ui/thumb_up.png')
+    url('../img/ui/thumb_up_blur.png')
+    url('../img/ui/thumb_up_blue_blur.png')
+    url('../img/ui/thumb_up_green.png')
+    url('../img/ui/thumb_down.png')
+    url('../img/ui/thumb_down_blur.png')
+    url('../img/ui/thumb_down_blue_blur.png')
+    url('../img/ui/green-ball.png')
+    url('../img/ui/grey-ball.png')
+    url('../img/ui/thumb_down_green.png');
+}

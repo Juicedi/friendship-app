@@ -1,0 +1,674 @@
+html {
+    min-height: 100%;
+    position: relative;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 100%;
+    color: #37424a;
+}
+
+iframe {
+    position: absolute;
+}
+
+/* loading css */
+html {
+    -webkit-transition: background-color 1s;
+    transition: background-color 1s;
+}
+html, body {
+    /* For the loading indicator to be vertically centered ensure */
+    /* the html and body elements take up the full viewport */
+    min-height: 100%;
+}
+html.loading {
+    /* Replace #333 with the background-color of your choice */
+    /* Replace loading.gif with the loading image of your choice */
+    background: #333 url('loading.gif') no-repeat 50% 50%;
+
+    /* Ensures that the transition only runs in one direction */
+    -webkit-transition: background-color 0;
+    transition: background-color 0;
+}
+body {
+    -webkit-transition: opacity 1s ease-in;
+    transition: opacity 1s ease-in;
+}
+html.loading body {
+    /* Make the contents of the body opaque during loading */
+    opacity: 0;
+
+    /* Ensures that the transition only runs in one direction */
+    -webkit-transition: opacity 0;
+    transition: opacity 0;
+}
+/* end loading css */
+
+
+/* ------ CONTENT ------ */
+
+#content {
+    height: 46vw;
+    text-align: center;
+    /*margin-top: 10px;*/
+    position: relative;
+    background-color: #eeeeee;
+    /*border: 1px solid #c0c3c5;*/
+    /*border: 1px solid #c0c3c5;*/
+}
+
+div {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    margin-bottom: 1vw;
+}
+
+h1 {
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 1.8vw;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 1.6vw;
+    font-weight: bold;
+}
+
+h4 {
+    /* in boxes */
+    line-height: 1.5vw;
+    letter-spacing: 0.03vw;
+    word-spacing: 0.05vw;
+    font-size: 1.4vw;
+    font-weight: bold;
+}
+
+h5 {
+    font-size: 1vw;
+    font-weight: bold;
+}
+
+p {
+    margin-bottom: 1vw;
+    font-size: 1vw;
+    line-height: 1.3;
+}
+
+span {
+    font-weight: bold;
+    font-size: 1.3vw;
+}
+
+b {
+    font-weight: 700;
+}
+
+ul {
+    list-style: outside;
+    margin-left: 0.8vw;
+}
+
+ol {
+    list-style: outside number;
+    margin-left: 0.8vw;
+}
+
+li {
+    font-size: 1vw;
+    line-height: 1.3;
+    list-style-type: disc;
+    list-style-position: inside;
+    text-indent: -1vw;
+    padding-left: 0.4vw;
+}
+
+textarea {
+    margin-bottom: 1.3vw;
+}
+
+.relative {
+    position: relative;
+}
+
+.margin-bottom-1vw {
+    margin-bottom: 1vw !important;
+}
+
+.disabled {
+    pointer-events: none;
+}
+
+#frame {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    z-index: 8;
+}
+
+
+/* ------ GUI ------ */
+
+#gui {
+    height: 4.3vw;
+    padding: 0.4vw 0.3vw;
+    background-color: #4c4d4f;
+    color: #4c4d4f;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.gui-title {
+    margin-top: 1.1vw;
+    margin-right: 0.1vw;
+    display: inline-block;
+    color: #fff;
+    text-align: center;
+}
+
+.gui-subtitle {
+    display: inline;
+    color: #fff;
+}
+
+.nav-progress {
+    position: absolute;
+    top: 4.3vw;
+    left: 0;
+    width: 100vw;
+    height: 3vw;
+    background: #FFF;
+    border-bottom: #50B948 solid 0.4vw;
+    box-sizing: content-box;
+    z-index: 1;
+    text-align: center;
+}
+
+.nav-progress-bar {
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    width: 0%;
+    background: #51BA49;
+    transition: 2s;
+    z-index: -1;
+}
+
+.white-texts {
+    position: relative;
+    width: 100vw;
+    height: 100%;
+    overflow: hidden;
+}
+
+.standard-name {
+    position: absolute;
+    -moz-transform: translateX(50%) translateY(50%);
+    -ms-transform: translateX(50%) translateY(50%);
+    transform: translateX(50%) translateY(50%);
+    vertical-align: middle;
+    bottom: 1.5vw;
+    display: inline-block;
+    font-size: 0.8vw;
+    color: #51BA49;
+    max-width: 11%;
+    text-align: left;
+    z-index: -2;
+}
+
+#company_logo {
+    height: 3.2vw;
+    float: left;
+}
+
+#info {
+    float: right;
+    font-size: 12px;
+    font-weight: bold;
+    display: block;
+    margin-top: 8px;
+}
+
+#info p {
+    float: left;
+}
+
+#progressbar {
+    width: 139px;
+    height: 8px;
+    border: 1px solid #d2d2d2;
+    float: left;
+    margin: 3px 8px 0 10px;
+}
+
+#progressbar div {
+    height: 100%;
+    width: 0%;
+    background-color: #d52d21;
+}
+
+.space_p {
+    margin: -5px 45px 0 45px;
+    background: #c0c3c5;
+    width: 1px;
+    height: 26px;
+}
+
+.gui-right {
+    float: right;
+}
+
+.document-icon-wrap {
+    margin-right: 60px;
+    float: left;
+    position: relative;
+}
+
+.document-icon-wrap .space_p {
+    float: right;
+    position: absolute;
+    top: 1px;
+    right: -29px;
+    margin: 0;
+}
+
+.document-icon-active {
+    display: none;
+}
+
+.document-icon-wrap.active .document-icon-active {
+    display: block;
+}
+
+.document-icon-wrap.active .document-icon {
+    display: none;
+}
+
+.btnForward,
+.btnLogin,
+.btnBackward {
+    cursor: pointer;
+}
+
+.btnNext {
+    cursor: pointer;
+}
+
+.answer,
+.guide {
+    display: none
+}
+
+.case-page .answer {
+    margin-top: 0.5vw;
+}
+
+.fadeIn-1,
+.fadeIn-2 {
+    display: none;
+}
+
+.gui-bottom {
+    background: #4C4D4F;
+    width: 100%;
+    height: 1vw;
+}
+
+.gui-bottom p {
+    display: inline-block;
+    color: #A2A2A2;
+}
+
+.gui-bottom .copyright {
+    float: left;
+    font-size: 1.2vw;
+    margin: 0 0 0 2.5vw;
+}
+
+.gui-bottom .disclaimer {
+    float: right;
+    cursor: pointer;
+    font-size: 1.2vw;
+    margin: 0 2.5vw 0 0;
+}
+
+
+/*Disclaimer modal*/
+
+#disclaimerBox {
+    /*z-index: 10;*/
+}
+
+#disclaimer {
+    position: absolute;
+    padding: 40px;
+    width: 305px;
+    top: 25%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -190px;
+    z-index: 10;
+}
+
+#closeDisclaimer {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    cursor: pointer;
+    margin-top: -90px;
+    margin-left: 166px;
+    z-index: 11;
+}
+
+#disclaimer p {
+    margin-bottom: 15px;
+}
+
+#disclaimer h5 {
+    margin: 5px 0 5px 0;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
+    background-color: rgba(0, 0, 0, 0.5);
+    /*dim the background*/
+}
+
+
+/* Navigation bar */
+
+.nav {
+    float: right;
+    font-size: 1.2vw;
+}
+
+#nav-btns {
+    display: inline-block;
+}
+
+.nav-item {
+    display: inline-block;
+    text-align: center;
+    padding: 0.2vw 1vw;
+    color: #FFF;
+    cursor: pointer;
+    /*margin-left: 3px;*/
+}
+
+.disabled-link {
+    cursor: default;
+    opacity: 0.3;
+}
+
+#standard-title {
+    font-weight: bold;
+    display: inline-block;
+    font-size: 15px;
+    margin-right: 5px;
+}
+
+.back-to-menu {
+    cursor: pointer;
+    display: inline-block;
+    text-align: right;
+}
+
+#back-to-menu {
+    opacity: 0;
+}
+
+#main-nav {
+    margin-top: 1.2vw;
+}
+
+
+/*Fixing a browser difference*/
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    #main-nav {
+        margin-top: 1.2vw;
+    }
+}
+
+.nav-active {
+    background-color: #d62c1f;
+    cursor: default;
+}
+
+.nav-disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.progress-header {
+    font-size: 18px;
+    margin: 0;
+}
+
+.performance-header {
+    font-size: 18px;
+    margin: 0;
+}
+
+.skip {
+    cursor: pointer;
+    padding: 10px 15px;
+    color: #FFF;
+    background: #d62c1f;
+    float: right;
+}
+
+
+/* ------ Main view (listing the standards) ------ */
+
+.module {
+    display: inline-block;
+    width: 13vw;
+    margin: 0 0.2vw 0 0.2vw;
+    vertical-align: top;
+}
+
+.animated {
+    visibility: visible !important;
+}
+
+.module-header {
+    display: table;
+    background-color: #4C4D4F;
+    text-align: left;
+    height: 3.5vw;
+    width: 85%;
+    padding: 0.1vw 1.1vw;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.module .arrow-right {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 0;
+    height: 0;
+    border-top: 1.75vw solid transparent;
+    border-bottom: 1.75vw solid transparent;
+    border-left: 1.75vw solid #4C4D4F;
+}
+
+.module-header-content {
+    display: table-cell;
+    vertical-align: middle;
+    width: 100%;
+    color: #fff;
+    font-size: 1.2vw;
+    font-weight: bold;
+    line-height: 1.3;
+}
+
+.standard,
+.standard-intro,
+.exercise {
+    display: table;
+    cursor: pointer;
+    background: #fff;
+    text-align: left;
+    position: relative;
+    margin: 0.2vw 0;
+    height: 4.6vw;
+    width: 100%;
+    padding: 0 0 0 0.5vw;
+}
+
+.standard:hover,
+.exercise:hover {
+    background: #e9e9e9;
+}
+
+.standard-header {
+    vertical-align: middle;
+    display: table-cell;
+    font-size: 0.9vw;
+}
+
+.standard-header-white {
+    position: absolute;
+    padding: 10px 10px 20px 10px;
+    color: #ffffff;
+    width: 121px;
+    z-index: 1;
+}
+
+.standard-progress-bar {
+    background-color: #51BA49;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 10%;
+    z-index: 10;
+    overflow: hidden;
+    -webkit-transition: 2s;
+    -moz-transition: 2s;
+    -ms-transition: 2s;
+    -o-transition: 2s;
+    transition: 2s;
+}
+
+.standard-progress-procent {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    z-index: 2;
+}
+
+.standard-procent-w-wrapper {
+    width: 140px;
+    position: absolute;
+    height: 100%;
+    z-index: 1;
+}
+
+.standard-progress-procent-w {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    color: #ffffff;
+    z-index: 1;
+}
+
+
+/* ------ Class for hiding stuff ------ */
+
+.hide {
+    display: none;
+}
+
+.transparent {
+    opacity: 0;
+}
+
+#feedback-back-btn {
+    position: absolute;
+    right: 0px;
+    top: 27px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+
+/*----- Progress bar ----*/
+
+.progress-bar {
+    position: relative;
+    width: 100%;
+    background-color: #E1E3E4;
+}
+
+.progress-bar-filled {
+    position: absolute;
+    height: 100%;
+    width: 0%;
+    background-color: #d62c1f;
+}
+
+
+/*----- Dialogs -----*/
+
+.ui-dialog-titlebar {
+    display: none;
+}
+
+.ui-widget-content {
+    border: none;
+}
+
+.ui-dialog-buttonset {
+    text-align: right;
+}
+
+.ui-button {
+    position: relative;
+    right: 10px;
+    bottom: 10px;
+    height: 35px;
+    margin-left: 10px;
+    padding: 0 10px;
+}
+
+.basic-dialog-btn {
+    cursor: pointer;
+}
+
+.dialog-content {
+    margin: 20px auto;
+    width: 465px;
+    text-align: center;
+}
+
+.finish-dialog {
+    /*text-align: center;*/
+    padding: 15px;
+}
+
+.finish-dialog p {
+    font-size: 17px;
+}
+
+.dialog-text-wrapper {
+    margin-top: 15px;
+}
+
+.finish-dialog hr {
+    height: 1px;
+}

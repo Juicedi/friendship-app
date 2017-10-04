@@ -1,0 +1,8 @@
+node_modules
+audio
+documents
+video
+build
+.vscode
+*.log
+package-lock.json

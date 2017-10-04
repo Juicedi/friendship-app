@@ -1,0 +1,31 @@
+.square-box {
+    margin: auto;
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    background-color: rgb(70, 70, 70);
+    background-color: rgba(0, 0, 0, 0.33);
+    font-size: 100px;
+    line-height: 100px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+    .some-icon {
+        font-size: 0.7em;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+.square-box:hover {
+    /*background-color: $green;*/
+    /* NOTE: disable to avoid confusion on mobile */
+    transform: scale(1.05);
+}
+.square-box.chosen:hover {
+    background-color: #4FE8BA !important;
+}
+.square-box:active {
+    transform: scale(0.9);
+}

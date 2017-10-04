@@ -1,0 +1,167 @@
+html {
+  height: 100%;
+  width: 100rem;
+  max-width: 100%;
+  font-size: 1vw;
+  background-color: #efefef;
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+body {
+  position: absolute;
+  margin: 0;
+  transform: translate(50%, 50%);
+  bottom: 50%;
+  right: 50%;
+  width: 100rem;
+  height: $viewportRatio * 100rem;
+  overflow-y: hidden;
+  max-width: 100%;
+  color: #000;
+  background-color: #fff;
+  font-family: Tahoma, sans-serif;
+  /*margin-bottom: 20px;*/
+}
+
+header {
+  height: $headerHeight;
+  background-color: $dark;
+  position: relative;
+  display: flex;
+  top: 0;
+  left: 0;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0.1rem 0 $dark;
+  z-index: 11;
+
+  img {
+    position: absolute;
+    left: 7rem;
+    top: 43%;
+    transform: translate(-50%, -50%);
+    width: 12rem;
+    height: auto;
+    cursor: pointer;
+  }
+
+  h2 {
+    display: inline-block;
+    font-weight: 400;
+    font-size: 2rem;
+  }
+
+  #role-selector {
+    position: absolute;
+    display: inline-block;
+    right: 0;
+    bottom: 0;
+
+    #role-selector-txt {
+      display: inline-block;
+      margin: 0;
+      padding-right: 1rem;
+    }
+
+    .role {
+      display: inline-block;
+      margin: 0;
+      padding: 0rem 0.8rem;
+      cursor: pointer;
+      user-select: none;
+
+      &.chosen {
+        background-color: white;
+        color: $green;
+        box-shadow: 0 0.2rem 0 #fff;
+      }
+    }
+  }
+}
+
+input {
+  color: rgb(70, 70, 70);
+}
+
+a {
+  color: $green;
+  text-decoration: underline;
+  font-weight: 600;
+  font-style: italic;
+}
+
+p,
+a {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  line-height: 1.4rem;
+}
+
+h1 {
+  font-size: 3.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h4 {
+  font-size: 1.4rem;
+  margin: 0;
+  font-weight: normal;
+}
+
+hr {
+  margin: 40px 0 10px;
+}
+
+ul {
+  list-style: none;
+  padding-left: 2rem;
+  margin: 0;
+
+  &.smaller-padding {
+    padding-left: 1rem;
+  }
+}
+
+li {
+  position: relative;
+  padding: 0 1rem;
+
+  &::before {
+    content: '•';
+    position: absolute;
+    left: 0.2rem;
+  }
+}
+
+label {
+  font-size: 1.2rem;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  font: inherit;
+}
+
+select {
+  font-size: 1rem;
+}
+
+/* Do things in .loaded, #frame, and #content to enable sticky footer */
+
+.loaded,
+#frame {
+  height: 100%;
+  overflow: hidden;
+}
+
+#content {
+  height: 90%;
+}
