@@ -1,0 +1,40 @@
+.login-page {
+  background-color: black;
+  text-align: center;
+
+  &:after {
+    content: '';
+    background-color: #000;
+    background-image: url(../img/bg/login_bg.jpg);
+    background-size: cover;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.2;
+    background-color: black;
+  }
+}
+
+#title {
+  margin-top: 2em;
+  color: white;
+}
+
+.login-btn-container {
+  display: inline-block;
+  margin-top: 13em;
+}
+
+.login-btn {
+  display: block;
+  margin: 1em 0;
+  border: 0.1em solid white;
+  color: black;
+
+  &:hover {
+    color: $darkGreen;
+    background-color: $mainGreen;
+  }
+}

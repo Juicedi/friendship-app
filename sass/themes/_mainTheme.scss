@@ -23,7 +23,8 @@ body {
   font-family: Arial, sans-serif;
 }
 
-div {
+div,
+button {
   box-sizing: border-box;
 }
 
@@ -62,14 +63,5 @@ button {
 }
 
 #content {
-  height: 75%;
-  overflow: scroll;
-
-  &.show-top {
-    height: 90%;
-  }
-
-  &.show-both {
-    height: 70%;
-  }
+  height: 100%;
 }

@@ -1,3 +1,7 @@
+.hide {
+  display: none;
+}
+
 #top-bar {
   position: relative;
   background-color: $mainGreen;
@@ -8,6 +12,7 @@
 
   h2 {
     display: inline-block;
+    margin: 0.6em 0;
   }
 }
 
@@ -16,7 +21,20 @@
   background-color: $mainGreen;
   color: white;
   text-align: center;
-  padding: 1.2em;
+  padding: 1em;
+}
+
+#page-content {
+  height: 100%;
+  padding: 0.1em;
+
+  &.show-top {
+    height: 90%;
+  }
+
+  &.show-bottom {
+    height: 78%;
+  }
 }
 
 #nav-symbols {
@@ -40,4 +58,11 @@
   background-size: contain;
   transform: translate(-50%, -50%) rotate(-180deg);
   vertical-align: middle;
+}
+
+.large-btn {
+  width: 10em;
+  font-size: 1.2em;
+  padding: 0.6em 0em;
+  border-radius: 2em;
 }
