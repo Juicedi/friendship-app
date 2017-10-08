@@ -5,56 +5,42 @@ const preload = (arrayOfImages) => {
 }
 preload([]);
 
-const MainController = (() => {
-  let pageCtrl = '';
-  let dataCtrl = '';
-  let animCtrl = '';
-  let ajaxCtrl = '';
-  let navCtrl = '';
+const MainController = (function(e) {
+  let self = null;
+  let pageCtrl, dataCtrl, animCtrl, ajaxCtrl, navCtrl;
 
   function initControllers () {
-    console.log('initializing controllers');
-    pageCtrl = new pageController();
-    dataCtrl = new dataController();
-    animCtrl = new AnimationController();
-    navCtrl = new Navigation();
+    console.log('Initializing controllers');
+    pageCtrl = new PageController(self);
+    dataCtrl = new DataController(self);
+    animCtrl = new AnimationController(self);
+    navCtrl = new Navigation(self);
   }
 
   function startApplication() {
-    console.log('starting application');
-    navCtrl.getContent('lander');
+    console.log('Starting application');
+    navCtrl.getContent('event_search');
   }
 
   return {
-    init() {
+    init(that) {
+      self = that;
       initControllers();
       startApplication();
+    },
+    changePage(page) {
+      navCtrl.getContent(page);
+    },
+    initPageBtns(page) {
+      pageCtrl.initPageBtns(page);
     }
   };
 })();
 
-const resizeFrame = () => {
-  const DESIRED_RATIO = 52 / 100;
-  const winHeight = $(window).height(); // New height
-  const winWidth = $(window).width(); // New width
-  let scale;
-
-  if (DESIRED_RATIO * winWidth > winHeight) {
-    scale = (winHeight / winWidth / DESIRED_RATIO) + 'vw';
-  } else {
-    scale = '';
-  }
-  document.getElementsByTagName('html')[0].style.fontSize = scale;
-};
-
-/*
-resizeFrame();
-$(window).resize(resizeFrame);
-*/
 $(window).load(() => {
   $('.loading').fadeOut(500, () => {
     console.log('init main');
-    MainController.init();
+    MainController.init(MainController);
     $('.loaded').fadeIn(1000);
   });
 });

@@ -1,0 +1,33 @@
+.event-info {
+  position: relative;
+
+  article {
+    padding: 0.3em 0.8em;
+  }
+
+  h4 {
+    margin: 0.3em 0;
+  }
+
+  p {
+    margin: 0.1em 0;
+    word-wrap: wrap;
+  }
+}
+
+#privacy-btn-container {
+  position: relative;
+}
+
+#attend-btn {
+  position: absolute;
+  right: 1em;
+  top: 17em;
+}
+
+#join-squad {
+  height: 3em;
+  width: 100%;
+  margin-top: 1em;
+  font-size: 2em;
+}

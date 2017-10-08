@@ -1,0 +1,36 @@
+.search-page {
+ text-align: center;
+
+ input {
+   display: inline-block;
+   margin-top: 3em;
+ }
+
+ .filter-btn-container {
+   margin-bottom: 2em;
+
+   button {
+     height: 3em;
+     width: 3em;
+     margin: 0 4em;
+     outline: 0.1em solid $lightGreen;
+   }
+
+   img {
+     height: 100%;
+     width: 100%;
+     object-fit: contain;
+   }
+}
+
+ .event {
+   text-align: left;
+
+   .main-btn {
+     position: absolute;
+     transform: translate(0, -50%);
+     right: 1em;
+     top: 50%;
+   }
+ }
+}

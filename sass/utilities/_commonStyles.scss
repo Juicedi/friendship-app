@@ -1,5 +1,5 @@
 .hide {
-  display: none;
+  display: none !important;
 }
 
 #top-bar {
@@ -16,6 +16,42 @@
   }
 }
 
+#image-top-bar {
+  position: relative;
+
+  .gradient-overlay {
+    position: absolute;
+    bottom: 0;
+    height: 66%;
+    width: 100%;
+    background: linear-gradient(rgba(255, 255, 255, 0), #000);
+  }
+
+  .btnBack {
+    top: 2em;
+  }
+
+  h1 {
+    position: absolute;
+    bottom: 0.2em;
+    left: 0.3em;
+    margin: 0;
+    font-weight: 100;
+  }
+
+  #header-image {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
 #bottom-bar {
   width: 100%;
   background-color: $mainGreen;
@@ -26,13 +62,17 @@
 
 #page-content {
   height: 100%;
-  padding: 0.1em;
+  overflow: scroll;
 
   &.show-top {
     height: 90%;
   }
 
   &.show-bottom {
+    height: 88%;
+  }
+
+  &.show-both{
     height: 78%;
   }
 }
@@ -60,9 +100,91 @@
   vertical-align: middle;
 }
 
+.main-btn,
+.large-btn {
+  font-size: 1.2em;
+  padding: 0.6em 0.8em;
+  border-radius: 2em;
+}
+
 .large-btn {
   width: 10em;
-  font-size: 1.2em;
-  padding: 0.6em 0em;
-  border-radius: 2em;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.5em 0.8em;
+  font-size: 0.8em;
+  color: white;
+  border-radius: 1em;
+  background-color: $mainGreen;
+  vertical-align: middle;
+}
+
+.plus-btn,
+.small-plus-btn {
+  box-sizing: border-box;
+  height: 1em;
+  width: 1em;
+  line-height: 1em;
+  background-color: $mainGreen;
+  color: white;
+  font-size: 3em;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.plus-btn {
+  font-size: 3em;
+}
+
+.slider-checkbox {
+  position: relative;
+  height: 2em;
+  width: 5em;
+  border-radius: 5em;
+}
+
+.slider-bg-color {
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  border-radius: 5em;
+}
+
+.slider-handle {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  height: 2.5em;
+  width: 2.5em;
+  border-radius: 50%;
+}
+
+#options {
+  position: absolute;
+  top: 0.4em;
+  right: 0;
+}
+
+#menu-image {
+  width: 3em;
+  float: right
+}
+
+#options-modal {
+  clear: both;
+  padding: 0;
+
+  li {
+    padding: 0.5em 0.2em;
+    border-bottom: 0.1em solid $lightGrey;
+
+    &:hover {
+      background-color: $darkGreen;
+      color: white;
+      border-bottom: 0.1em solid $darkGreen;
+    }
+  }
 }

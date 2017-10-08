@@ -48,10 +48,26 @@ p {
   font-size: 1em;
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
 button {
   background-color: transparent;
   border: none;
   font: inherit;
+}
+
+input {
+  border: none;
+    display: block;
+    background-color: transparent;
+    border-bottom: 0.1em solid $mainGreen;
+    font-size: 1.4em;
+    margin: 1em 0;
+    color: black;
 }
 
 /* Do things in .loaded, #frame, and #content to enable sticky footer */

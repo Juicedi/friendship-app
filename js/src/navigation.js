@@ -1,7 +1,6 @@
-const Navigation = () => {
+const Navigation = (mainCtrl) => {
   let pages = [];
   let pageNr = 0;
-  let startTime = 0;
   const errors = [];
   const folder = 'content/';
 
@@ -11,8 +10,8 @@ const Navigation = () => {
     $.ajax({
       url: url,
       success: (content) => {
-    console.log(content);
         $('#content').html(content);
+        mainCtrl.initPageBtns(c);
       },
       error: () => {
         setTimeout(() => {

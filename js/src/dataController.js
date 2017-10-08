@@ -1,5 +1,5 @@
 // 'use strict';
-const dataController = function () {
+const DataController = function () {
   const self = this;
 
   return {

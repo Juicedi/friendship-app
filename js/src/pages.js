@@ -1,9 +1,14 @@
 // 'use strict';
-const pageController = function (points) {
+const PageController = function (mainCtrl) {
+  const self = this;
+
+  const initPageBtns = (page) => {
+    console.log('Initializing page buttons.');
+  }
 
   return {
-    changeNavbarTitle(module, section) {
-      self.changeNavbarTitle(module, section);
+    initPageBtns(page) {
+      initPageBtns(page);
     },
   };
 };
