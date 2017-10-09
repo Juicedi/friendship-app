@@ -37,10 +37,11 @@ const DataController = function () {
     }
   }
 
-  self.users = [
-    {
-      id: 65431234,
+  self.users = {
+    'ducky101_123': {
       nickname: 'Ducky101',
+      email: 'ducky@mail.fi',
+      hash: '12034810289581dsfhakjhv92384',
       profileImage: 'img/users/ducky.jpg',
       profileBg: 'img/users/duckybg.jpg',
       chatBg: 'img/users/duckybg.jpg',
@@ -54,7 +55,14 @@ const DataController = function () {
       chatMute: false,
       chats: ['chat123'],
     }
-  ]
+  }
+
+  self.login = {
+    'ducky@mail.fi': {
+      id: 'ducky101_123',
+      hash: '1340998fdg0984098has098gha98ds',
+    }
+  }
 
   self.chatNames = {
     chat123: {
