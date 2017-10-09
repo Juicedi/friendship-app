@@ -28,9 +28,16 @@ const MainController = (function(e) {
       initControllers();
       startApplication();
     },
+
+    // Navigation functions
+    getPrevPage() {
+      return navCtrl.getPrevPage();
+    },
     changePage(page) {
       navCtrl.getContent(page);
     },
+
+    // PageController functions
     initPageBtns(page) {
       pageCtrl.initPageBtns(page);
     }

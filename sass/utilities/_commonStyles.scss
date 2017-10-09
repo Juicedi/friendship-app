@@ -3,7 +3,11 @@
 }
 
 #top-bar {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: $top-bar-height;
   background-color: $mainGreen;
   color: white;
   text-align: center;
@@ -11,8 +15,13 @@
   border-bottom: 0.1em solid $darkGreen;
 
   h2 {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    width: 100%;
     display: inline-block;
-    margin: 0.6em 0;
+    margin: 0;
   }
 }
 
@@ -53,27 +62,38 @@
 }
 
 #bottom-bar {
+  position: absolute;
+  bottom: 0;
+  height: $bottom-bar-height;
   width: 100%;
   background-color: $mainGreen;
   color: white;
   text-align: center;
-  padding: 1em;
+
+  nav {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    width: 100%;
+  }
 }
 
 #page-content {
   height: 100%;
-  overflow: scroll;
+  overflow-y: overlay;
 
   &.show-top {
-    height: 90%;
+    padding-top: $top-bar-height;
   }
 
   &.show-bottom {
-    height: 88%;
+    padding-bottom: $bottom-bar-height;
   }
 
-  &.show-both{
-    height: 78%;
+  &.show-both {
+    padding-top: $top-bar-height;
+    padding-bottom: $bottom-bar-height;
   }
 }
 
@@ -84,7 +104,7 @@
     display: inline-block;
     height: 3em;
     width: auto;
-    margin: 0 1em;
+    margin: 0 4%;
   }
 }
 
@@ -98,6 +118,7 @@
   background-size: contain;
   transform: translate(-50%, -50%) rotate(-180deg);
   vertical-align: middle;
+  z-index: 1;
 }
 
 .main-btn,

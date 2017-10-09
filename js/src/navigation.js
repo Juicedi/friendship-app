@@ -1,17 +1,25 @@
 const Navigation = (mainCtrl) => {
   let pages = [];
   let pageNr = 0;
+  let prevPage = '';
+  let currPage = '';
   const errors = [];
   const folder = 'content/';
 
   // PAGECONTROLLER WITH AJAX
   function getContent(c) {
     const url = `${folder}${c}.html`;
+    prevPage = currPage;
+    currPage = c;
+
     $.ajax({
       url: url,
       success: (content) => {
-        $('#content').html(content);
-        mainCtrl.initPageBtns(c);
+        $('#content').fadeOut(100, () => {
+            $('#content').html(content);
+            mainCtrl.initPageBtns(c);
+          $('#content').fadeIn(300)
+        });
       },
       error: () => {
         setTimeout(() => {
@@ -27,8 +35,10 @@ const Navigation = (mainCtrl) => {
     init: () => {
       getContent(c);
     },
+    getPrevPage: (c) => {
+      return prevPage;
+    },
     getContent: (c) => {
-      console.log('navigating');
       getContent(c);
     },
   };

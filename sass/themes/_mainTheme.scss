@@ -1,6 +1,6 @@
 html {
   height: 100%;
-  max-width: 100%;
+  max-width: 500px;
   background-color: #e4e4e4;
 
   * {
@@ -17,7 +17,8 @@ body {
   bottom: 50%;
   right: 50%;
   overflow-y: hidden;
-  max-width: 100%;
+  max-width: 500px;
+  max-height: 900px;
   color: #000;
   background-color: #fff;
   font-family: Arial, sans-serif;
