@@ -5,10 +5,17 @@ const preload = (arrayOfImages) => {
 }
 preload([]);
 
-const MainController = (function(e) {
+/**
+ * Runs the application and controls all of the application controllers
+ * @return {Object} - All of the main controller functions that are shared with other controllers
+ */
+const MainController = (function() {
   let self = null;
   let pageCtrl, dataCtrl, animCtrl, ajaxCtrl, navCtrl;
 
+  /**
+   * Initializes all of this applications controllers and gives itself to them as a parameter.
+   */
   function initControllers () {
     console.log('Initializing controllers');
     pageCtrl = new PageController(self);
@@ -17,8 +24,12 @@ const MainController = (function(e) {
     navCtrl = new Navigation(self);
   }
 
+  /**
+   * Starts application by loading the first page.
+   */
   function startApplication() {
     console.log('Starting application');
+    dataCtrl.getUserInfo('testeri');
     navCtrl.getContent('event_search');
   }
 
@@ -27,6 +38,11 @@ const MainController = (function(e) {
       self = that;
       initControllers();
       startApplication();
+    },
+
+    // DataController functions
+    getUserEvents() {
+      dataCtrl.getUserEvents();
     },
 
     // Navigation functions
@@ -40,7 +56,10 @@ const MainController = (function(e) {
     // PageController functions
     initPageBtns(page) {
       pageCtrl.initPageBtns(page);
-    }
+    },
+    populateOwnEvents(events) {
+      pageCtrl.populateOwnEvents(events);
+    },
   };
 })();
 

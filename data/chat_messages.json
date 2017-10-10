@@ -1,0 +1,26 @@
+{
+   "chat123":[
+      {
+         "sender":"ducky101",
+         "message":"Quack! Quack!",
+         "time":"21.10.2017 12.00"
+      },
+      {
+         "sender":"alan",
+         "message":"Hey! Let's meet up!",
+         "time":"21.10.2017 12.03"
+      }
+   ],
+   "evtChat123":[
+      {
+         "sender":"ducky101",
+         "message":"Quack! Quack!",
+         "time":"21.10.2017 12.00"
+      },
+      {
+         "sender":"alan",
+         "message":"Hey! Let's meet up!",
+         "time":"21.10.2017 12.03"
+      }
+   ]
+}

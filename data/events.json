@@ -1,0 +1,43 @@
+{
+  "event34534534": {
+    "title":"Sting",
+    "eventImg":"img/events/eventbg34534534.jpg",
+    "date":"28.09.2017",
+    "location":"Helsinki",
+    "description": "Weekend long camping trip in a forest near Hämeenlinna. Everyone has to bring their own things. We will take the group to the camping spot from a parking lot by the forest. Be there!",
+    "private":false,
+    "large":true,
+    "attending":[
+      "ducky101",
+      "alan"
+    ],
+    "tags":[
+      "music",
+      "rock",
+      "pop"
+    ],
+    "owner":"testeri",
+    "groupsIds":[
+      "sting_123",
+      "sting_54395"
+    ]
+  },
+  "event123": {
+    "title":"Camping",
+    "eventImg":"img/events/eventbg34534534.jpg",
+    "date":"28.10.2017",
+    "location":"Hämeenlinna",
+    "description": "Weekend long camping trip in a forest near Hämeenlinna. Everyone has to bring their own things. We will take the group to the camping spot from a parking lot by the forest. Be there!",
+    "private":true,
+    "large":false,
+    "attending":[
+      "Alan"
+    ],
+    "tags":[
+      "outdoor",
+      "camping",
+      "fishing"
+    ],
+    "owner":"Ducky101"
+  }
+}

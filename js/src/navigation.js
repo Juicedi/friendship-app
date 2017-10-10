@@ -1,3 +1,8 @@
+/**
+ * Gets page contents depending on navigation calls.
+ * @param {Object} mainCtrl - The applications main controller
+ * @return {Object} - All of the navigation functions that are shared with other controllers
+ */
 const Navigation = (mainCtrl) => {
   let pages = [];
   let pageNr = 0;
@@ -6,7 +11,10 @@ const Navigation = (mainCtrl) => {
   const errors = [];
   const folder = 'content/';
 
-  // PAGECONTROLLER WITH AJAX
+  /**
+   * Gets pages content using AJAX call. After successful content fetch, calls for page function initialization from main controller.
+   * @param {String} c - Page's filename which content should be fetched
+   */
   function getContent(c) {
     const url = `${folder}${c}.html`;
     prevPage = currPage;
