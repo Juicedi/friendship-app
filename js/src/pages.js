@@ -11,10 +11,11 @@ const PageController = function (mainCtrl) {
   function populateOwnEvents(events) {
     let eventTemplate;
     console.log('populating own events');
+
     for(let i = 0, len = events.length; i < len; i += 1) {
       const own = events[i].own === true ? '' : 'hide';
       eventTemplate = `
-        <article class="event white-bg">
+        <article class="event white-bg go-to-page" data-page="event_info">
           <div class="event-image">
             <img src="build/img/content/sting.jpg" alt="event-thumbnail">
           </div>
@@ -27,14 +28,11 @@ const PageController = function (mainCtrl) {
         </article>
       `
       $('#page-content').append(eventTemplate);
-
     }
+    initNavigationBtns();
   }
 
-  function initPageBtns(page) {
-    console.log('Initializing ' + page + ' buttons.');
-
-    // Common buttons
+  function initNavigationBtns() {
     $('.go-to-page').on('click', (event) => {
       const nextPage = event.currentTarget.dataset.page;
       console.log('going to page: ' + nextPage);
@@ -51,6 +49,10 @@ const PageController = function (mainCtrl) {
         mainCtrl.changePage(prevPage);
       }
     });
+  }
+
+  function initPageBtns(page) {
+    console.log('Initializing ' + page + ' buttons.');
 
     // Page specific buttons
     switch (page) {
@@ -59,6 +61,7 @@ const PageController = function (mainCtrl) {
         break;
       }
       default: {
+        initNavigationBtns();
         break;
       }
     }
