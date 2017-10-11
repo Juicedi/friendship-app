@@ -116,12 +116,12 @@ const PageController = function (mainCtrl) {
 
   function initPage(page) {
     let pageName;
+
     if (page.indexOf(':') !== -1) {
       pageName = page.split(':')[0]
     } else {
       pageName = page;
     }
-    console.log('Initializing ' + pageName + ' buttons.');
 
     // Page specific buttons
     switch (pageName) {
