@@ -9,6 +9,7 @@ const PageController = function (mainCtrl) {
   const self = this;
 
   function fillEventInfo(evtInfo) {
+    $('#header-image img').attr('src', evtInfo.eventImg);
     $('#event-title').html(evtInfo.title);
     $('#event-location').html(evtInfo.location);
     $('#event-date').html(evtInfo.date);
@@ -44,7 +45,7 @@ const PageController = function (mainCtrl) {
         eventTemplate = `
         <article class="event white-bg go-to-page-with-id" data-page="event_info" data-id="${events[i].id}">
           <div class="event-image">
-            <img src="build/img/content/sting.jpg" alt="event-thumbnail">
+            <img src="${events[i].eventImg}" alt="event-thumbnail">
           </div>
           <div class="event-texts">
             <h4 class="event-title darkestGreen-text">${events[i].title}</h4>
@@ -70,7 +71,7 @@ const PageController = function (mainCtrl) {
       eventTemplate = `
         <article class="event white-bg go-to-page-with-id" data-page="event_info" data-id="${keys[i]}">
           <div class="event-image">
-            <img src="build/img/content/sting.jpg" alt="event-thumbnail">
+            <img src="${events[keys[i]].eventImg}" alt="event-thumbnail">
           </div>
           <div class="event-texts">
             <h4 class="event-title darkestGreen-text">${events[keys[i]].title}</h4>
