@@ -1,5 +1,6 @@
 .event-info {
   position: relative;
+  padding-bottom: 6em;
 
   article {
     padding: 0.3em 0.8em;
@@ -26,6 +27,8 @@
 }
 
 #join-squad {
+  position: absolute;
+  bottom: -3em;
   height: 3em;
   width: 100%;
   margin-top: 1em;
