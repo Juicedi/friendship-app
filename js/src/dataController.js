@@ -22,6 +22,22 @@ const DataController = function (mainCtrl) {
   }
 
   /**
+   * Filter out users own events and the events that user is attending.
+   * @param {Object} events - Object that has all event informations.
+   * @return {Array} - List of only current user's events.
+   */
+  function filterSuggestedEvents(events) {
+    let eventObjList = [];
+    const keys = Object.keys(events);
+    for(let i = 0, len = keys.length; i < len; i += 1) {
+      if (userData.eventsAttending.indexOf(events[keys[i]]) !== -1){
+        eventObjList.push(events[keys[i]]);
+      }
+    }
+    return eventObjList;
+  }
+
+  /**
    * Gets user information from database.
    * @param {String} userName - Username which user information will be fetched.
    * @return {Object} - Returns all of the user information
@@ -60,12 +76,55 @@ const DataController = function (mainCtrl) {
     });
   }
 
+  function getEventInfo() {
+    const url = 'data/events.json';
+    const currentPageInfo = mainCtrl.getCurrentPage();
+    const eventId = currentPageInfo.split(':')[1];
+    $.ajax({
+      url: url,
+      success: (content) => {
+        console.log(content[eventId]);
+        mainCtrl.fillEventInfo(content[eventId]);
+      },
+      error: () => {
+        console.log('Error: Couldn\'t get event informations');
+      },
+    });
+  }
+
+  /**
+   *  Gets current users event informations.
+   *  @return {Array} - Returns an array of objects which have the event informations
+   */
+  function getSuggestedEvents() {
+    const url = 'data/events.json';
+    $.ajax({
+      url: url,
+      success: (content) => {
+        console.log(content);
+        mainCtrl.populateSuggestedEvents(content);
+      },
+      error: () => {
+        console.log('Error: Couldn\'t get event informations');
+      },
+    });
+  }
+
   return {
     getUserInfo(user) {
       return getUserInfo(user);
     },
+    getUserId() {
+      return userData.id;
+    },
     getUserEvents() {
       return getUserEvents();
+    },
+    getEventInfo(eventId) {
+      return getEventInfo(eventId);
+    },
+    getSuggestedEvents() {
+      return getSuggestedEvents();
     }
   };
 };

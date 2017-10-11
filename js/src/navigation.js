@@ -16,7 +16,13 @@ const Navigation = (mainCtrl) => {
    * @param {String} c - Page's filename which content should be fetched
    */
   function getContent(c) {
-    const url = `${folder}${c}.html`;
+    let url;
+    if (c.indexOf(':') !== -1) {
+      const temp = c.split(':');
+      url = `${folder}${temp[0]}.html`;
+    } else {
+      url = `${folder}${c}.html`;
+    }
     prevPage = currPage;
     currPage = c;
 
@@ -25,7 +31,7 @@ const Navigation = (mainCtrl) => {
       success: (content) => {
         $('#content').fadeOut(100, () => {
             $('#content').html(content);
-            mainCtrl.initPageBtns(c);
+            mainCtrl.initPage(c);
           $('#content').fadeIn(300)
         });
       },
@@ -43,8 +49,11 @@ const Navigation = (mainCtrl) => {
     init: () => {
       getContent(c);
     },
-    getPrevPage: (c) => {
+    getPrevPage: () => {
       return prevPage;
+    },
+    getCurrentPage: () => {
+      return currPage;
     },
     getContent: (c) => {
       getContent(c);

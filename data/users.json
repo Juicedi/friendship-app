@@ -1,5 +1,6 @@
 {
    "ducky101_123":{
+      "id":"Ducky101_123",
       "nickname":"Ducky101",
       "email":"ducky@mail.fi",
       "profileImage":"img/users/ducky.jpg",
@@ -30,6 +31,7 @@
       ]
    },
    "testeri":{
+      "id":"testeri",
       "nickname":"Topi",
       "email":"test@mail.fi",
       "profileImage":"img/users/ducky.jpg",
@@ -52,7 +54,8 @@
       ],
       "searchRange":12,
       "eventsAttending":[
-         "event123"
+         "event123",
+         "event34534534"
       ],
       "chatMute":false,
       "chats":[

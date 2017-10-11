@@ -8,14 +8,41 @@
 const PageController = function (mainCtrl) {
   const self = this;
 
+  function fillEventInfo(evtInfo) {
+    $('#event-title').html(evtInfo.title);
+    $('#event-location').html(evtInfo.location);
+    $('#event-date').html(evtInfo.date);
+    $('#event-description').html(evtInfo.description);
+    placeTags(evtInfo.tags);
+
+    if (evtInfo.owner === mainCtrl.getUserId()) {
+      $('#privacy-btn-container').removeClass('hide');
+      $('.invite-person').removeClass('hide');
+      $('.add-tag').removeClass('hide');
+      $('#options').removeClass('hide');
+      $('#attend-btn').addClass('hide');
+    }
+
+    if (evtInfo.large === true) {
+      $('#join-squad').removeClass('hide');
+    }
+  }
+
+  function placeTags(tags) {
+    for (let i = 0, len = tags.length; i < len; i += 1) {
+      const elem = `<div class="tag">${tags[i]}</div>`;
+      $('#tag-container').append(elem);
+    }
+  }
+
   function populateOwnEvents(events) {
     let eventTemplate;
-    console.log('populating own events');
 
-    for(let i = 0, len = events.length; i < len; i += 1) {
-      const own = events[i].own === true ? '' : 'hide';
-      eventTemplate = `
-        <article class="event white-bg go-to-page" data-page="event_info">
+    if( events.length > 0) {
+      for(let i = 0, len = events.length; i < len; i += 1) {
+        const own = events[i].owner === mainCtrl.getUserId() ? '' : 'hide';
+        eventTemplate = `
+        <article class="event white-bg go-to-page-with-id" data-page="event_info" data-id="${events[i].id}">
           <div class="event-image">
             <img src="build/img/content/sting.jpg" alt="event-thumbnail">
           </div>
@@ -26,7 +53,35 @@ const PageController = function (mainCtrl) {
             <h4 class="owner green-text ${own}">Own</h4>
           </div>
         </article>
-      `
+      `;
+        $('#page-content').append(eventTemplate);
+      }
+    } else {
+      $('.no-events-text').removeClass('hide');
+    }
+    initNavigationBtns();
+  }
+
+  function populateSuggestedEvents(events) {
+    let eventTemplate;
+    const keys = Object.keys(events);
+
+    for(let i = 0, len = keys.length; i < len; i += 1) {
+      eventTemplate = `
+        <article class="event white-bg go-to-page-with-id" data-page="event_info" data-id="${keys[i]}">
+          <div class="event-image">
+            <img src="build/img/content/sting.jpg" alt="event-thumbnail">
+          </div>
+          <div class="event-texts">
+            <h4 class="event-title darkestGreen-text">${events[keys[i]].title}</h4>
+            <p class="event-location darkGreen-text">${events[keys[i]].location}</p>
+            <p class="event-date darkGreen-text">${events[keys[i]].date}</p>
+            <button>
+              <h4 class="main-btn green-bg white-text">Join</h4>
+            </button>
+          </div>
+        </article>
+      `;
       $('#page-content').append(eventTemplate);
     }
     initNavigationBtns();
@@ -35,6 +90,14 @@ const PageController = function (mainCtrl) {
   function initNavigationBtns() {
     $('.go-to-page').on('click', (event) => {
       const nextPage = event.currentTarget.dataset.page;
+      console.log('going to page: ' + nextPage);
+      mainCtrl.changePage(nextPage);
+    });
+
+    $('.go-to-page-with-id').on('click', (event) => {
+      const id = event.currentTarget.dataset.id;
+      const filename = event.currentTarget.dataset.page;
+      const nextPage = `${filename}:${id}`;
       console.log('going to page: ' + nextPage);
       mainCtrl.changePage(nextPage);
     });
@@ -51,13 +114,28 @@ const PageController = function (mainCtrl) {
     });
   }
 
-  function initPageBtns(page) {
-    console.log('Initializing ' + page + ' buttons.');
+  function initPage(page) {
+    let pageName;
+    if (page.indexOf(':') !== -1) {
+      pageName = page.split(':')[0]
+    } else {
+      pageName = page;
+    }
+    console.log('Initializing ' + pageName + ' buttons.');
 
     // Page specific buttons
-    switch (page) {
+    switch (pageName) {
       case 'own_events': {
         mainCtrl.getUserEvents();
+        break;
+      }
+      case 'event_search': {
+        mainCtrl.getSuggestedEvents();
+        break;
+      }
+      case 'event_info': {
+        mainCtrl.getEventInfo();
+        initNavigationBtns();
         break;
       }
       default: {
@@ -68,11 +146,17 @@ const PageController = function (mainCtrl) {
   }
 
   return {
-    initPageBtns(page) {
-      initPageBtns(page);
+    initPage(page) {
+      initPage(page);
+    },
+    fillEventInfo(evtInfo) {
+      fillEventInfo(evtInfo);
     },
     populateOwnEvents(events) {
       populateOwnEvents(events);
+    },
+    populateSuggestedEvents(events) {
+      populateSuggestedEvents(events);
     }
   };
 };

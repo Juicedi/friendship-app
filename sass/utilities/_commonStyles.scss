@@ -104,7 +104,7 @@
     display: inline-block;
     height: 3em;
     width: auto;
-    margin: 0 4%;
+    margin: 0 1%;
   }
 }
 
@@ -134,6 +134,7 @@
 
 .tag {
   display: inline-block;
+  margin: 0 0.2em;
   padding: 0.5em 0.8em;
   font-size: 0.8em;
   color: white;
@@ -142,6 +143,7 @@
   vertical-align: middle;
 }
 
+.large-plus-btn,
 .plus-btn,
 .small-plus-btn {
   box-sizing: border-box;
@@ -157,6 +159,10 @@
 
 .plus-btn {
   font-size: 3em;
+}
+
+.large-plus-btn {
+  font-size: 6em;
 }
 
 .slider-checkbox {

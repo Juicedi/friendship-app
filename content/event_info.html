@@ -2,11 +2,11 @@
   <header id="image-top-bar" class="">
     <div class="gradient-overlay"></div>
     <div class="btnBack"></div>
-    <h1 class="white-text">Camping</h1>
+    <h1 id="event-title" class="white-text">Camping</h1>
     <div id="header-image">
       <img src="build/img/content/tent.jpg" alt="event-image">
     </div>
-    <div id="options">
+    <div id="options" class="hide">
       <img id="menu-image" src="build/img/ui/menu.png" alt="options-menu">
       <article id="options-modal" class="white-bg">
         <ul>
@@ -17,7 +17,7 @@
     </div>
   </header>
 
-  <article id="privacy-btn-container">
+  <article id="privacy-btn-container" class="hide">
     <h4 class="darkestGreen-text">Private</h4>
     <div class="slider-checkbox grey-bg">
       <div class="slider-bg-color green-bg"></div>
@@ -27,29 +27,26 @@
 
   <button id="attend-btn" class="main-btn green-bg white-text">Attend</button>
 
-  <article>
+  <article id="date-container">
     <h4 class="darkestGreen-text">When</h4>
-    <p class="darkestGreen-text">21.09.2018 21.00</p>
+    <p id="event-date" class="darkestGreen-text">21.09.2018 21.00</p>
   </article>
-  <article>
+  <article id="location-container">
     <h4 class="darkestGreen-text">Location</h4>
-    <p class="darkestGreen-text">Hämeenlinna</p>
+    <p id="event-location" class="darkestGreen-text">Hämeenlinna</p>
   </article>
-  <article>
+  <article id="description-container">
     <h4 class="darkestGreen-text">About</h4>
-    <p class="darkestGreen-text">Weekend long camping trip in a forest near Hä<wbr>meen<wbr>lin<wbr>na. Everyone has to bring their own things.</p>
-    <p class="darkestGreen-text">We will take the group to the camping spot from a parking lot by the forest. Be there!</p>
+    <p id="event-description" class="darkestGreen-text">Weekend long camping trip in a forest near Hä<wbr>meen<wbr>lin<wbr>na. Everyone has to bring their own things.</p>
   </article>
-  <article>
+  <article id="attending-container">
     <h4 class="darkestGreen-text">Attending: <span class="attendee-number">4</span></h4>
-    <button class="small-plus-btn invite-person">+</button>
+    <button class="small-plus-btn invite-person hide">+</button>
   </article>
-  <article>
+  <article id="tag-container">
     <h4 class="darkestGreen-text">Tags</h4>
-    <div class="tag">Outdoors</div>
-    <div class="tag">Camping</div>
-    <button class="small-plus-btn add-tag">+</button>
+    <button class="small-plus-btn add-tag hide">+</button>
   </article>
 
-  <button id="join-squad" class="green-bg white-text">Join a squad</button>
+  <button id="join-squad" class="green-bg white-text hide">Join a squad</button>
 </main>

@@ -17,7 +17,6 @@ const MainController = (function() {
    * Initializes all of this applications controllers and gives itself to them as a parameter.
    */
   function initControllers () {
-    console.log('Initializing controllers');
     pageCtrl = new PageController(self);
     dataCtrl = new DataController(self);
     animCtrl = new AnimationController(self);
@@ -44,28 +43,45 @@ const MainController = (function() {
     getUserEvents() {
       dataCtrl.getUserEvents();
     },
+    getSuggestedEvents() {
+      dataCtrl.getSuggestedEvents();
+    },
+    getUserId() {
+      return dataCtrl.getUserId();
+    },
+    getEventInfo() {
+      dataCtrl.getEventInfo();
+    },
 
     // Navigation functions
     getPrevPage() {
       return navCtrl.getPrevPage();
+    },
+    getCurrentPage() {
+      return navCtrl.getCurrentPage();
     },
     changePage(page) {
       navCtrl.getContent(page);
     },
 
     // PageController functions
-    initPageBtns(page) {
-      pageCtrl.initPageBtns(page);
+    initPage(page) {
+      pageCtrl.initPage(page);
     },
     populateOwnEvents(events) {
       pageCtrl.populateOwnEvents(events);
     },
+    populateSuggestedEvents(events) {
+      pageCtrl.populateSuggestedEvents(events);
+    },
+    fillEventInfo(evtInfo) {
+      pageCtrl.fillEventInfo(evtInfo);
+    }
   };
 })();
 
 $(window).load(() => {
   $('.loading').fadeOut(500, () => {
-    console.log('init main');
     MainController.init(MainController);
     $('.loaded').fadeIn(1000);
   });
