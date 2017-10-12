@@ -46,8 +46,8 @@ const MainController = (function() {
     getSuggestedEvents() {
       dataCtrl.getSuggestedEvents();
     },
-    getUserId() {
-      return dataCtrl.getUserId();
+    getUserData() {
+      return dataCtrl.getUserData();
     },
     getEventInfo() {
       dataCtrl.getEventInfo();

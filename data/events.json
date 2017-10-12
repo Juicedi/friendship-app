@@ -24,6 +24,44 @@
       "sting_54395"
     ]
   },
+  "event345": {
+    "id": "event345",
+    "title":"LARP",
+    "eventImg":"https://i.ytimg.com/vi/cTJjdjn7QPc/maxresdefault.jpg",
+    "date":"28.11.2017",
+    "location":"Espoo",
+    "description": "Feast your eyes on 30 minutes of League of Legends Larp Footage!",
+    "private": false,
+    "large":false,
+    "attending":[
+    ],
+    "owner":"alan",
+    "tags":[
+      "LARP",
+      "roleplaying",
+      "outdoors",
+      "League of Legends",
+      "LoL",
+      "video games"
+    ]
+  },
+  "event234": {
+    "id": "event234",
+    "title":"Chess match",
+    "eventImg":"//upload.wikimedia.org/wikipedia/commons/thumb/6/6f/ChessSet.jpg/375px-ChessSet.jpg",
+    "date":"28.11.2017",
+    "location":"Tampere",
+    "description": "Top favorite Globus and sixth seed Odlar Yurdu started with four wins and will face each other in round five of the European Club Cup in Göynük/Antalya, Turkey.",
+    "private": false,
+    "large":false,
+    "attending":[
+    ],
+    "owner":"alan",
+    "tags":[
+      "chess",
+      "boardgames"
+    ]
+  },
   "event123": {
     "id": "event123",
     "title":"Camping",

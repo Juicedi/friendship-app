@@ -9,6 +9,7 @@ const PageController = function (mainCtrl) {
   const self = this;
 
   function fillEventInfo(evtInfo) {
+    const uData = mainCtrl.getUserData();
     $('#header-image img').attr('src', evtInfo.eventImg);
     $('#event-title').html(evtInfo.title);
     $('#event-location').html(evtInfo.location);
@@ -16,7 +17,15 @@ const PageController = function (mainCtrl) {
     $('#event-description').html(evtInfo.description);
     placeTags(evtInfo.tags);
 
-    if (evtInfo.owner === mainCtrl.getUserId()) {
+    if (evtInfo.attending.indexOf(uData.id) !== -1) {
+      $('#attend-btn').addClass('hide');
+      $('#leave-btn').removeClass('hide');
+    } else {
+      $('#attend-btn').removeClass('hide');
+      $('#leave-btn').addClass('hide');
+    }
+
+    if (evtInfo.owner === mainCtrl.getUserData().id) {
       $('#privacy-btn-container').removeClass('hide');
       $('.invite-person').removeClass('hide');
       $('.add-tag').removeClass('hide');
@@ -41,7 +50,7 @@ const PageController = function (mainCtrl) {
 
     if( events.length > 0) {
       for(let i = 0, len = events.length; i < len; i += 1) {
-        const own = events[i].owner === mainCtrl.getUserId() ? '' : 'hide';
+        const own = events[i].owner === mainCtrl.getUserData().id ? '' : 'hide';
         eventTemplate = `
         <article class="event white-bg go-to-page-with-id" data-page="event_info" data-id="${events[i].id}">
           <div class="event-image">
@@ -65,26 +74,28 @@ const PageController = function (mainCtrl) {
 
   function populateSuggestedEvents(events) {
     let eventTemplate;
-    const keys = Object.keys(events);
 
-    for(let i = 0, len = keys.length; i < len; i += 1) {
+    for(let i = 0, len = events.length; i < len; i += 1) {
       eventTemplate = `
-        <article class="event white-bg go-to-page-with-id" data-page="event_info" data-id="${keys[i]}">
-          <div class="event-image">
-            <img src="${events[keys[i]].eventImg}" alt="event-thumbnail">
+        <article class="event white-bg"">
+          <div class="event-image go-to-page-with-id" data-page="event_info" data-id="${events[i].id}">
+            <img src="${events[i].eventImg}" alt="event-thumbnail">
           </div>
-          <div class="event-texts">
-            <h4 class="event-title darkestGreen-text">${events[keys[i]].title}</h4>
-            <p class="event-location darkGreen-text">${events[keys[i]].location}</p>
-            <p class="event-date darkGreen-text">${events[keys[i]].date}</p>
-            <button>
-              <h4 class="main-btn green-bg white-text">Join</h4>
-            </button>
+          <div class="event-texts go-to-page-with-id" data-page="event_info" data-id="${events[i].id}">
+            <h4 class="event-title darkestGreen-text">${events[i].title}</h4>
+            <p class="event-location darkGreen-text">${events[i].location}</p>
+            <p class="event-date darkGreen-text">${events[i].date}</p>
           </div>
+          <button class="join-btn">
+            <h4 class="main-btn green-bg white-text">Join</h4>
+          </button>
         </article>
       `;
       $('#page-content').append(eventTemplate);
     }
+    $('.join-btn').on('click', (event) => {
+      $(event.currentTarget).parent().addClass('hide');
+    });
     initNavigationBtns();
   }
 
@@ -137,6 +148,14 @@ const PageController = function (mainCtrl) {
       case 'event_info': {
         mainCtrl.getEventInfo();
         initNavigationBtns();
+        $('#attend-btn').on('click', () => {
+          $('#attend-btn').addClass('hide');
+          $('#leave-btn').removeClass('hide');
+        });
+        $('#leave-btn').on('click', () => {
+          $('#leave-btn').addClass('hide');
+          $('#attend-btn').removeClass('hide');
+        });
         break;
       }
       default: {

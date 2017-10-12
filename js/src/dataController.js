@@ -21,16 +21,15 @@ const DataController = function (mainCtrl) {
     return eventObjList;
   }
 
-  /**
-   * Filter out users own events and the events that user is attending.
-   * @param {Object} events - Object that has all event informations.
-   * @return {Array} - List of only current user's events.
-   */
   function filterSuggestedEvents(events) {
     let eventObjList = [];
     const keys = Object.keys(events);
+
     for(let i = 0, len = keys.length; i < len; i += 1) {
-      if (userData.eventsAttending.indexOf(events[keys[i]]) !== -1){
+      if (
+        events[keys[i]].attending.indexOf(userData.id) === -1 
+        && events[keys[i]].owner.indexOf(userData.id) === -1
+      ){
         eventObjList.push(events[keys[i]]);
       }
     }
@@ -101,8 +100,9 @@ const DataController = function (mainCtrl) {
     $.ajax({
       url: url,
       success: (content) => {
-        console.log(content);
-        mainCtrl.populateSuggestedEvents(content);
+        const suggestedEvents = filterSuggestedEvents(content);
+        console.log(suggestedEvents);
+        mainCtrl.populateSuggestedEvents(suggestedEvents);
       },
       error: () => {
         console.log('Error: Couldn\'t get event informations');
@@ -114,8 +114,8 @@ const DataController = function (mainCtrl) {
     getUserInfo(user) {
       return getUserInfo(user);
     },
-    getUserId() {
-      return userData.id;
+    getUserData() {
+      return userData;
     },
     getUserEvents() {
       return getUserEvents();
