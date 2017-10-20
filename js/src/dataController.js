@@ -6,6 +6,7 @@
  */
 const DataController = function (mainCtrl) {
   let userData = {};
+  let allEvents = 'empty';
   const self = this;
 
   /**
@@ -15,7 +16,7 @@ const DataController = function (mainCtrl) {
    */
   function filterUserEvents(events) {
     let eventObjList = [];
-    for(let i = 0, len = userData.eventsAttending.length; i < len; i += 1) {
+    for (let i = 0, len = userData.eventsAttending.length; i < len; i += 1) {
       eventObjList.push(events[userData.eventsAttending[i]]);
     }
     return eventObjList;
@@ -25,11 +26,11 @@ const DataController = function (mainCtrl) {
     let eventObjList = [];
     const keys = Object.keys(events);
 
-    for(let i = 0, len = keys.length; i < len; i += 1) {
+    for (let i = 0, len = keys.length; i < len; i += 1) {
       if (
-        events[keys[i]].attending.indexOf(userData.id) === -1 
+        userData.eventsAttending.indexOf(events[keys[i]].id) === -1
         && events[keys[i]].owner.indexOf(userData.id) === -1
-      ){
+      ) {
         eventObjList.push(events[keys[i]]);
       }
     }
@@ -61,34 +62,46 @@ const DataController = function (mainCtrl) {
    *  @return {Array} - Returns an array of objects which have the event informations
    */
   function getUserEvents() {
-    const url = 'data/events.json';
-    $.ajax({
-      url: url,
-      success: (content) => {
-        const events = filterUserEvents(content);
-        console.log(events);
-        mainCtrl.populateOwnEvents(events);
-      },
-      error: () => {
-        console.log('Error: Couldn\'t get event informations');
-      },
-    });
+    if (allEvents === 'empty') {
+      const url = 'data/events.json';
+      $.ajax({
+        url,
+        success: (content) => {
+          allEvents = content;
+          const events = filterUserEvents(content);
+          console.log(events);
+          mainCtrl.populateOwnEvents(events);
+        },
+        error: () => {
+          console.log('Error: Couldn\'t get event informations');
+        },
+      });
+    } else {
+      const events = filterUserEvents(allEvents);
+      console.log(events);
+      mainCtrl.populateOwnEvents(events);
+    }
   }
 
   function getEventInfo() {
     const url = 'data/events.json';
     const currentPageInfo = mainCtrl.getCurrentPage();
     const eventId = currentPageInfo.split(':')[1];
-    $.ajax({
-      url: url,
-      success: (content) => {
-        console.log(content[eventId]);
-        mainCtrl.fillEventInfo(content[eventId]);
-      },
-      error: () => {
-        console.log('Error: Couldn\'t get event informations');
-      },
-    });
+
+    if (allEvents === 'empty') {
+      $.ajax({
+        url,
+        success: (content) => {
+          console.log(content[eventId]);
+          mainCtrl.fillEventInfo(content[eventId]);
+        },
+        error: () => {
+          console.log('Error: Couldn\'t get event informations');
+        },
+      });
+    } else {
+      mainCtrl.fillEventInfo(allEvents[eventId]);
+    }
   }
 
   /**
@@ -96,18 +109,54 @@ const DataController = function (mainCtrl) {
    *  @return {Array} - Returns an array of objects which have the event informations
    */
   function getSuggestedEvents() {
-    const url = 'data/events.json';
-    $.ajax({
-      url: url,
-      success: (content) => {
-        const suggestedEvents = filterSuggestedEvents(content);
-        console.log(suggestedEvents);
-        mainCtrl.populateSuggestedEvents(suggestedEvents);
-      },
-      error: () => {
-        console.log('Error: Couldn\'t get event informations');
-      },
-    });
+    if (allEvents === 'empty') {
+      const url = 'data/events.json';
+      $.ajax({
+        url: url,
+        success: (content) => {
+          allEvents = content;
+          const suggestedEvents = filterSuggestedEvents(content);
+          console.log(suggestedEvents);
+          mainCtrl.populateSuggestedEvents(suggestedEvents);
+        },
+        error: () => {
+          console.log('Error: Couldn\'t get event informations');
+        },
+      });
+    } else {
+      const suggestedEvents = filterSuggestedEvents(allEvents);
+      console.log(suggestedEvents);
+      mainCtrl.populateSuggestedEvents(suggestedEvents);
+    }
+  }
+
+  function attendEvent(id) {
+    const index = userData.eventsAttending.indexOf(id);
+
+    if (index === -1) {
+      userData.eventsAttending.push(id);
+      allEvents[id].attending.push(userData.id);
+    }
+    console.log(userData.eventsAttending);
+  }
+
+  function leaveEvent(id) {
+    const index = userData.eventsAttending.indexOf(id);
+    userData.eventsAttending.splice(index, 1);
+    console.log(userData.eventsAttending);
+  }
+
+  function removeEvent(id) {
+    console.log('removed event' + id);
+    leaveEvent(id);
+    delete allEvents[id];
+    console.log(allEvents);
+  }
+
+  function changeEventOwner(id, newOwner) {
+    console.log('changed ' + id + ' event\'s owner to ' + newOwner);
+    leaveEvent(id);
+    allEvents[id].owner = newOwner;
   }
 
   return {
@@ -125,6 +174,18 @@ const DataController = function (mainCtrl) {
     },
     getSuggestedEvents() {
       return getSuggestedEvents();
+    },
+    attendEvent(id) {
+      attendEvent(id);
+    },
+    leaveEvent(id) {
+      leaveEvent(id);
+    },
+    removeEvent(id) {
+      removeEvent(id);
+    },
+    changeEventOwner(id, newOwner) {
+      changeEventOwner(id, newOwner);
     }
   };
 };

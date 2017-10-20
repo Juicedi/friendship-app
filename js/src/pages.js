@@ -15,9 +15,10 @@ const PageController = function (mainCtrl) {
     $('#event-location').html(evtInfo.location);
     $('#event-date').html(evtInfo.date);
     $('#event-description').html(evtInfo.description);
+    $('.attendee-number').html(evtInfo.attending.length);
     placeTags(evtInfo.tags);
 
-    if (evtInfo.attending.indexOf(uData.id) !== -1) {
+    if (uData.eventsAttending.indexOf(evtInfo.id) !== -1) {
       $('#attend-btn').addClass('hide');
       $('#leave-btn').removeClass('hide');
     } else {
@@ -25,17 +26,65 @@ const PageController = function (mainCtrl) {
       $('#leave-btn').addClass('hide');
     }
 
-    if (evtInfo.owner === mainCtrl.getUserData().id) {
+    if (evtInfo.owner === uData.id) {
       $('#privacy-btn-container').removeClass('hide');
       $('.invite-person').removeClass('hide');
       $('.add-tag').removeClass('hide');
       $('#options').removeClass('hide');
       $('#attend-btn').addClass('hide');
+      $('#leave-btn').addClass('hide');
     }
 
     if (evtInfo.large === true) {
       $('#join-squad').removeClass('hide');
     }
+  }
+
+  function initEventInfoBtns(id) {
+    $('#attend-btn').on('click', () => {
+      $('#attend-btn').addClass('hide');
+      $('#leave-btn').removeClass('hide');
+      mainCtrl.attendEvent(id);
+    });
+    $('#leave-btn').on('click', () => {
+      $('#leave-btn').addClass('hide');
+      $('#attend-btn').removeClass('hide');
+      mainCtrl.leaveEvent(id);
+    });
+    $('.close-modal-btn').on('click', (event) => {
+      $(event.currentTarget).parent().parent().addClass('hide');
+      $('#modal-overlay').addClass('hide');
+    });
+    $('.open-modal-btn').on('click', (event) => {
+      const modal = event.currentTarget.dataset.modal;
+      $('#' + modal + '-modal').removeClass('hide');
+      $('#modal-overlay').removeClass('hide');
+    });
+
+    // Confirm modal function
+    $('#confirm-invite').on('click', () => {
+      console.log('Sent invitation');
+    });
+    $('#confirm-change').on('click', () => {
+      const inputVal = $('#owner-input').val();
+
+      if (inputVal.length > 0) {
+        mainCtrl.changeEventOwner(id, inputVal);
+        mainCtrl.changePage('own_events');
+      } else {
+        $('#owner-modal').find('.warning-text').removeClass('hide');
+      }
+    });
+    $('#confirm-remove').on('click', () => {
+      mainCtrl.removeEvent(id);
+      mainCtrl.changePage('own_events');
+    });
+    $('.tag').on('dblclick', (event) => {
+      // FIXME: Poistaa myös niiltä sivuilta joita ei omista.
+      const tag = event.currentTarget.innerHTML;
+      event.currentTarget.parentElement.removeChild(event.currentTarget);
+      mainCtrl.removeEventTag(id, tag);
+    });
   }
 
   function placeTags(tags) {
@@ -48,8 +97,8 @@ const PageController = function (mainCtrl) {
   function populateOwnEvents(events) {
     let eventTemplate;
 
-    if( events.length > 0) {
-      for(let i = 0, len = events.length; i < len; i += 1) {
+    if (events.length > 0) {
+      for (let i = 0, len = events.length; i < len; i += 1) {
         const own = events[i].owner === mainCtrl.getUserData().id ? '' : 'hide';
         eventTemplate = `
         <article class="event white-bg go-to-page-with-id" data-page="event_info" data-id="${events[i].id}">
@@ -75,38 +124,40 @@ const PageController = function (mainCtrl) {
   function populateSuggestedEvents(events) {
     let eventTemplate;
 
-    for(let i = 0, len = events.length; i < len; i += 1) {
+    for (let i = 0, len = events.length; i < len; i += 1) {
       eventTemplate = `
-        <article class="event white-bg"">
-          <div class="event-image go-to-page-with-id" data-page="event_info" data-id="${events[i].id}">
+        <article class="event white-bg go-to-page-with-id" data-page="event_info" data-id="${events[i].id}">
+          <div class="event-image">
             <img src="${events[i].eventImg}" alt="event-thumbnail">
           </div>
-          <div class="event-texts go-to-page-with-id" data-page="event_info" data-id="${events[i].id}">
+          <div class="event-texts">
             <h4 class="event-title darkestGreen-text">${events[i].title}</h4>
             <p class="event-location darkGreen-text">${events[i].location}</p>
             <p class="event-date darkGreen-text">${events[i].date}</p>
           </div>
-          <button class="join-btn">
-            <h4 class="main-btn green-bg white-text">Join</h4>
+          <button class="main-btn green-bg join-btn" data-id="${events[i].id}">
+            <h4 class="white-text">Join</h4>
           </button>
         </article>
       `;
       $('#page-content').append(eventTemplate);
     }
     $('.join-btn').on('click', (event) => {
+      event.stopPropagation();
       $(event.currentTarget).parent().addClass('hide');
+      mainCtrl.attendEvent(event.currentTarget.dataset.id);
     });
     initNavigationBtns();
   }
 
   function initNavigationBtns() {
-    $('.go-to-page').on('click', (event) => {
+    $('.go-to-page').one('click', (event) => {
       const nextPage = event.currentTarget.dataset.page;
       console.log('going to page: ' + nextPage);
       mainCtrl.changePage(nextPage);
     });
 
-    $('.go-to-page-with-id').on('click', (event) => {
+    $('.go-to-page-with-id').one('click', (event) => {
       const id = event.currentTarget.dataset.id;
       const filename = event.currentTarget.dataset.page;
       const nextPage = `${filename}:${id}`;
@@ -114,8 +165,8 @@ const PageController = function (mainCtrl) {
       mainCtrl.changePage(nextPage);
     });
 
-    $('.btnBack').on('click', () => {
-      const prevPage = mainCtrl.getPrevPage();;
+    $('.btnBack').one('click', () => {
+      const prevPage = mainCtrl.getPrevPage();
 
       if (prevPage === '' || typeof prevPage !== 'string') {
         console.log('There is no previous page stored');
@@ -128,9 +179,11 @@ const PageController = function (mainCtrl) {
 
   function initPage(page) {
     let pageName;
+    let pageId;
 
     if (page.indexOf(':') !== -1) {
-      pageName = page.split(':')[0]
+      pageName = page.split(':')[0];
+      pageId = page.split(':')[1];
     } else {
       pageName = page;
     }
@@ -148,14 +201,23 @@ const PageController = function (mainCtrl) {
       case 'event_info': {
         mainCtrl.getEventInfo();
         initNavigationBtns();
-        $('#attend-btn').on('click', () => {
-          $('#attend-btn').addClass('hide');
-          $('#leave-btn').removeClass('hide');
-        });
-        $('#leave-btn').on('click', () => {
-          $('#leave-btn').addClass('hide');
-          $('#attend-btn').removeClass('hide');
-        });
+        initEventInfoBtns(pageId);
+        break;
+      }
+      case 'create_event': {
+        initNavigationBtns();
+        break;
+      }
+      case 'profile': {
+        initNavigationBtns();
+        break;
+      }
+      case 'chat_list': {
+        initNavigationBtns();
+        break;
+      }
+      case 'chat': {
+        initNavigationBtns();
         break;
       }
       default: {

@@ -45,6 +45,40 @@
       "video games"
     ]
   },
+  "eventArch": {
+    "id": "eventArch",
+    "title":"Archery training",
+    "eventImg":"//img.grouponcdn.com/iam/nkKNf9vTEzfS65GM8jYy/5n-2048x1229/v1/c700x420.jpg",
+    "date":"12.11.2017",
+    "location":"Tampere",
+    "description": "The October NCEA Training Camp will start on Friday, October 20th at noon (for those who can be there at that time).  We will be training at the Minnesota Sportsman Club in Zimmerman, MN all three days (Friday Noon - 6, Saturday 9-5, Sunday 8-2 or as decided by coaches).  Please go to the Minnesota Sportsman club website (www.minnesotasportsmensclub.com) for directions & you can also check our venues on NCEA page here for the location.  There is a block of rooms at the Country Inn & Suites in Elk River under NCEA for Friday & Saturday nights.",
+    "private": false,
+    "large":false,
+    "attending":[
+    ],
+    "owner":"alan",
+    "tags":[
+      "outdoor",
+      "archery"
+    ]
+  },
+  "eventBas": {
+    "id": "eventBas",
+    "title":"Basketballin",
+    "eventImg":"//thecatholicspirit.com/wp-content/uploads/2012/03/basketball.jpg",
+    "date":"15.12.2017",
+    "location":"Tampere",
+    "description": "The Basketball Tournament is a 5-on-5, winner take all tournament with a grand prize of $2 million.",
+    "private": false,
+    "large":false,
+    "attending":[
+    ],
+    "owner":"alan",
+    "tags":[
+      "basketball",
+      "sports"
+    ]
+  },
   "event234": {
     "id": "event234",
     "title":"Chess match",

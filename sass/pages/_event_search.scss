@@ -24,13 +24,16 @@
 }
 
  .event {
+   position: relative;
    text-align: left;
+   z-index: 3;
 
    .main-btn {
      position: absolute;
      transform: translate(0, -50%);
      right: 1em;
      top: 50%;
+     z-index: 4;
    }
  }
 }

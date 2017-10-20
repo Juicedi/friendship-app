@@ -10,8 +10,8 @@
       <img id="menu-image" src="build/img/ui/menu.png" alt="options-menu">
       <article id="options-modal" class="white-bg">
         <ul>
-          <li>Change owner</li>
-          <li>Cancel event</li>
+          <li id="change-owner-btn open-modal-btn" data-modal="owner">Change owner</li>
+          <li id="cancel-event-btn open-modal-btn" data-modal="remove">Cancel event</li>
         </ul>
       </article>
     </div>
@@ -30,19 +30,21 @@
 
   <article id="date-container">
     <h4 class="darkestGreen-text">When</h4>
-    <p id="event-date" class="darkestGreen-text">21.09.2018 21.00</p>
+    <p id="event-date" class="darkestGreen-text"></p>
   </article>
   <article id="location-container">
     <h4 class="darkestGreen-text">Location</h4>
-    <p id="event-location" class="darkestGreen-text">Hämeenlinna</p>
+    <p id="event-location" class="darkestGreen-text"></p>
   </article>
   <article id="description-container">
     <h4 class="darkestGreen-text">About</h4>
-    <p id="event-description" class="darkestGreen-text">Weekend long camping trip in a forest near Hä<wbr>meen<wbr>lin<wbr>na. Everyone has to bring their own things.</p>
+    <p id="event-description" class="darkestGreen-text"></p>
   </article>
   <article id="attending-container">
-    <h4 class="darkestGreen-text">Attending: <span class="attendee-number">4</span></h4>
-    <button class="small-plus-btn invite-person hide">+</button>
+    <h4 class="darkestGreen-text">Attending:
+      <span class="attendee-number">???</span>
+    </h4>
+    <button class="small-plus-btn invite-person open-modal-btn hide" data-modal="invite">+</button>
   </article>
   <article id="tag-container">
     <h4 class="darkestGreen-text">Tags</h4>
@@ -50,4 +52,37 @@
   </article>
 
   <button id="join-squad" class="green-bg white-text hide">Join a squad</button>
+
+  <div id="modal-overlay" class="hide"></div>
+  <div id="invite-modal" class="modal white-bg hide">
+    <div class="text-container">
+      <h3>Write the user's nickname you want to invite</h3>
+      <p class="warning-text red-text hide">Give a username.</p>
+      <input type="text" name="username" id="invite-input" placeholder="Username">
+    </div>
+    <div class="button-container">
+      <button class="close-modal-btn red-bg white-text">Cancel</button>
+      <button id="confirm-invite" class="confirm-btn green-bg white-text" data-method="invite">Invite</button>
+    </div>
+  </div>
+  <div id="owner-modal" class="modal white-bg hide">
+    <div class="text-container">
+      <h3>Write the user's nickname you want to give ownership</h3>
+      <p class="warning-text red-text hide">Give a username.</p>
+      <input type="text" name="username" id="owner-input" placeholder="Username">
+    </div>
+    <div class="button-container">
+      <button class="close-modal-btn red-bg white-text">Cancel</button>
+      <button id="confirm-change" class="confirm-btn green-bg white-text" data-method="change">Ok</button>
+    </div>
+  </div>
+  <div id="remove-modal" class="modal white-bg hide">
+    <div class="text-container">
+      <h3>Are you sure you want to cancel this event?</h3>
+    </div>
+    <div class="button-container">
+      <button class="close-modal-btn red-bg white-text">Cancel</button>
+      <button id="confirm-remove" class="confirm-btn green-bg white-text" data-method="remove">Remove</button>
+    </div>
+  </div>
 </main>
