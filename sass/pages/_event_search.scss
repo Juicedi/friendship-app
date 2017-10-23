@@ -6,6 +6,25 @@
    margin-top: 3em;
  }
 
+ #search-field-container {
+   position: relative;
+   display: inline-block;
+ }
+
+ #cancel-search {
+   position: absolute;
+   top: 1.8em;
+   right: -2em;
+   display: inline-block;
+   width: 1.5em;
+   height: 1.5em;
+   font-size: 2em;
+   color: $red;
+   line-height: 1.15em;
+   border: 5px solid $red;
+   border-radius: 50%;
+ }
+
  .filter-btn-container {
    margin-bottom: 2em;
 

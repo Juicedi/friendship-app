@@ -49,8 +49,11 @@ const MainController = (function () {
     getUserData() {
       return dataCtrl.getUserData();
     },
-    getEventInfo() {
-      dataCtrl.getEventInfo();
+    getEventInfo(id, callback) {
+      return dataCtrl.getEventInfo(id, callback);
+    },
+    getSearchResults(searchInput) {
+      dataCtrl.getSearchResults(searchInput);
     },
     attendEvent(id) {
       dataCtrl.attendEvent(id);
@@ -60,6 +63,9 @@ const MainController = (function () {
     },
     removeEvent(id) {
       dataCtrl.removeEvent(id);
+    },
+    removeTag(eventId, tag) {
+      dataCtrl.removeTag(eventId, tag);
     },
     changeEventOwner(id, newOwner) {
       dataCtrl.changeEventOwner(id, newOwner);
@@ -83,8 +89,8 @@ const MainController = (function () {
     populateOwnEvents(events) {
       pageCtrl.populateOwnEvents(events);
     },
-    populateSuggestedEvents(events) {
-      pageCtrl.populateSuggestedEvents(events);
+    populateSearchEvents(events, location) {
+      pageCtrl.populateSearchEvents(events, location);
     },
     fillEventInfo(evtInfo) {
       pageCtrl.fillEventInfo(evtInfo);

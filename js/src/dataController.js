@@ -83,24 +83,29 @@ const DataController = function (mainCtrl) {
     }
   }
 
-  function getEventInfo() {
+  function getEventInfo(eventId, callback) {
     const url = 'data/events.json';
-    const currentPageInfo = mainCtrl.getCurrentPage();
-    const eventId = currentPageInfo.split(':')[1];
 
     if (allEvents === 'empty') {
       $.ajax({
         url,
         success: (content) => {
+          allEvents = content;
           console.log(content[eventId]);
-          mainCtrl.fillEventInfo(content[eventId]);
+          if (typeof callback === 'function') {
+            mainCtrl.fillEventInfo(content[eventId]);
+          } else {
+            return content[eventId];
+          }
         },
         error: () => {
           console.log('Error: Couldn\'t get event informations');
         },
       });
-    } else {
+    } else if (typeof callback === 'function') {
       mainCtrl.fillEventInfo(allEvents[eventId]);
+    } else {
+      return allEvents[eventId];
     }
   }
 
@@ -117,7 +122,7 @@ const DataController = function (mainCtrl) {
           allEvents = content;
           const suggestedEvents = filterSuggestedEvents(content);
           console.log(suggestedEvents);
-          mainCtrl.populateSuggestedEvents(suggestedEvents);
+          mainCtrl.populateSearchEvents(suggestedEvents, '#suggested-events');
         },
         error: () => {
           console.log('Error: Couldn\'t get event informations');
@@ -126,8 +131,26 @@ const DataController = function (mainCtrl) {
     } else {
       const suggestedEvents = filterSuggestedEvents(allEvents);
       console.log(suggestedEvents);
-      mainCtrl.populateSuggestedEvents(suggestedEvents);
+      mainCtrl.populateSearchEvents(suggestedEvents, '#suggested-events');
     }
+  }
+
+  function getSearchResults(searchInput) {
+    const inputLower = searchInput.toLowerCase();
+    const keys = Object.keys(allEvents);
+    const length = keys.length;
+    const found = [];
+
+    for (let i = 0; i < length; i += 1) {
+      const id = keys[i];
+
+      if (allEvents[id].title.toLowerCase() === inputLower) {
+        found.push(allEvents[id]);
+      } else if (allEvents[id].tags.indexOf(inputLower) !== -1) {
+        found.push(allEvents[id]);
+      }
+    }
+    mainCtrl.populateSearchEvents(found, '#search-results');
   }
 
   function attendEvent(id) {
@@ -153,6 +176,11 @@ const DataController = function (mainCtrl) {
     console.log(allEvents);
   }
 
+  function removeTag(id, tag) {
+    const index = allEvents[id].tags.indexOf(tag);
+    allEvents[id].tags.splice(index, 1);
+  }
+
   function changeEventOwner(id, newOwner) {
     console.log('changed ' + id + ' event\'s owner to ' + newOwner);
     leaveEvent(id);
@@ -169,11 +197,14 @@ const DataController = function (mainCtrl) {
     getUserEvents() {
       return getUserEvents();
     },
-    getEventInfo(eventId) {
-      return getEventInfo(eventId);
+    getEventInfo(eventId, callback) {
+      return getEventInfo(eventId, callback);
     },
     getSuggestedEvents() {
       return getSuggestedEvents();
+    },
+    getSearchResults(searchInput) {
+      getSearchResults(searchInput);
     },
     attendEvent(id) {
       attendEvent(id);
@@ -183,6 +214,9 @@ const DataController = function (mainCtrl) {
     },
     removeEvent(id) {
       removeEvent(id);
+    },
+    removeTag(id, tag) {
+      removeTag(id, tag);
     },
     changeEventOwner(id, newOwner) {
       changeEventOwner(id, newOwner);

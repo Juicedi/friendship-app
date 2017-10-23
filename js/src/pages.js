@@ -6,8 +6,6 @@
  * @return {Object} - All of the controllers functions that are shared with other controllers
  */
 const PageController = function (mainCtrl) {
-  const self = this;
-
   function fillEventInfo(evtInfo) {
     const uData = mainCtrl.getUserData();
     $('#header-image img').attr('src', evtInfo.eventImg);
@@ -40,6 +38,41 @@ const PageController = function (mainCtrl) {
     }
   }
 
+  function initSearchbar() {
+    $('#search-field').keyup((event) => {
+      const key = event.keyCode;
+      if (key === 13 && event.currentTarget.value.length > 0) {
+        const searchInput = event.currentTarget.value;
+        console.log(searchInput);
+        console.log(mainCtrl.getSearchResults(searchInput));
+        $('#search-results').removeClass('hide');
+        $('#cancel-search').removeClass('hide');
+        $('#suggested-events').html('');
+        $('#suggested-events').addClass('hide');
+      }
+
+      /* If the suggested events are still show on the screen, don't refresh them.
+      Just hide cancel button. */
+      if (event.currentTarget.value.length < 1 && !$('#suggested-events').hasClass('hide')) {
+        $('#cancel-search').addClass('hide');
+      } else if (event.currentTarget.value.length < 1) {
+        $('#cancel-search').addClass('hide');
+        $('#search-results').addClass('hide');
+        $('#search-results').html('');
+        $('#suggested-events').removeClass('hide');
+        mainCtrl.getSuggestedEvents();
+      }
+    });
+    $('#cancel-search').on('click', () => {
+      $('#search-field').val('');
+      $('#cancel-search').addClass('hide');
+      $('#search-results').addClass('hide');
+      $('#search-results').html('');
+      $('#suggested-events').removeClass('hide');
+      mainCtrl.getSuggestedEvents();
+    });
+  }
+
   function initEventInfoBtns(id) {
     $('#attend-btn').on('click', () => {
       $('#attend-btn').addClass('hide');
@@ -57,8 +90,15 @@ const PageController = function (mainCtrl) {
     });
     $('.open-modal-btn').on('click', (event) => {
       const modal = event.currentTarget.dataset.modal;
-      $('#' + modal + '-modal').removeClass('hide');
+      $(`#${modal}-modal`).removeClass('hide');
       $('#modal-overlay').removeClass('hide');
+    });
+    $('.tag').on('dblclick', (event) => {
+      if (mainCtrl.getEventInfo(id).owner === mainCtrl.getUserData().id) {
+        const tag = event.currentTarget.innerHTML;
+        event.currentTarget.parentNode.removeChild(event.currentTarget);
+        mainCtrl.removeTag(id, tag);
+      }
     });
 
     // Confirm modal function
@@ -78,12 +118,6 @@ const PageController = function (mainCtrl) {
     $('#confirm-remove').on('click', () => {
       mainCtrl.removeEvent(id);
       mainCtrl.changePage('own_events');
-    });
-    $('.tag').on('dblclick', (event) => {
-      // FIXME: Poistaa myös niiltä sivuilta joita ei omista.
-      const tag = event.currentTarget.innerHTML;
-      event.currentTarget.parentElement.removeChild(event.currentTarget);
-      mainCtrl.removeEventTag(id, tag);
     });
   }
 
@@ -121,8 +155,10 @@ const PageController = function (mainCtrl) {
     initNavigationBtns();
   }
 
-  function populateSuggestedEvents(events) {
+  function populateSearchEvents(events, location) {
     let eventTemplate;
+
+    $(location).html('');
 
     for (let i = 0, len = events.length; i < len; i += 1) {
       eventTemplate = `
@@ -140,14 +176,30 @@ const PageController = function (mainCtrl) {
           </button>
         </article>
       `;
-      $('#page-content').append(eventTemplate);
+      $(location).append(eventTemplate);
     }
-    $('.join-btn').on('click', (event) => {
+    $(location + ' .join-btn').on('click', (event) => {
       event.stopPropagation();
       $(event.currentTarget).parent().addClass('hide');
       mainCtrl.attendEvent(event.currentTarget.dataset.id);
     });
-    initNavigationBtns();
+    initSearchEventBtns(location);
+  }
+
+  function initSearchEventBtns(element) {
+    $(element + ' .go-to-page').one('click', (event) => {
+      const nextPage = event.currentTarget.dataset.page;
+      console.log('going to page: ' + nextPage);
+      mainCtrl.changePage(nextPage);
+    });
+
+    $(element + ' .go-to-page-with-id').one('click', (event) => {
+      const id = event.currentTarget.dataset.id;
+      const filename = event.currentTarget.dataset.page;
+      const nextPage = `${filename}:${id}`;
+      console.log('going to page: ' + nextPage);
+      mainCtrl.changePage(nextPage);
+    });
   }
 
   function initNavigationBtns() {
@@ -196,10 +248,13 @@ const PageController = function (mainCtrl) {
       }
       case 'event_search': {
         mainCtrl.getSuggestedEvents();
+        initNavigationBtns();
+        initSearchbar();
+        // TODO: Filter function
         break;
       }
       case 'event_info': {
-        mainCtrl.getEventInfo();
+        mainCtrl.getEventInfo(pageId, initEventInfoBtns);
         initNavigationBtns();
         initEventInfoBtns(pageId);
         break;
@@ -237,8 +292,8 @@ const PageController = function (mainCtrl) {
     populateOwnEvents(events) {
       populateOwnEvents(events);
     },
-    populateSuggestedEvents(events) {
-      populateSuggestedEvents(events);
+    populateSearchEvents(events, location) {
+      populateSearchEvents(events, location);
     }
   };
 };
