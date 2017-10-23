@@ -74,6 +74,7 @@ const PageController = function (mainCtrl) {
   }
 
   function initEventInfoBtns(id) {
+    console.log('wut');
     $('#attend-btn').on('click', () => {
       $('#attend-btn').addClass('hide');
       $('#leave-btn').removeClass('hide');
@@ -90,6 +91,7 @@ const PageController = function (mainCtrl) {
     });
     $('.open-modal-btn').on('click', (event) => {
       const modal = event.currentTarget.dataset.modal;
+      console.log(modal);
       $(`#${modal}-modal`).removeClass('hide');
       $('#modal-overlay').removeClass('hide');
     });
