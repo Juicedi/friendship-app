@@ -20,7 +20,7 @@
     <div class="image-container">
       <h2 class="darkestGreen-text">Image</h2>
       <img id="event-image" src="//getuikit.com/v2/docs/images/placeholder_600x400.svg" alt="event-image">
-      <button id="change-event-image" class="main-btn green-bg white-text">Change image</button>
+      <button id="change-event-image" class="main-btn green-bg white-text open-modal-btn" data-modal="change-image">Change image</button>
     </div>
     <div id="tag-container" class="container">
       <h2 class="darkestGreen-text">Tags</h2>
@@ -29,3 +29,15 @@
   </article>
   <button id="submit-event" class="green-bg white-text">Create</button>
 </main>
+
+<div id="modal-overlay" class="hide"></div>
+<div id="change-image-modal" class="modal white-bg hide">
+  <div class="text-container">
+    <h3>Add url to your image.</h3>
+    <input type="text" name="username" id="image-input" placeholder="http://placekitten.com/g/200/300">
+  </div>
+  <div class="button-container">
+    <button class="close-modal-btn red-bg white-text">Cancel</button>
+    <button id="confirm-image" class="confirm-btn green-bg white-text" data-method="change-image">Change</button>
+  </div>
+</div>
