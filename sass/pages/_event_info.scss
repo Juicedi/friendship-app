@@ -1,7 +1,9 @@
 .event-info {
   position: relative;
-  padding-bottom: 6em;
 
+  .positioning {
+    min-height: 100%;
+  }
   article {
     padding: 0.3em 0.8em;
   }
@@ -14,6 +16,15 @@
     margin: 0.1em 0;
     word-wrap: wrap;
   }
+
+  #tag-container{
+    .small-plus-btn {
+      float: right;
+    }
+    .tag {
+      float: left;
+    }
+  }
 }
 
 #privacy-btn-container {
@@ -24,12 +35,10 @@
 #attend-btn {
   position: absolute;
   right: 1em;
-  top: 42%;
+  top: 20em;
 }
 
 #join-squad {
-  position: absolute;
-  bottom: -3em;
   height: 3em;
   width: 100%;
   margin-top: 1em;

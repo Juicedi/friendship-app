@@ -1,0 +1,32 @@
+.create-event-page {
+  background-color: $lightGrey;
+
+  #event-image {
+    display: inline-block;
+    width: 10em;
+    vertical-align: middle;
+  }
+
+  #change-event-image {
+    display: inline-block;
+    vertical-align: bottom;
+  }
+}
+
+#create-fields {
+  padding: 0.6em 1em;
+  min-height: 100%;
+}
+
+#time-and-date-container {
+  input {
+    display: inline-block;
+    margin: 0;
+  }
+}
+#submit-event {
+  height: 3em;
+  width: 100%;
+  margin-top: 1em;
+  font-size: 2em;
+}

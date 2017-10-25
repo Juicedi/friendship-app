@@ -13,6 +13,7 @@
   text-align: center;
   padding: 0.2em;
   border-bottom: 0.1em solid $darkGreen;
+  z-index: 5;
 
   h2 {
     position: absolute;
@@ -80,6 +81,10 @@
     top: 50%;
     left: 50%;
     width: 100%;
+
+    img {
+      cursor: pointer;
+    }
   }
 }
 
@@ -122,6 +127,7 @@
   transform: translate(-50%, -50%) rotate(-180deg);
   vertical-align: middle;
   z-index: 1;
+  cursor: pointer;
 }
 
 .main-btn,
@@ -144,6 +150,7 @@
   border-radius: 1em;
   background-color: $mainGreen;
   vertical-align: middle;
+  cursor: pointer;
 }
 
 .large-plus-btn,
@@ -173,23 +180,53 @@
   height: 2em;
   width: 5em;
   border-radius: 5em;
+  cursor: pointer;
+}
+
+.slider-bg-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  border-radius: 5em;
+  overflow: hidden;
 }
 
 .slider-bg-color {
   position: absolute;
+  top: 50%;
+  left: 50%;
   height: 100%;
-  width: 50%;
+  width: 100%;
   border-radius: 5em;
+  transition: transform 0.33s;
 }
 
 .slider-handle {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
-  left: 50%;
+  left: 80%;
   height: 2.5em;
   width: 2.5em;
   border-radius: 50%;
+  transition: transform 0.33s;
+}
+
+.slider-checkbox.off {
+  .slider-bg-color {
+    transform: translate(-120%, -50%);
+  }
+  .slider-handle{
+    transform: translate(-180%, -50%);
+  }
+}
+.slider-checkbox.on {
+  .slider-bg-color {
+    transform: translate(-50%, -50%);
+  }
+  .slider-handle{
+    transform: translate(-50%, -50%);
+  }
 }
 
 #options {
@@ -226,6 +263,10 @@
   width: 100%;
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 5;
+}
+
+.open-modal-btn {
+  cursor: pointer;
 }
 
 .modal {

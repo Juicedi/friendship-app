@@ -16,6 +16,11 @@
   padding: 0.2em 0.2em;
   overflow: hidden;
   border-bottom: 0.05em solid $lightGreen;
+  cursor: pointer;
+
+  &:last-child {
+    margin-bottom: 3em;
+  }
 
   .event-image {
     position: relative;
@@ -39,7 +44,7 @@
     display: inline-block;
     vertical-align: middle;
     margin-left: 1em;
-    width: 14em;
+    width: 12em;
   }
 
   h4 {

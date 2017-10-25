@@ -74,6 +74,15 @@ const PageController = function (mainCtrl) {
   }
 
   function initEventInfoBtns(id) {
+    $('.slider-checkbox').on('click', (event) => {
+      if ($(event.currentTarget).hasClass('off')) {
+        $(event.currentTarget).addClass('on');
+        $(event.currentTarget).removeClass('off');
+      } else {
+        $(event.currentTarget).addClass('off');
+        $(event.currentTarget).removeClass('on');
+      }
+    })
     $('#attend-btn').on('click', () => {
       $('#attend-btn').addClass('hide');
       $('#leave-btn').removeClass('hide');
@@ -121,6 +130,38 @@ const PageController = function (mainCtrl) {
     });
   }
 
+  function checkCreateInputs() {
+    const title = $('#title-field').val();
+    const location = $('#location-field').val();
+    const date = $('#event-date').val();
+    const time = $('#event-time').val();
+    const desc = $('#event-description').val();
+
+    if (
+      title.length > 0
+      && location.length > 0
+      && date.length > 0
+      && time.length > 0
+      && desc.length > 0
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  function initCreateEventBtns() {
+    // TODO: Finish event creation
+    $('#submit-event').on('click', () => {
+      console.log('asdf');
+      let check = false;
+      check = checkCreateInputs();
+
+      if (check) {
+        console.log('tesaldfskj');
+      }
+    });
+  }
+
   function placeTags(tags) {
     for (let i = 0, len = tags.length; i < len; i += 1) {
       const elem = `<div class="tag">${tags[i]}</div>`;
@@ -162,7 +203,7 @@ const PageController = function (mainCtrl) {
 
     for (let i = 0, len = events.length; i < len; i += 1) {
       eventTemplate = `
-        <article class="event white-bg go-to-page-with-id" data-page="event_info" data-id="${events[i].id}">
+        <article class="event white-bg go-to-event-page-with-id" data-page="event_info" data-id="${events[i].id}">
           <div class="event-image">
             <img src="${events[i].eventImg}" alt="event-thumbnail">
           </div>
@@ -178,7 +219,7 @@ const PageController = function (mainCtrl) {
       `;
       $(location).append(eventTemplate);
     }
-    $(location + ' .join-btn').on('click', (event) => {
+    $(`${location} .join-btn`).on('click', (event) => {
       event.stopPropagation();
       $(event.currentTarget).parent().addClass('hide');
       mainCtrl.attendEvent(event.currentTarget.dataset.id);
@@ -187,17 +228,11 @@ const PageController = function (mainCtrl) {
   }
 
   function initSearchEventBtns(element) {
-    $(element + ' .go-to-page').one('click', (event) => {
-      const nextPage = event.currentTarget.dataset.page;
-      console.log('going to page: ' + nextPage);
-      mainCtrl.changePage(nextPage);
-    });
-
-    $(element + ' .go-to-page-with-id').one('click', (event) => {
+    $(`${element} .go-to-event-page-with-id`).one('click', (event) => {
       const id = event.currentTarget.dataset.id;
       const filename = event.currentTarget.dataset.page;
       const nextPage = `${filename}:${id}`;
-      console.log('going to page: ' + nextPage);
+      console.log(`going to page: ${nextPage}`);
       mainCtrl.changePage(nextPage);
     });
   }
@@ -213,18 +248,17 @@ const PageController = function (mainCtrl) {
       const id = event.currentTarget.dataset.id;
       const filename = event.currentTarget.dataset.page;
       const nextPage = `${filename}:${id}`;
-      console.log('going to page: ' + nextPage);
+      console.log(`going to page: ${nextPage}`);
       mainCtrl.changePage(nextPage);
     });
 
     $('.btnBack').one('click', () => {
-      //FIXME: Navigaatio suggestedista event infoon ja takaisin ei aina toimi
       const prevPage = mainCtrl.getPrevPage();
 
       if (prevPage === '' || typeof prevPage !== 'string') {
         console.log('There is no previous page stored');
       } else {
-        console.log('Going to previous page: ' + prevPage);
+        console.log(`Going to previous page: ${prevPage}`);
         mainCtrl.changePage(prevPage);
       }
     });
@@ -261,6 +295,7 @@ const PageController = function (mainCtrl) {
         break;
       }
       case 'create_event': {
+        initCreateEventBtns();
         initNavigationBtns();
         break;
       }

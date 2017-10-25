@@ -1,7 +1,31 @@
 <header id="top-bar" class="">
   <div class="btnBack"></div>
-  <h2>Create you own event</h2>
+  <h2>Create your
+    <br>own event</h2>
 </header>
 
-<main id="page-content" class="profile-page show-top">
+<main id="page-content" class="create-event-page show-top">
+  <article id="create-fields">
+    <input id="title-field" type="text" placeholder="Event title">
+    <input id="location-field" type="text" placeholder="Event location">
+    <div id="time-and-date-container" class="container">
+      <h2 class="darkestGreen-text">Time and date</h2>
+      <input type="date" name="date" id="event-date">
+      <input type="time" name="time" id="event-time">
+    </div>
+    <div id="description-container" class="container">
+      <h2 class="darkestGreen-text">Description</h2>
+      <textarea name="description-text" id="event-description" class="darkestGreen-text" cols="30" rows="10" placeholder="Write a short description of your event."></textarea>
+    </div>
+    <div class="image-container">
+      <h2 class="darkestGreen-text">Image</h2>
+      <img id="event-image" src="//getuikit.com/v2/docs/images/placeholder_600x400.svg" alt="event-image">
+      <button id="change-event-image" class="main-btn green-bg white-text">Change image</button>
+    </div>
+    <div id="tag-container" class="container">
+      <h2 class="darkestGreen-text">Tags</h2>
+      <input id="tags-field" class="tag-input" type="text" placeholder="tag name">
+    </div>
+  </article>
+  <button id="submit-event" class="green-bg white-text">Create</button>
 </main>

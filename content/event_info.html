@@ -1,56 +1,59 @@
 <main id="page-content" class="event-info">
-  <header id="image-top-bar" class="">
-    <div class="gradient-overlay"></div>
-    <div class="btnBack"></div>
-    <h1 id="event-title" class="white-text">Camping</h1>
-    <div id="header-image">
-      <img src="build/img/content/tent.jpg" alt="event-image">
-    </div>
-    <div id="options" class="hide">
-      <img id="menu-image" src="build/img/ui/menu.png" alt="options-menu">
-      <article id="options-modal" class="white-bg">
-        <ul>
-          <li id="change-owner-btn" class="open-modal-btn" data-modal="owner">Change owner</li>
-          <li id="cancel-event-btn" class="open-modal-btn" data-modal="remove">Cancel event</li>
-        </ul>
-      </article>
-    </div>
-  </header>
+  <div class="positioning">
+    <header id="image-top-bar" class="">
+      <div class="gradient-overlay"></div>
+      <div class="btnBack"></div>
+      <h1 id="event-title" class="white-text">Camping</h1>
+      <div id="header-image">
+        <img src="build/img/content/tent.jpg" alt="event-image">
+      </div>
+      <div id="options" class="hide">
+        <img id="menu-image" src="build/img/ui/menu.png" alt="options-menu">
+        <article id="options-modal" class="white-bg">
+          <ul>
+            <li id="change-owner-btn" class="open-modal-btn" data-modal="owner">Change owner</li>
+            <li id="cancel-event-btn" class="open-modal-btn" data-modal="remove">Cancel event</li>
+          </ul>
+        </article>
+      </div>
+    </header>
 
-  <article id="privacy-btn-container" class="hide">
-    <h4 class="darkestGreen-text">Private</h4>
-    <div class="slider-checkbox grey-bg">
-      <div class="slider-bg-color green-bg"></div>
-      <div class="slider-handle dark-green-bg"></div>
-    </div>
-  </article>
+    <article id="privacy-btn-container" class="hide">
+      <h4 class="darkestGreen-text">Private</h4>
+      <div class="slider-checkbox off grey-bg">
+        <div class="slider-bg-wrapper">
+          <div class="slider-bg-color green-bg"></div>
+        </div>
+        <div class="slider-handle dark-green-bg"></div>
+      </div>
+    </article>
 
-  <button id="attend-btn" class="main-btn green-bg white-text">Attend</button>
-  <button id="leave-btn" class="main-btn grey-bg black-text">Leave</button>
+    <button id="attend-btn" class="main-btn green-bg white-text">Attend</button>
+    <button id="leave-btn" class="main-btn grey-bg black-text">Leave</button>
 
-  <article id="date-container">
-    <h4 class="darkestGreen-text">When</h4>
-    <p id="event-date" class="darkestGreen-text"></p>
-  </article>
-  <article id="location-container">
-    <h4 class="darkestGreen-text">Location</h4>
-    <p id="event-location" class="darkestGreen-text"></p>
-  </article>
-  <article id="description-container">
-    <h4 class="darkestGreen-text">About</h4>
-    <p id="event-description" class="darkestGreen-text"></p>
-  </article>
-  <article id="attending-container">
-    <h4 class="darkestGreen-text">Attending:
-      <span class="attendee-number">???</span>
-    </h4>
-    <button class="small-plus-btn invite-person open-modal-btn hide" data-modal="invite">+</button>
-  </article>
-  <article id="tag-container">
-    <h4 class="darkestGreen-text">Tags</h4>
-    <button class="small-plus-btn add-tag hide">+</button>
-  </article>
-
+    <article id="date-container">
+      <h4 class="darkestGreen-text">When</h4>
+      <p id="event-date" class="darkestGreen-text"></p>
+    </article>
+    <article id="location-container">
+      <h4 class="darkestGreen-text">Location</h4>
+      <p id="event-location" class="darkestGreen-text"></p>
+    </article>
+    <article id="description-container">
+      <h4 class="darkestGreen-text">About</h4>
+      <p id="event-description" class="darkestGreen-text"></p>
+    </article>
+    <article id="attending-container">
+      <h4 class="darkestGreen-text">Attending:
+        <span class="attendee-number">???</span>
+      </h4>
+      <button class="small-plus-btn invite-person open-modal-btn hide" data-modal="invite">+</button>
+    </article>
+    <article id="tag-container">
+      <h4 class="darkestGreen-text">Tags</h4>
+      <button class="small-plus-btn add-tag hide">+</button>
+    </article>
+  </div>
   <button id="join-squad" class="green-bg white-text hide">Join a squad</button>
 
   <div id="modal-overlay" class="hide"></div>

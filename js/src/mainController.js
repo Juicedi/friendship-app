@@ -29,7 +29,7 @@ const MainController = (function () {
   function startApplication() {
     console.log('Starting application');
     dataCtrl.getUserInfo('testeri');
-    navCtrl.getContent('event_search');
+    navCtrl.getContent('own_events');
   }
 
   return {
