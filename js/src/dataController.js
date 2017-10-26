@@ -6,8 +6,34 @@
  */
 const DataController = function (mainCtrl) {
   let userData = {};
+  let categories = 'empty';
   let allEvents = 'empty';
-  const self = this;
+
+  function getCategories(callback) {
+    const url = 'data/categories.json';
+
+    if (categories === 'empty') {
+      $.ajax({
+        url,
+        success: (content) => {
+          categories = content;
+
+          if (typeof callback !== 'undefined') {
+            callback(content);
+          }
+          return content;
+        },
+        error: () => {
+          console.log('Error: Couldn\'t get user informations');
+        },
+      });
+    } else {
+      if (typeof callback !== 'undefined') {
+        callback(categories);
+      }
+      return categories;
+    }
+  }
 
   /**
    * Will filter througt all the events and put user event informations to a list.
@@ -45,7 +71,7 @@ const DataController = function (mainCtrl) {
   function getUserInfo(username) {
     const url = 'data/users.json';
     $.ajax({
-      url: url,
+      url,
       success: (content) => {
         userData = content[username];
         console.log(userData);
@@ -117,7 +143,7 @@ const DataController = function (mainCtrl) {
     if (allEvents === 'empty') {
       const url = 'data/events.json';
       $.ajax({
-        url: url,
+        url,
         success: (content) => {
           allEvents = content;
           const suggestedEvents = filterSuggestedEvents(content);
@@ -203,6 +229,9 @@ const DataController = function (mainCtrl) {
   }
 
   return {
+    getCategories(callback) {
+      return getCategories(callback);
+    },
     getUserInfo(user) {
       return getUserInfo(user);
     },

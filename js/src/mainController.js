@@ -2,7 +2,7 @@ const preload = (arrayOfImages) => {
   $(arrayOfImages).each(function () {
     $('<img/>')[0].src = this;
   });
-}
+};
 preload([]);
 
 /**
@@ -11,7 +11,11 @@ preload([]);
  */
 const MainController = (function () {
   let self = null;
-  let pageCtrl, dataCtrl, animCtrl, ajaxCtrl, navCtrl;
+  let pageCtrl;
+  let dataCtrl;
+  let animCtrl;
+  let ajaxCtrl;
+  let navCtrl;
 
   /**
    * Initializes all of this applications controllers and gives itself to them as a parameter.
@@ -29,7 +33,7 @@ const MainController = (function () {
   function startApplication() {
     console.log('Starting application');
     dataCtrl.getUserInfo('testeri');
-    navCtrl.getContent('own_events');
+    navCtrl.getContent('category_list');
   }
 
   return {
@@ -51,6 +55,9 @@ const MainController = (function () {
     },
     getEventInfo(id, callback) {
       return dataCtrl.getEventInfo(id, callback);
+    },
+    getCategories(callback) {
+      return dataCtrl.getCategories(callback);
     },
     getSearchResults(searchInput) {
       dataCtrl.getSearchResults(searchInput);
@@ -94,6 +101,9 @@ const MainController = (function () {
     // PageController functions
     initPage(page) {
       pageCtrl.initPage(page);
+    },
+    addAllDropdowns(categories) {
+      pageCtrl.addAllDropdowns(categories);
     },
     populateOwnEvents(events) {
       pageCtrl.populateOwnEvents(events);

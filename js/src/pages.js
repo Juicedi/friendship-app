@@ -6,8 +6,28 @@
  * @return {Object} - All of the controllers functions that are shared with other controllers
  */
 const PageController = function (mainCtrl) {
-  function addDropdowns() {
+  function addDropdownElement(dropdownCategory, dropdownData) {
+    // TODO: dropdown arrow
+    let dropdownTemplate = `<div class="dropdown">
+    <h3 class="dropdown-text green-bg white-text">${dropdownCategory}</h3>
+    <ul class="dropdown-list">`;
 
+    dropdownData.forEach(function (interest) {
+      dropdownTemplate += `<li class="dropdown-list-item">${interest}</li>`;
+    }, this);
+
+    dropdownTemplate += '</ul></div>';
+    $('#dropdowns').append(dropdownTemplate);
+  }
+
+  function addAllDropdowns(data) {
+    const categories = data.categories;
+    console.log(categories);
+    const catKeys = Object.keys(categories);
+
+    for (let i = 0, len = catKeys.length; i < len; i += 1) {
+      addDropdownElement(catKeys[i], categories[catKeys[i]]);
+    }
   }
 
   function fillEventInfo(evtInfo) {
@@ -356,6 +376,10 @@ const PageController = function (mainCtrl) {
         initNavigationBtns();
         break;
       }
+      case 'category_list': {
+        mainCtrl.getCategories(addAllDropdowns);
+        break;
+      }
       case 'profile': {
         initNavigationBtns();
         break;
@@ -378,6 +402,9 @@ const PageController = function (mainCtrl) {
   return {
     initPage(page) {
       initPage(page);
+    },
+    addAllDropdowns(categories) {
+      addAllDropdowns(categories);
     },
     fillEventInfo(evtInfo) {
       fillEventInfo(evtInfo);
