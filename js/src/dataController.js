@@ -163,6 +163,21 @@ const DataController = function (mainCtrl) {
     console.log(userData.eventsAttending);
   }
 
+  function createEvent(data) {
+    allEvents[data.id] = data;
+    attendEvent(data.id);
+    mainCtrl.changePage('own_events');
+    console.log(allEvents);
+  }
+
+  function eventPrivacyToggle(id) {
+    console.log('toggling privacy');
+  }
+
+  function addAttendee(name) {
+    console.log('Added attendee' + name);
+  }
+
   function leaveEvent(id) {
     const index = userData.eventsAttending.indexOf(id);
     userData.eventsAttending.splice(index, 1);
@@ -206,11 +221,20 @@ const DataController = function (mainCtrl) {
     getSearchResults(searchInput) {
       getSearchResults(searchInput);
     },
+    createEvent(data) {
+      createEvent(data);
+    },
+    addAttendee(id) {
+      addAttendee(id);
+    },
     attendEvent(id) {
       attendEvent(id);
     },
     leaveEvent(id) {
       leaveEvent(id);
+    },
+    eventPrivacyToggle(id) {
+      eventPrivacyToggle(id);
     },
     removeEvent(id) {
       removeEvent(id);

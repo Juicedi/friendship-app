@@ -1,0 +1,16 @@
+{
+  "categories": {
+    "music": [
+      "music thing"
+    ],
+    "sports": [
+      "sporty sport"
+    ],
+    "indoor hobbies": [
+      "puzzles"
+    ],
+    "outdoor hobbies": [
+      "camping"
+    ]
+  }
+}

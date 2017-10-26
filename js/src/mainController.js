@@ -55,6 +55,15 @@ const MainController = (function () {
     getSearchResults(searchInput) {
       dataCtrl.getSearchResults(searchInput);
     },
+    createEvent(data) {
+      dataCtrl.createEvent(data);
+    },
+    eventPrivacyToggle(id) {
+      dataCtrl.eventPrivacyToggle(id);
+    },
+    addAttendee(name) {
+      dataCtrl.addAttendee(name);
+    },
     attendEvent(id) {
       dataCtrl.attendEvent(id);
     },

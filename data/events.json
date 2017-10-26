@@ -6,6 +6,7 @@
     "date":"28.09.2017",
     "location":"Helsinki",
     "description": "Buy tickets for an upcoming Sting concert near you. List of all Sting tickets and tour dates for 2017.",
+    "tickets": "www.ticketmaster.com",
     "private":false,
     "large":true,
     "attending":[

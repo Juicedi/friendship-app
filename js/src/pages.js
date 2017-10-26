@@ -6,6 +6,10 @@
  * @return {Object} - All of the controllers functions that are shared with other controllers
  */
 const PageController = function (mainCtrl) {
+  function addDropdowns() {
+
+  }
+
   function fillEventInfo(evtInfo) {
     const uData = mainCtrl.getUserData();
     $('#header-image img').attr('src', evtInfo.eventImg);
@@ -43,8 +47,8 @@ const PageController = function (mainCtrl) {
       const key = event.keyCode;
       if (key === 13 && event.currentTarget.value.length > 0) {
         const searchInput = event.currentTarget.value;
-        console.log(searchInput);
-        console.log(mainCtrl.getSearchResults(searchInput));
+
+        mainCtrl.getSearchResults(searchInput);
         $('#search-results').removeClass('hide');
         $('#cancel-search').removeClass('hide');
         $('#suggested-events').html('');
@@ -94,6 +98,7 @@ const PageController = function (mainCtrl) {
         $(event.currentTarget).addClass('off');
         $(event.currentTarget).removeClass('on');
       }
+      mainCtrl.eventPrivacyToggle(id);
     });
     $('#attend-btn').on('click', () => {
       $('#attend-btn').addClass('hide');
@@ -164,7 +169,6 @@ const PageController = function (mainCtrl) {
   }
 
   function initCreateEventBtns() {
-    // TODO: Finish event creation
     $('#submit-event').on('click', () => {
       let check = false;
       check = checkCreateInputs();
@@ -185,7 +189,7 @@ const PageController = function (mainCtrl) {
         eventObj.large = false;
         eventObj.private = false;
 
-        console.log(eventObj);
+        mainCtrl.createEvent(eventObj);
       }
     });
     $('#confirm-image').on('click', () => {
