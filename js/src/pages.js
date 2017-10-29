@@ -9,11 +9,20 @@ const PageController = function (mainCtrl) {
   function addDropdownElement(dropdownCategory, dropdownData) {
     // TODO: dropdown arrow
     let dropdownTemplate = `<div class="dropdown">
-    <h3 class="dropdown-text green-bg white-text">${dropdownCategory}</h3>
+    
+    <h3 class="dropdown-text green-bg white-text">
+      ${dropdownCategory}
+      <i class="fa fa-chevron-down white-text dropdown-arrow down" aria-hidden="true"></i>
+      <i class="fa fa-chevron-right white-text dropdown-arrow right" aria-hidden="true"></i>
+    </h3>
+      
     <ul class="dropdown-list">`;
 
     dropdownData.forEach(function (interest) {
-      dropdownTemplate += `<li class="dropdown-list-item">${interest}</li>`;
+      dropdownTemplate += `<li class="dropdown-list-item" data-interest="${interest.toLowerCase()}">
+        ${interest}
+        <i class="fa fa-check black-text dropdown-list-checkmark" aria-hidden="true"></i>
+      </li>`;
     }, this);
 
     dropdownTemplate += '</ul></div>';
@@ -24,10 +33,33 @@ const PageController = function (mainCtrl) {
     const categories = data.categories;
     console.log(categories);
     const catKeys = Object.keys(categories);
+    const currentFilters = mainCtrl.getInterestFilters();
 
     for (let i = 0, len = catKeys.length; i < len; i += 1) {
       addDropdownElement(catKeys[i], categories[catKeys[i]]);
     }
+
+    for (let i = 0, len = currentFilters.length; i < len; i += 1) {
+      $(`.dropdown-list-item[data-interest="${currentFilters[i]}"]`).addClass('selected');
+    }
+
+    $('.dropdown-list-item').on('click', (event) => {
+      if ($(event.currentTarget).hasClass('selected')) {
+        $(event.currentTarget).removeClass('selected');
+        mainCtrl.removeFilter(event.currentTarget.dataset.interest);
+      } else {
+        $(event.currentTarget).addClass('selected');
+        mainCtrl.addFilter(event.currentTarget.dataset.interest);
+      }
+    });
+
+    $('.dropdown-text').on('click', (event) => {
+      if ($(event.currentTarget).parent().hasClass('opened')) {
+        $(event.currentTarget).parent().removeClass('opened');
+      } else {
+        $(event.currentTarget).parent().addClass('opened');
+      }
+    });
   }
 
   function fillEventInfo(evtInfo) {
@@ -294,22 +326,34 @@ const PageController = function (mainCtrl) {
       `;
       $(location).append(eventTemplate);
     }
-    $(`${location} .join-btn`).on('click', (event) => {
-      event.stopPropagation();
-      $(event.currentTarget).parent().addClass('hide');
-      mainCtrl.attendEvent(event.currentTarget.dataset.id);
-    });
     initSearchEventBtns(location);
   }
 
   function initSearchEventBtns(element) {
+    $(`${element} .join-btn`).on('click', (event) => {
+      event.stopPropagation();
+      $(event.currentTarget).parent().addClass('hide');
+      mainCtrl.attendEvent(event.currentTarget.dataset.id);
+    });
     $(`${element} .go-to-event-page-with-id`).one('click', (event) => {
       const id = event.currentTarget.dataset.id;
       const filename = event.currentTarget.dataset.page;
       const nextPage = `${filename}:${id}`;
+
       console.log(`going to page: ${nextPage}`);
       mainCtrl.changePage(nextPage);
     });
+    $('#interests-btn').on('click', () => {
+      mainCtrl.changePage('category_list');
+    });
+    if (mainCtrl.getInterestFilters().length > 0) {
+      $('#clear-interest-filters').removeClass('hide');
+      $('#clear-interest-filters').on('click', (event) => {
+        event.stopPropagation();
+        mainCtrl.clearFilters();
+        mainCtrl.changePage('event_search');
+      });
+    }
   }
 
   function initNavigationBtns() {
@@ -378,6 +422,7 @@ const PageController = function (mainCtrl) {
       }
       case 'category_list': {
         mainCtrl.getCategories(addAllDropdowns);
+        initNavigationBtns();
         break;
       }
       case 'profile': {

@@ -28,11 +28,24 @@
  .filter-btn-container {
    margin-bottom: 2em;
 
-   button {
+   #calendar-btn,
+   #interests-btn {
+     position: relative;
      height: 3em;
      width: 3em;
      margin: 0 15%;
      outline: 0.1em solid $lightGreen;
+   }
+
+   #clear-interest-filters,
+   #clear-date-filters{
+     position: absolute;
+     height: 1.2em;
+     width: 1.2em;
+     font-size: 1.5em;
+     top: -0.8em;
+     right: -0.8em;
+     border-radius: 50%;
    }
 
    img {

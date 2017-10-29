@@ -8,6 +8,23 @@ const DataController = function (mainCtrl) {
   let userData = {};
   let categories = 'empty';
   let allEvents = 'empty';
+  let selectedFilters = [];
+
+  function addFilter(item) {
+    if (selectedFilters.indexOf(item) === -1) {
+      selectedFilters.push(item);
+    }
+  }
+
+  function removeFilter(item) {
+    if (selectedFilters.indexOf(item) !== -1) {
+      selectedFilters.splice(selectedFilters.indexOf(item), 1);
+    }
+  }
+
+  function clearFilters() {
+    selectedFilters = [];
+  }
 
   function getCategories(callback) {
     const url = 'data/categories.json';
@@ -37,6 +54,7 @@ const DataController = function (mainCtrl) {
 
   /**
    * Will filter througt all the events and put user event informations to a list.
+   *
    * @param {Object} events - Object that has all event informations.
    * @return {Array} - List of only current user's events.
    */
@@ -48,16 +66,49 @@ const DataController = function (mainCtrl) {
     return eventObjList;
   }
 
+  /**
+   * Checks if selected filters match with the event tags
+   *
+   * @param {Object} event - Event object which tags will be checked
+   * @returns {Boolean} - Returns true if filters matched with the event tags
+   */
+  function checkTags(event) {
+    const tags = event.tags;
+    let result = false;
+
+    for (let i = 0, len = tags.length; i < len; i += 1) {
+      if (selectedFilters.indexOf(tags[i]) !== -1) {
+        result = true;
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Filters events that are relevant to user
+   * (This will be done mostly in the server when we get one)
+   *
+   * @param {Object} events - List of all events
+   * @returns {Array} - Returns list of relevant event objects
+   */
   function filterSuggestedEvents(events) {
     let eventObjList = [];
     const keys = Object.keys(events);
 
     for (let i = 0, len = keys.length; i < len; i += 1) {
+
       if (
         userData.eventsAttending.indexOf(events[keys[i]].id) === -1
-        && events[keys[i]].owner.indexOf(userData.id) === -1
+        && events[keys[i]].owner !== userData.id
       ) {
-        eventObjList.push(events[keys[i]]);
+        if (selectedFilters.length > 0) {
+          if (checkTags(events[keys[i]])) {
+            eventObjList.push(events[keys[i]]);
+          }
+        } else {
+          eventObjList.push(events[keys[i]]);
+        }
       }
     }
     return eventObjList;
@@ -255,6 +306,18 @@ const DataController = function (mainCtrl) {
     },
     addAttendee(id) {
       addAttendee(id);
+    },
+    getInterestFilters() {
+      return selectedFilters;
+    },
+    addFilter(item) {
+      addFilter(item);
+    },
+    removeFilter(item) {
+      removeFilter(item);
+    },
+    clearFilters() {
+      clearFilters();
     },
     attendEvent(id) {
       attendEvent(id);

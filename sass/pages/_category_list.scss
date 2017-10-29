@@ -1,9 +1,66 @@
 .category-page {
+
+  .dropdown-list {
+    transform-origin: top;
+    transition: max-height 0.333s ease-in-out;
+    overflow: hidden;
+  }
+
+  .dropdown {
+    .down {
+      display: none;
+    }
+
+    .dropdown-list {
+      max-height: 0;
+    }
+
+    &.opened {
+      .dropdown-list {
+        max-height: 2000px;
+      }
+
+      .down {
+        display: block;
+      }
+
+      .right {
+        display: none;
+      }
+    }
+  }
+
   .dropdown-text {
+    position: relative;
     margin: 0;
     padding: 1em 2em;
   }
+
   .dropdown-list-item {
     padding: 0.5em 0 0.5em 2em;
+  }
+
+  .dropdown-arrow {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    right: 1em;
+  }
+
+  .dropdown-list-checkmark {
+    display: none;
+    float: right;
+    margin-right: 1em;
+  }
+
+  .dropdown-list-item.selected {
+    background-color: $darkGreen;
+    color: white;
+
+    .dropdown-list-checkmark {
+      background-color: $darkGreen;
+      display: block;
+      color: white;
+    }
   }
 }

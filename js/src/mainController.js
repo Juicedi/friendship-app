@@ -33,7 +33,7 @@ const MainController = (function () {
   function startApplication() {
     console.log('Starting application');
     dataCtrl.getUserInfo('testeri');
-    navCtrl.getContent('category_list');
+    navCtrl.getContent('event_search');
   }
 
   return {
@@ -82,6 +82,18 @@ const MainController = (function () {
     },
     removeTag(eventId, tag) {
       dataCtrl.removeTag(eventId, tag);
+    },
+    getInterestFilters() {
+      return dataCtrl.getInterestFilters();
+    },
+    addFilter(item) {
+      dataCtrl.addFilter(item);
+    },
+    removeFilter(item) {
+      dataCtrl.removeFilter(item);
+    },
+    clearFilters() {
+      dataCtrl.clearFilters();
     },
     changeEventOwner(id, newOwner) {
       dataCtrl.changeEventOwner(id, newOwner);

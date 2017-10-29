@@ -11,10 +11,21 @@
 
   <article class="filter">
     <h2 class="darkestGreen-text">Suggested events</h2>
+
     <div class="filter-btn-container">
-      <button id="calendar-btn"><img src="build/img/ui/calendar_light.png" alt="calendar"></button>
-      <button id="interests-btn"><img src="build/img/ui/heart_light.png" alt="interests"></button>
+      <button id="calendar-btn">
+        <img src="build/img/ui/calendar_light.png" alt="calendar">
+        <span id="clear-date-filters" class="hide red-bg">
+          <i class="fa fa-times white-text" aria-hidden="true"></i>
+        </span>
+      </button>
+      <button id="interests-btn"><img src="build/img/ui/heart_light.png" alt="interests">
+        <span id="clear-interest-filters" class="hide red-bg">
+          <i class="fa fa-times white-text" aria-hidden="true"></i>
+        </span>
+      </button>
     </div>
+
     <article id="suggested-events"></article>
     <article id="search-results"></article>
   </article>
