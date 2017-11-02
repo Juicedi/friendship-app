@@ -33,7 +33,7 @@ const MainController = (function () {
   function startApplication() {
     console.log('Starting application');
     dataCtrl.getUserInfo('testeri');
-    navCtrl.getContent('event_search');
+    navCtrl.getContent('chat_list');
   }
 
   return {
@@ -61,6 +61,12 @@ const MainController = (function () {
     },
     getSearchResults(searchInput) {
       dataCtrl.getSearchResults(searchInput);
+    },
+    getSuggestedUsers() {
+      dataCtrl.getSuggestedUsers();
+    },
+    getChatList() {
+      dataCtrl.getChatList();
     },
     createEvent(data) {
       dataCtrl.createEvent(data);
@@ -122,6 +128,12 @@ const MainController = (function () {
     },
     populateSearchEvents(events, location) {
       pageCtrl.populateSearchEvents(events, location);
+    },
+    populateChatList(chats) {
+      pageCtrl.populateChatList(chats);
+    },
+    populateSuggestedUsers(users) {
+      pageCtrl.populateSuggestedUsers(users);
     },
     fillEventInfo(evtInfo) {
       pageCtrl.fillEventInfo(evtInfo);

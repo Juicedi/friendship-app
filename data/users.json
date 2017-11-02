@@ -1,12 +1,93 @@
 {
    "ducky101_123":{
-      "id":"Ducky101_123",
+      "id":"ducky101_123",
       "nickname":"Ducky101",
       "email":"ducky@mail.fi",
-      "profileImage":"img/users/ducky.jpg",
-      "profileBg":"img/users/duckybg.jpg",
-      "chatBg":"img/users/duckybg.jpg",
-      "interests":[
+      "loves":[
+         "camping",
+         "fishing",
+         "rock"
+      ],
+      "hates":[
+         "pop"
+      ],
+      "description":"Hello I'm Ducky101",
+      "location":"Helsinki",
+      "friends":[
+         234,
+         1234,
+         4356
+      ],
+      "searchRange":12,
+      "eventsAttending":[
+         "event123"
+      ],
+      "chatMute":false,
+      "chats":[
+         "chat123"
+      ]
+   },
+   "user123":{
+      "id":"user123",
+      "nickname":"asdpasd",
+      "email":"ducky@mail.fi",
+      "loves":[
+         "camping",
+         "fishing",
+         "rock"
+      ],
+      "hates":[
+         "pop"
+      ],
+      "description":"Hello I'm Ducky101",
+      "location":"Helsinki",
+      "friends":[
+         234,
+         1234,
+         4356
+      ],
+      "searchRange":12,
+      "eventsAttending":[
+         "event123"
+      ],
+      "chatMute":false,
+      "chats":[
+         "chat123"
+      ]
+   },
+   "user234":{
+      "id":"user234",
+      "nickname":"qwerty",
+      "email":"ducky@mail.fi",
+      "loves":[
+         "camping",
+         "fishing",
+         "rock"
+      ],
+      "hates":[
+         "pop"
+      ],
+      "description":"Hello I'm Ducky101",
+      "location":"Helsinki",
+      "friends":[
+         234,
+         1234,
+         4356
+      ],
+      "searchRange":12,
+      "eventsAttending":[
+         "event123"
+      ],
+      "chatMute":false,
+      "chats":[
+         "chat123"
+      ]
+   },
+   "user345":{
+      "id":"user345",
+      "nickname":"dworak",
+      "email":"ducky@mail.fi",
+      "loves":[
          "camping",
          "fishing",
          "rock"
@@ -34,10 +115,7 @@
       "id":"testeri",
       "nickname":"Topi",
       "email":"test@mail.fi",
-      "profileImage":"img/users/ducky.jpg",
-      "profileBg":"img/users/duckybg.jpg",
-      "chatBg":"img/users/duckybg.jpg",
-      "interests":[
+      "loves":[
          "camping",
          "fishing",
          "rock"

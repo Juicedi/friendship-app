@@ -8,6 +8,8 @@ const DataController = function (mainCtrl) {
   let userData = {};
   let categories = 'empty';
   let allEvents = 'empty';
+  let allChats = 'empty';
+  let allUsers = 'empty';
   let selectedFilters = [];
 
   function addFilter(item) {
@@ -66,6 +68,45 @@ const DataController = function (mainCtrl) {
     return eventObjList;
   }
 
+  function checkLovesAndHates(user) {
+    let result= false;
+
+    for (let i = 0, len = userData.loves.length; i < len; i += 1) {
+      if (user.loves.indexOf(userData.loves[i]) !== -1) {
+        result = true;
+      }
+    }
+
+    for (let i = 0, len = userData.hates.length; i < len; i += 1) {
+      if (user.hates.indexOf(userData.hates[i]) !== -1) {
+        result = true;
+      }
+    }
+
+    return result;
+  }
+
+  function filterSuggestedUsers(users) {
+    const userList = [];
+    let found = 0;
+    for (let i = 0; i < found || i < users.lenght; i += 1) {
+      const match = checkLovesAndHates(users[i]);
+      if (match) {
+        userList.push(users[userData.eventsAttending[i]]);
+        found += 1;
+      }
+    }
+    return userList;
+  }
+
+  function filterChats(chats) {
+    const ownChats = [];
+    for (let i = 0, len = userData.chats.length; i < len; i += 1) {
+      ownChats.push(chats[userData.chats[i]]);
+    }
+    return ownChats;
+  }
+
   /**
    * Checks if selected filters match with the event tags
    *
@@ -93,7 +134,7 @@ const DataController = function (mainCtrl) {
    * @returns {Array} - Returns list of relevant event objects
    */
   function filterSuggestedEvents(events) {
-    let eventObjList = [];
+    const eventObjList = [];
     const keys = Object.keys(events);
 
     for (let i = 0, len = keys.length; i < len; i += 1) {
@@ -212,6 +253,49 @@ const DataController = function (mainCtrl) {
     }
   }
 
+  function getChatList() {
+    if (allChats === 'empty') {
+      const url = 'data/chats.json';
+      $.ajax({
+        url,
+        success: (content) => {
+          allChats = content;
+          const ownChats = filterChats(content);
+          console.log(ownChats);
+          mainCtrl.populateChatList(ownChats);
+        },
+        error: () => {
+          console.log('Error: Couldn\'t get event informations');
+        },
+      });
+    } else {
+      const ownChats = filterChats(allChats);
+      console.log(ownChats);
+      mainCtrl.populateChatList(ownChats);
+    }
+  }
+
+  function getSuggestedUsers() {
+    if (allUsers === 'empty') {
+      const url = 'data/users.json';
+      $.ajax({
+        url,
+        success: (content) => {
+          allUsers = content;
+          const suggestedUsers = filterSuggestedUsers(content);
+          console.log(suggestedUsers);
+          mainCtrl.populateSuggestedUsers(suggestedUsers);
+        },
+        error: () => {
+          console.log('Error: Couldn\'t get event informations');
+        },
+      });
+    } else {
+      const suggestedUsers = filterSuggestedEvents(allUsers);
+      console.log(suggestedUsers);
+      mainCtrl.populateSuggestedUsers(suggestedUsers);
+    }
+  }
   function getSearchResults(searchInput) {
     const inputLower = searchInput.toLowerCase();
     const keys = Object.keys(allEvents);
@@ -300,6 +384,12 @@ const DataController = function (mainCtrl) {
     },
     getSearchResults(searchInput) {
       getSearchResults(searchInput);
+    },
+    getChatList() {
+      getChatList();
+    },
+    getSuggestedUsers() {
+      getSuggestedUsers();
     },
     createEvent(data) {
       createEvent(data);

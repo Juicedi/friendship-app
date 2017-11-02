@@ -276,6 +276,55 @@ const PageController = function (mainCtrl) {
     }
   }
 
+  function populateChatList(chats) {
+    let chatTemplate;
+
+    if (chats.length > 0) {
+      for (let i = 0, len = chats.length; i < len; i += 1) {
+        if (chats[i].partisipants.lenght === 2) {
+        /*
+        FIXME: laita chatin nimeksi kaverin nimi jos chatissä on vain kaksi keskustelijaa
+        muussa tapauksessa käytä chatille annettua nimeä
+        (default kaikkien chatissä olevien käytäjien nimet)
+        */
+          chats[i].partisipants
+        }
+        chatTemplate = `
+        <article class="event white-bg go-to-page-with-id" data-page="event_info" data-id="${chats[i].id}">
+          <div class="event-image">
+            <img src="build/img/users/${chats[i].messages.slice(-1)[0].sender}.jpg" alt="event-thumbnail">
+          </div>
+          <div class="event-texts">
+            <h4 class="event-title darkestGreen-text">${chats[i].name}</h4>
+            <p class="event-location darkGreen-text">${chats[i].messages.slice(-1)[0].content}</p>
+            <p class="event-date darkGreen-text">${chats[i].messages.slice(-1)[0].date}</p>
+          </div>
+        </article>
+      `;
+        $('#page-content').append(chatTemplate);
+      }
+    } else {
+      $('.no-chats-text').removeClass('hide');
+    }
+    initNavigationBtns();
+  }
+
+  function populateSuggestedUsers(users) {
+    let userTemplate;
+
+    for (let i = 0, len = users.length; i < len; i += 1) {
+      userTemplate = `
+        <article class="user go-to-page-with-id" data-page="profile" data-id="${users[i].id}">
+          <div class="user-image">
+            <img src="build/img/users/${users[i].id}.jpg" alt="user-thumbnail">
+          </div>
+        </article>
+      `;
+      $('#page-content').append(userTemplate);
+    }
+    initNavigationBtns();
+  }
+
   function populateOwnEvents(events) {
     let eventTemplate;
 
@@ -430,6 +479,8 @@ const PageController = function (mainCtrl) {
         break;
       }
       case 'chat_list': {
+        mainCtrl.getSuggestedUsers();
+        mainCtrl.getChatList();
         initNavigationBtns();
         break;
       }
@@ -459,6 +510,12 @@ const PageController = function (mainCtrl) {
     },
     populateSearchEvents(events, location) {
       populateSearchEvents(events, location);
+    },
+    populateChatList(chats) {
+      populateChatList(chats);
+    },
+    populateSuggestedUsers(users) {
+      populateSuggestedUsers(users);
     }
   };
 };
