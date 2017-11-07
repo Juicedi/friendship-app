@@ -9,7 +9,7 @@
   z-index: 5;
 }
 
-.event {
+.list-item {
   position: relative;
   height: 5em;
   width: 100%;
@@ -22,7 +22,7 @@
     margin-bottom: 3em;
   }
 
-  .event-image {
+  .list-item-image {
     position: relative;
     display: inline-block;
     height: 100%;
@@ -40,7 +40,7 @@
     object-fit: cover;
   }
 
-  .event-texts {
+  .list-item-texts {
     display: inline-block;
     vertical-align: middle;
     margin-left: 1em;

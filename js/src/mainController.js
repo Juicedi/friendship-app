@@ -62,9 +62,6 @@ const MainController = (function () {
     getSearchResults(searchInput) {
       dataCtrl.getSearchResults(searchInput);
     },
-    getSuggestedUsers() {
-      dataCtrl.getSuggestedUsers();
-    },
     getChatList() {
       dataCtrl.getChatList();
     },

@@ -275,27 +275,6 @@ const DataController = function (mainCtrl) {
     }
   }
 
-  function getSuggestedUsers() {
-    if (allUsers === 'empty') {
-      const url = 'data/users.json';
-      $.ajax({
-        url,
-        success: (content) => {
-          allUsers = content;
-          const suggestedUsers = filterSuggestedUsers(content);
-          console.log(suggestedUsers);
-          mainCtrl.populateSuggestedUsers(suggestedUsers);
-        },
-        error: () => {
-          console.log('Error: Couldn\'t get event informations');
-        },
-      });
-    } else {
-      const suggestedUsers = filterSuggestedEvents(allUsers);
-      console.log(suggestedUsers);
-      mainCtrl.populateSuggestedUsers(suggestedUsers);
-    }
-  }
   function getSearchResults(searchInput) {
     const inputLower = searchInput.toLowerCase();
     const keys = Object.keys(allEvents);
@@ -387,9 +366,6 @@ const DataController = function (mainCtrl) {
     },
     getChatList() {
       getChatList();
-    },
-    getSuggestedUsers() {
-      getSuggestedUsers();
     },
     createEvent(data) {
       createEvent(data);

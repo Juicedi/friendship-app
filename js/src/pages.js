@@ -6,8 +6,14 @@
  * @return {Object} - All of the controllers functions that are shared with other controllers
  */
 const PageController = function (mainCtrl) {
-  function addDropdownElement(dropdownCategory, dropdownData) {
-    // TODO: dropdown arrow
+  /**
+   * Creates a dropdown HTML string.
+   *
+   * @param {String} dropdownCategory - Dropdown category as a string.
+   * @param {Array} dropdownData - List of all items in the dropdown.
+   * @returns HTML string with all correct dropdown data in it.
+   */
+  function createDropdown(dropdownCategory, dropdownData) {
     let dropdownTemplate = `<div class="dropdown">
     
     <h3 class="dropdown-text green-bg white-text">
@@ -26,9 +32,14 @@ const PageController = function (mainCtrl) {
     }, this);
 
     dropdownTemplate += '</ul></div>';
-    $('#dropdowns').append(dropdownTemplate);
+    return dropdownTemplate;
   }
 
+  /**
+   * Adds all dropdowns to the page and initializes their functionalities.
+   *
+   * @param {Object} data - All of the interest categories and their items.
+   */
   function addAllDropdowns(data) {
     const categories = data.categories;
     console.log(categories);
@@ -36,7 +47,8 @@ const PageController = function (mainCtrl) {
     const currentFilters = mainCtrl.getInterestFilters();
 
     for (let i = 0, len = catKeys.length; i < len; i += 1) {
-      addDropdownElement(catKeys[i], categories[catKeys[i]]);
+      const dropdown = createDropdown(catKeys[i], categories[catKeys[i]]);
+      $('#dropdowns').append(dropdown);
     }
 
     for (let i = 0, len = currentFilters.length; i < len; i += 1) {
@@ -62,13 +74,18 @@ const PageController = function (mainCtrl) {
     });
   }
 
+  /**
+   * Puts all event information to their correct places.
+   *
+   * @param {Object} evtInfo - Current pages event information.
+   */
   function fillEventInfo(evtInfo) {
     const uData = mainCtrl.getUserData();
     $('#header-image img').attr('src', evtInfo.eventImg);
-    $('#event-title').html(evtInfo.title);
-    $('#event-location').html(evtInfo.location);
-    $('#event-date').html(evtInfo.date);
-    $('#event-description').html(evtInfo.description);
+    $('#list-item-title').html(evtInfo.title);
+    $('#list-item-location').html(evtInfo.location);
+    $('#list-item-date').html(evtInfo.date);
+    $('#list-item-description').html(evtInfo.description);
     $('.attendee-number').html(evtInfo.attending.length);
     placeTags(evtInfo.tags);
 
@@ -94,6 +111,9 @@ const PageController = function (mainCtrl) {
     }
   }
 
+  /**
+   * Initializes the searchbar functionality.
+   */
   function initSearchbar() {
     $('#search-field').keyup((event) => {
       const key = event.keyCode;
@@ -109,6 +129,7 @@ const PageController = function (mainCtrl) {
 
       /* If the suggested events are still show on the screen, don't refresh them.
       Just hide cancel button. */
+      // FIXME: Clicking on events doesn't work after canceling search by removing text manually.
       if (event.currentTarget.value.length < 1 && !$('#suggested-events').hasClass('hide')) {
         $('#cancel-search').addClass('hide');
       } else if (event.currentTarget.value.length < 1) {
@@ -129,6 +150,9 @@ const PageController = function (mainCtrl) {
     });
   }
 
+  /**
+   * Initializes the open and close modal buttons.
+   */
   function initModalBtns() {
     $('.close-modal-btn').on('click', (event) => {
       $(event.currentTarget).parent().parent().addClass('hide');
@@ -141,6 +165,11 @@ const PageController = function (mainCtrl) {
     });
   }
 
+  /**
+   * Initializes the event info pages buttons.
+   *
+   * @param {String} id - Current pages event id.
+   */
   function initEventInfoBtns(id) {
     $('.slider-checkbox').on('click', (event) => {
       if ($(event.currentTarget).hasClass('off')) {
@@ -190,12 +219,15 @@ const PageController = function (mainCtrl) {
     // TODO: Add tags function
   }
 
+  /**
+   * Checks if all inputfields have correct data in them.
+   */
   function checkCreateInputs() {
     const title = $('#title-field').val();
     const location = $('#location-field').val();
-    const date = $('#event-date').val();
-    const time = $('#event-time').val();
-    const desc = $('#event-description').val();
+    const date = $('#list-item-date').val();
+    const time = $('#list-item-time').val();
+    const desc = $('#list-item-description').val();
 
     if (
       title.length > 0
@@ -209,6 +241,11 @@ const PageController = function (mainCtrl) {
     return false;
   }
 
+  /**
+   * Gets user selected tags and put them into an array.
+   *
+   * @returns Array of tags.
+   */
   function getTags() {
     const tagElems = $('.tag');
     const list = [];
@@ -220,6 +257,9 @@ const PageController = function (mainCtrl) {
     return list;
   }
 
+  /**
+   * Initializes all buttons on Create event page.
+   */
   function initCreateEventBtns() {
     $('#submit-event').on('click', () => {
       let check = false;
@@ -232,10 +272,10 @@ const PageController = function (mainCtrl) {
         eventObj.id = $('#title-field').val() + Math.floor(Math.random() * 100);
         eventObj.title = $('#title-field').val();
         eventObj.location = $('#location-field').val();
-        eventObj.date = `${$('#event-date').val()} ${$('#event-time').val()}`;
-        eventObj.description = $('#event-description').val();
+        eventObj.date = `${$('#list-item-date').val()} ${$('#list-item-time').val()}`;
+        eventObj.description = $('#list-item-description').val();
         eventObj.tags = getTags();
-        eventObj.eventImg = $('#event-image').attr('src');
+        eventObj.eventImg = $('#list-item-image').attr('src');
         eventObj.owner = mainCtrl.getUserData().id;
         eventObj.attending = [];
         eventObj.large = false;
@@ -249,7 +289,7 @@ const PageController = function (mainCtrl) {
 
       $('#change-image-modal').addClass('hide');
       $('#modal-overlay').addClass('hide');
-      $('#event-image').attr('src', newSrc);
+      $('#list-item-image').attr('src', newSrc);
 
       newSrc = '';
     });
@@ -269,6 +309,11 @@ const PageController = function (mainCtrl) {
     });
   }
 
+  /**
+   * Appends list of tags to DOM.
+   *
+   * @param {Array} tags - List of tags to be appended to DOM.
+   */
   function placeTags(tags) {
     for (let i = 0, len = tags.length; i < len; i += 1) {
       const elem = `<div class="tag">${tags[i]}</div>`;
@@ -276,74 +321,110 @@ const PageController = function (mainCtrl) {
     }
   }
 
+  /**
+   * Initialize chat list items after their creation.
+   */
+  function initChatListItems() {
+    $('.go-to-chat').on('click', (event) => {
+      console.log('testing');
+      const id = event.currentTarget.dataset.id;
+      const filename = event.currentTarget.dataset.page;
+      const nextPage = `${filename}:${id}`;
+
+      console.log(`going to page: ${nextPage}`);
+      mainCtrl.changePage(nextPage);
+    });
+  }
+
+  /**
+   * Create chat list item template.
+   *
+   * @param {Object} chat - Contains all the needed chat information.
+   * @returns HTML text with all of the correct texts inserted to it.
+   */
+  function createChatListItem(chat) {
+    const chatTemplate = `
+        <article class="list-item white-bg go-to-chat" data-page="chat" data-id="${chat.id}">
+          <div class="list-item-image">
+            <img src="build/img/users/${chat.messages.slice(-1)[0].sender}.jpg" alt="list-item-thumbnail">
+          </div>
+          <div class="list-item-texts">
+            <h4 class="list-item-title darkestGreen-text">${chat.name}</h4>
+            <p class="list-item-location darkGreen-text">${chat.messages.slice(-1)[0].content}</p>
+            <p class="list-item-date darkGreen-text">${chat.messages.slice(-1)[0].date}</p>
+          </div>
+        </article>
+    `;
+    return chatTemplate;
+  }
+
+  /**
+   * Create HTML template for event list item.
+   *
+   * @param {Object} event - Object containing all needed event information.
+   * @returns HTML text with all needed data inserted to it.
+   */
+  function createEventListItem(event) {
+    let ownText = '';
+    let joinBtn = '';
+    if (event.owner === mainCtrl.getUserData().id) {
+      ownText = `<h4 class="owner green-text ${event.own}">Own</h4>`;
+    }
+    if (event.addJoinBtn === true) {
+      joinBtn = `
+        <button class="main-btn green-bg join-btn" data-id="${event.id}">
+          <h4 class="white-text">Join</h4>
+        </button>
+      `;
+    }
+
+    const template = `
+        <article class="list-item white-bg go-to-page-with-id" data-page="event_info" data-id="${event.id}">
+          <div class="list-item-image">
+            <img src="${event.eventImg}" alt="list-item-thumbnail">
+          </div>
+          <div class="list-item-texts">
+            <h4 class="list-item-title darkestGreen-text">${event.title}</h4>
+            <p class="list-item-location darkGreen-text">${event.location}</p>
+            <p class="list-item-date darkGreen-text">${event.date}</p>
+            ${ownText}
+          </div>
+          ${joinBtn}
+        </article>
+      `;
+    return template;
+  }
+
+  /**
+   * Show all of the user's chats on the chats page.
+   *
+   * @param {Array} chats - List of all of the chats the current user has.
+   */
   function populateChatList(chats) {
     let chatTemplate;
 
     if (chats.length > 0) {
       for (let i = 0, len = chats.length; i < len; i += 1) {
-        if (chats[i].partisipants.lenght === 2) {
-        /*
-        FIXME: laita chatin nimeksi kaverin nimi jos chatissä on vain kaksi keskustelijaa
-        muussa tapauksessa käytä chatille annettua nimeä
-        (default kaikkien chatissä olevien käytäjien nimet)
-        */
-          chats[i].partisipants
-        }
-        chatTemplate = `
-        <article class="event white-bg go-to-page-with-id" data-page="event_info" data-id="${chats[i].id}">
-          <div class="event-image">
-            <img src="build/img/users/${chats[i].messages.slice(-1)[0].sender}.jpg" alt="event-thumbnail">
-          </div>
-          <div class="event-texts">
-            <h4 class="event-title darkestGreen-text">${chats[i].name}</h4>
-            <p class="event-location darkGreen-text">${chats[i].messages.slice(-1)[0].content}</p>
-            <p class="event-date darkGreen-text">${chats[i].messages.slice(-1)[0].date}</p>
-          </div>
-        </article>
-      `;
+        chatTemplate = createChatListItem(chats[i]);
         $('#page-content').append(chatTemplate);
       }
     } else {
       $('.no-chats-text').removeClass('hide');
     }
-    initNavigationBtns();
+    initChatListItems();
   }
 
-  function populateSuggestedUsers(users) {
-    let userTemplate;
-
-    for (let i = 0, len = users.length; i < len; i += 1) {
-      userTemplate = `
-        <article class="user go-to-page-with-id" data-page="profile" data-id="${users[i].id}">
-          <div class="user-image">
-            <img src="build/img/users/${users[i].id}.jpg" alt="user-thumbnail">
-          </div>
-        </article>
-      `;
-      $('#page-content').append(userTemplate);
-    }
-    initNavigationBtns();
-  }
-
+  /**
+   * Show all users own events and events s/he is currently attending.
+   *
+   * @param {Array} events - List of events to be shown on the users own events page.
+   */
   function populateOwnEvents(events) {
     let eventTemplate;
 
     if (events.length > 0) {
       for (let i = 0, len = events.length; i < len; i += 1) {
-        const own = events[i].owner === mainCtrl.getUserData().id ? '' : 'hide';
-        eventTemplate = `
-        <article class="event white-bg go-to-page-with-id" data-page="event_info" data-id="${events[i].id}">
-          <div class="event-image">
-            <img src="${events[i].eventImg}" alt="event-thumbnail">
-          </div>
-          <div class="event-texts">
-            <h4 class="event-title darkestGreen-text">${events[i].title}</h4>
-            <p class="event-location darkGreen-text">${events[i].location}</p>
-            <p class="event-date darkGreen-text">${events[i].date}</p>
-            <h4 class="owner green-text ${own}">Own</h4>
-          </div>
-        </article>
-      `;
+        eventTemplate = createEventListItem(events[i]);
         $('#page-content').append(eventTemplate);
       }
     } else {
@@ -352,32 +433,31 @@ const PageController = function (mainCtrl) {
     initNavigationBtns();
   }
 
+  /**
+   * Populates event list with search results.
+   *
+   * @param {Array} events - List of events to be shown on the list.
+   * @param {String} location - Location where events should be appended.
+   */
   function populateSearchEvents(events, location) {
     let eventTemplate;
 
     $(location).html('');
 
     for (let i = 0, len = events.length; i < len; i += 1) {
-      eventTemplate = `
-        <article class="event white-bg go-to-event-page-with-id" data-page="event_info" data-id="${events[i].id}">
-          <div class="event-image">
-            <img src="${events[i].eventImg}" alt="event-thumbnail">
-          </div>
-          <div class="event-texts">
-            <h4 class="event-title darkestGreen-text">${events[i].title}</h4>
-            <p class="event-location darkGreen-text">${events[i].location}</p>
-            <p class="event-date darkGreen-text">${events[i].date}</p>
-          </div>
-          <button class="main-btn green-bg join-btn" data-id="${events[i].id}">
-            <h4 class="white-text">Join</h4>
-          </button>
-        </article>
-      `;
+      const event = events[i];
+      event.addJoinBtn = true;
+      eventTemplate = createEventListItem(event);
       $(location).append(eventTemplate);
     }
     initSearchEventBtns(location);
   }
 
+  /**
+   * Initialize searched event list items and their buttons.
+   *
+   * @param {String} element - Element string determining what elements buttons should be initialized.
+   */
   function initSearchEventBtns(element) {
     $(`${element} .join-btn`).on('click', (event) => {
       event.stopPropagation();
@@ -405,6 +485,9 @@ const PageController = function (mainCtrl) {
     }
   }
 
+  /**
+   * Initialize the basic navigation buttons.
+   */
   function initNavigationBtns() {
     $('.go-to-page').one('click', (event) => {
       const nextPage = event.currentTarget.dataset.page;
@@ -432,6 +515,11 @@ const PageController = function (mainCtrl) {
     });
   }
 
+  /**
+   * Initialize the given page.
+   *
+   * @param {String} page - Current page and possibly an id for an event or chat (i.e. "event_info:event1234").
+   */
   function initPage(page) {
     let pageName;
     let pageId;
@@ -479,7 +567,6 @@ const PageController = function (mainCtrl) {
         break;
       }
       case 'chat_list': {
-        mainCtrl.getSuggestedUsers();
         mainCtrl.getChatList();
         initNavigationBtns();
         break;
