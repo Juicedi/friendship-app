@@ -325,7 +325,6 @@ const PageController = function (mainCtrl) {
    */
   function initChatListItems() {
     $('.go-to-chat').on('click', (event) => {
-      console.log('testing');
       const id = event.currentTarget.dataset.id;
       const filename = event.currentTarget.dataset.page;
       const nextPage = `${filename}:${id}`;
@@ -392,6 +391,10 @@ const PageController = function (mainCtrl) {
         </article>
       `;
     return template;
+  }
+
+  function populateChatMessages() {
+    console.log('populating chat messages');
   }
 
   /**
@@ -571,6 +574,7 @@ const PageController = function (mainCtrl) {
         break;
       }
       case 'chat': {
+        mainCtrl.getChatMessages(pageId);
         initNavigationBtns();
         break;
       }
@@ -597,11 +601,11 @@ const PageController = function (mainCtrl) {
     populateSearchEvents(events, location) {
       populateSearchEvents(events, location);
     },
+    populateChatMessages(messages) {
+      populateChatMessages(messages);
+    },
     populateChatList(chats) {
       populateChatList(chats);
-    },
-    populateSuggestedUsers(users) {
-      populateSuggestedUsers(users);
     }
   };
 };

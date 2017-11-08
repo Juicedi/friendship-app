@@ -1,6 +1,8 @@
 {
     "chat123": {
+        "id": "chat123",
         "name": "testing chat",
+        "image": "build/chat/chat123.jpg",
         "partisipants": [
             {
                 "id": "testeri",
@@ -9,14 +11,6 @@
             {
                 "id": "ducky101_123",
                 "nicname": "Ducky_101"
-            }
-        ],
-        "messages": [
-            {
-                "sender": "ducky101_123",
-                "nickname": "Ducky101",
-                "content": "Quack! Quack!",
-                "date": "01-11-2017 12.00"
             }
         ]
     }

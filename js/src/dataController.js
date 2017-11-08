@@ -69,7 +69,7 @@ const DataController = function (mainCtrl) {
   }
 
   function checkLovesAndHates(user) {
-    let result= false;
+    let result = false;
 
     for (let i = 0, len = userData.loves.length; i < len; i += 1) {
       if (user.loves.indexOf(userData.loves[i]) !== -1) {
@@ -253,7 +253,44 @@ const DataController = function (mainCtrl) {
     }
   }
 
-  function getChatList() {
+  function getChatMessages(id) {
+    // TODO: Add callback function, so this can be used by other functions as well.
+    if (allChats === 'empty') {
+      const url = 'data/messages.json';
+      $.ajax({
+        url,
+        success: (content) => {
+          const chatMessages = content[id];
+          console.log(chatMessages);
+          mainCtrl.populateChatMessages(chatMessages);
+        },
+        error: () => {
+          console.log('Error: Couldn\'t get messages');
+        },
+      });
+    }
+  }
+
+  /**
+   * Attach chat messages to the chat other data
+   *
+   * @param {Array} chats - Filtered chats in an array
+   */
+  function addMessages(chats, callback) {
+    const chatData = {};
+    chatData.chats = chats;
+    chatData.messages = {};
+
+    for (let i = 0, len = chats.length; i < len; i += 1) {
+      chatData.messages[chats[i].id] = getChatMessages(chats[i].id);
+    }
+    // FIXME: tarkista että kaikki tiedot menevät populatechatlistiin
+
+    callback(chatData);
+    return chatData;
+  }
+
+  function getChatList(callback) {
     if (allChats === 'empty') {
       const url = 'data/chats.json';
       $.ajax({
@@ -262,7 +299,8 @@ const DataController = function (mainCtrl) {
           allChats = content;
           const ownChats = filterChats(content);
           console.log(ownChats);
-          mainCtrl.populateChatList(ownChats);
+          callback(ownChats, mainCtrl.populateChatList);
+          return ownChats;
         },
         error: () => {
           console.log('Error: Couldn\'t get event informations');
@@ -364,8 +402,11 @@ const DataController = function (mainCtrl) {
     getSearchResults(searchInput) {
       getSearchResults(searchInput);
     },
+    getChatMessages() {
+      getChatMessages();
+    },
     getChatList() {
-      getChatList();
+      getChatList(addMessages);
     },
     createEvent(data) {
       createEvent(data);

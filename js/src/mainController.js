@@ -62,6 +62,9 @@ const MainController = (function () {
     getSearchResults(searchInput) {
       dataCtrl.getSearchResults(searchInput);
     },
+    getChatMessages(id) {
+      dataCtrl.getChatMessages(id);
+    },
     getChatList() {
       dataCtrl.getChatList();
     },
@@ -125,6 +128,9 @@ const MainController = (function () {
     },
     populateSearchEvents(events, location) {
       pageCtrl.populateSearchEvents(events, location);
+    },
+    populateChatMessages(messages) {
+      pageCtrl.populateChatMessages(messages);
     },
     populateChatList(chats) {
       pageCtrl.populateChatList(chats);
