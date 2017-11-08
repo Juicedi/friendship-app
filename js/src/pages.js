@@ -82,10 +82,10 @@ const PageController = function (mainCtrl) {
   function fillEventInfo(evtInfo) {
     const uData = mainCtrl.getUserData();
     $('#header-image img').attr('src', evtInfo.eventImg);
-    $('#list-item-title').html(evtInfo.title);
-    $('#list-item-location').html(evtInfo.location);
-    $('#list-item-date').html(evtInfo.date);
-    $('#list-item-description').html(evtInfo.description);
+    $('#event-title').html(evtInfo.title);
+    $('#event-location').html(evtInfo.location);
+    $('#event-date').html(evtInfo.date);
+    $('#event-description').html(evtInfo.description);
     $('.attendee-number').html(evtInfo.attending.length);
     placeTags(evtInfo.tags);
 
@@ -225,9 +225,9 @@ const PageController = function (mainCtrl) {
   function checkCreateInputs() {
     const title = $('#title-field').val();
     const location = $('#location-field').val();
-    const date = $('#list-item-date').val();
-    const time = $('#list-item-time').val();
-    const desc = $('#list-item-description').val();
+    const date = $('#event-date').val();
+    const time = $('#event-time').val();
+    const desc = $('#event-description').val();
 
     if (
       title.length > 0
@@ -272,10 +272,10 @@ const PageController = function (mainCtrl) {
         eventObj.id = $('#title-field').val() + Math.floor(Math.random() * 100);
         eventObj.title = $('#title-field').val();
         eventObj.location = $('#location-field').val();
-        eventObj.date = `${$('#list-item-date').val()} ${$('#list-item-time').val()}`;
-        eventObj.description = $('#list-item-description').val();
+        eventObj.date = `${$('#event-date').val()} ${$('#event-time').val()}`;
+        eventObj.description = $('#event-description').val();
         eventObj.tags = getTags();
-        eventObj.eventImg = $('#list-item-image').attr('src');
+        eventObj.eventImg = $('#event-image').attr('src');
         eventObj.owner = mainCtrl.getUserData().id;
         eventObj.attending = [];
         eventObj.large = false;
@@ -289,7 +289,7 @@ const PageController = function (mainCtrl) {
 
       $('#change-image-modal').addClass('hide');
       $('#modal-overlay').addClass('hide');
-      $('#list-item-image').attr('src', newSrc);
+      $('#event-image').attr('src', newSrc);
 
       newSrc = '';
     });
@@ -464,7 +464,7 @@ const PageController = function (mainCtrl) {
       $(event.currentTarget).parent().addClass('hide');
       mainCtrl.attendEvent(event.currentTarget.dataset.id);
     });
-    $(`${element} .go-to-event-page-with-id`).one('click', (event) => {
+    $(`${element} .go-to-page-with-id`).one('click', (event) => {
       const id = event.currentTarget.dataset.id;
       const filename = event.currentTarget.dataset.page;
       const nextPage = `${filename}:${id}`;
