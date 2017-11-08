@@ -129,7 +129,6 @@ const PageController = function (mainCtrl) {
 
       /* If the suggested events are still show on the screen, don't refresh them.
       Just hide cancel button. */
-      // FIXME: Clicking on events doesn't work after canceling search by removing text manually.
       if (event.currentTarget.value.length < 1 && !$('#suggested-events').hasClass('hide')) {
         $('#cancel-search').addClass('hide');
       } else if (event.currentTarget.value.length < 1) {
