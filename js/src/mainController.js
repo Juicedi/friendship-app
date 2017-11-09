@@ -104,6 +104,9 @@ const MainController = (function () {
     changeEventOwner(id, newOwner) {
       dataCtrl.changeEventOwner(id, newOwner);
     },
+    sendMessage(id, message) {
+      dataCtrl.sendMessage(id, message);
+    },
 
     // Navigation functions
     getPrevPage() {
@@ -140,6 +143,9 @@ const MainController = (function () {
     },
     fillEventInfo(evtInfo) {
       pageCtrl.fillEventInfo(evtInfo);
+    },
+    updateChat(receivedMessage) {
+      pageCtrl.updateChat(receivedMessage);
     }
   };
 })();

@@ -1,19 +1,8 @@
 .chat-page {
   position: relative;
   z-index: 1;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: .9;
-    z-index: -1;
-    background: url(../img/bg/default-chat.jpg);
-    background-size: cover;
-  }
+  background: url(../img/bg/default-chat.jpg);
+  background-size: cover;
 
   .list-item {
     background-color: rgba(0, 161, 75, 0.33);
@@ -29,7 +18,6 @@
   }
 
   .list-item-date {
-
   }
 }
 

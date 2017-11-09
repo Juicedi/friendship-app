@@ -10,6 +10,7 @@ const DataController = function (mainCtrl) {
   let allEvents = 'empty';
   let allChats = 'empty';
   let allUsers = 'empty';
+  let allMessages = 'empty';
   let selectedFilters = [];
 
   function addFilter(item) {
@@ -253,21 +254,40 @@ const DataController = function (mainCtrl) {
     }
   }
 
+  /**
+   * Gets messages for a specific chat
+   *
+   * @param {String} id - Chat id
+   * @param {Function} callback - Run after messages have been collected
+   */
   function getChatMessages(id, callback) {
-    const url = 'data/messages.json';
-    $.ajax({
-      url,
-      success: (allMessages) => {
-        const chatMessages = allMessages[id];
-        callback(chatMessages);
-        return chatMessages;
-      },
-      error: () => {
-        console.log('Error: Couldn\'t get messages');
-      },
-    });
+    if (allMessages === 'empty') {
+      const url = 'data/messages.json';
+      $.ajax({
+        url,
+        success: (content) => {
+          allMessages = content;
+          const chatMessages = allMessages[id];
+          callback(chatMessages);
+          return chatMessages;
+        },
+        error: () => {
+          console.log('Error: Couldn\'t get messages');
+        },
+      });
+    } else {
+      const chatMessages = allMessages[id];
+      callback(chatMessages);
+      return chatMessages;
+    }
   }
 
+  /**
+   * Goes through the chats and combines their information with chat messages.
+   *
+   * @param {Array} chats - Array of chat objects and their information
+   * @param {Object} allMessages - Object with properties containing array of chat message objects
+   */
   function filterChatMessages(chats, allMessages) {
     const messages = {};
     for (let i = 0, len = chats.length; i < len; i++) {
@@ -302,6 +322,11 @@ const DataController = function (mainCtrl) {
     });
   }
 
+  /**
+   * Gets all chats the user is currently assigned to.
+   *
+   * @param {Function} callback - Callback function which is run after the data fetch
+   */
   function getChatList(callback) {
     if (allChats === 'empty') {
       const url = 'data/chats.json';
@@ -393,6 +418,25 @@ const DataController = function (mainCtrl) {
     allEvents[id].owner = newOwner;
   }
 
+  /**
+   * Send message to the database (and other users?)
+   *
+   * @param {String} id - Chat id where the message is sent
+   * @param {String} message - Message content
+   */
+  function sendMessage(id, message) {
+    const newMessage = {
+      id: Math.floor(Math.random() * 1000000),
+      content: message,
+      sender: userData.id,
+      nickname: userData.nickname,
+      date: Date()
+    };
+
+    allMessages[id].push(newMessage);
+    mainCtrl.updateChat(newMessage);
+  }
+
   return {
     getCategories(callback) {
       return getCategories(callback);
@@ -456,6 +500,9 @@ const DataController = function (mainCtrl) {
     },
     changeEventOwner(id, newOwner) {
       changeEventOwner(id, newOwner);
+    },
+    sendMessage(id, message) {
+      sendMessage(id, message);
     }
   };
 };

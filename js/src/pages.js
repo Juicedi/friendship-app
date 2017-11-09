@@ -6,6 +6,8 @@
  * @return {Object} - All of the controllers functions that are shared with other controllers
  */
 const PageController = function (mainCtrl) {
+  let currentChat = 'empty';
+
   /**
    * Creates a dropdown HTML string.
    *
@@ -109,6 +111,29 @@ const PageController = function (mainCtrl) {
     if (evtInfo.large === true) {
       $('#join-squad').removeClass('hide');
     }
+  }
+
+  /**
+   * Initializes the chat message input.
+   */
+  function initChatInput() {
+    $('#chat-message-input').on('keyup', () => {
+      if ($('#chat-message-input').val() !== '') {
+        const message = $('#chat-message-input').val();
+        if (event.keyCode === 13) {
+          mainCtrl.sendMessage(currentChat, message);
+          $('#chat-message-input').val('');
+        }
+      }
+    });
+
+    $('#send-message').on('click', () => {
+      if ($('#chat-message-input').val() !== '') {
+        const message = $('#chat-message-input').val();
+        mainCtrl.sendMessage(currentChat, message);
+        $('#chat-message-input').val('');
+      }
+    });
   }
 
   /**
@@ -463,7 +488,7 @@ const PageController = function (mainCtrl) {
    */
   function createMessageItem(message) {
     const template = `
-        <article class="list-item white-bg go-to-page-with-id" data-page="event_info" data-id="${event.id}">
+        <article class="list-item white-bg go-to-page-with-id" data-page="profile" data-id="${message.id}">
           <div class="list-item-image">
             <img src="build/img/users/${message.sender}.jpg" alt="list-item-thumbnail">
           </div>
@@ -549,6 +574,11 @@ const PageController = function (mainCtrl) {
     initSearchEventBtns(location);
   }
 
+  function updateChat(receivedMessage) {
+    const message = createMessageItem(receivedMessage);
+    $('#chat-messages').append(message);
+  }
+
   /**
    * Initialize the given page.
    *
@@ -606,6 +636,7 @@ const PageController = function (mainCtrl) {
         break;
       }
       case 'chat': {
+        currentChat = pageId;
         mainCtrl.getChatMessages(pageId, populateChatMessages);
         initNavigationBtns();
         break;
@@ -638,6 +669,9 @@ const PageController = function (mainCtrl) {
     },
     populateChatList(chats) {
       populateChatList(chats);
+    },
+    updateChat(receivedMessage) {
+      updateChat(receivedMessage);
     }
   };
 };

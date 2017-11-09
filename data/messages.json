@@ -1,12 +1,14 @@
 {
     "chat123": [
         {
+            "id": "123456789",
             "sender": "ducky101_123",
             "nickname": "Ducky101",
             "content": "Quack! Quack!",
             "date": "01-11-2017 12.00"
         },
         {
+            "id": "234567891",
             "sender": "ducky101_123",
             "nickname": "Ducky101",
             "content": "Quack!",
