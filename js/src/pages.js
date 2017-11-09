@@ -335,127 +335,6 @@ const PageController = function (mainCtrl) {
   }
 
   /**
-   * Create chat list item template.
-   *
-   * @param {Object} chat - Contains all the needed chat information.
-   * @returns HTML text with all of the correct texts inserted to it.
-   */
-  function createChatListItem(chat) {
-    const chatTemplate = `
-        <article class="list-item white-bg go-to-chat" data-page="chat" data-id="${chat.id}">
-          <div class="list-item-image">
-            <img src="build/img/users/${chat.messages.slice(-1)[0].sender}.jpg" alt="list-item-thumbnail">
-          </div>
-          <div class="list-item-texts">
-            <h4 class="list-item-title darkestGreen-text">${chat.name}</h4>
-            <p class="list-item-location darkGreen-text">${chat.messages.slice(-1)[0].content}</p>
-            <p class="list-item-date darkGreen-text">${chat.messages.slice(-1)[0].date}</p>
-          </div>
-        </article>
-    `;
-    return chatTemplate;
-  }
-
-  /**
-   * Create HTML template for event list item.
-   *
-   * @param {Object} event - Object containing all needed event information.
-   * @returns HTML text with all needed data inserted to it.
-   */
-  function createEventListItem(event) {
-    let ownText = '';
-    let joinBtn = '';
-    if (event.owner === mainCtrl.getUserData().id) {
-      ownText = `<h4 class="owner green-text ${event.own}">Own</h4>`;
-    }
-    if (event.addJoinBtn === true) {
-      joinBtn = `
-        <button class="main-btn green-bg join-btn" data-id="${event.id}">
-          <h4 class="white-text">Join</h4>
-        </button>
-      `;
-    }
-
-    const template = `
-        <article class="list-item white-bg go-to-page-with-id" data-page="event_info" data-id="${event.id}">
-          <div class="list-item-image">
-            <img src="${event.eventImg}" alt="list-item-thumbnail">
-          </div>
-          <div class="list-item-texts">
-            <h4 class="list-item-title darkestGreen-text">${event.title}</h4>
-            <p class="list-item-location darkGreen-text">${event.location}</p>
-            <p class="list-item-date darkGreen-text">${event.date}</p>
-            ${ownText}
-          </div>
-          ${joinBtn}
-        </article>
-      `;
-    return template;
-  }
-
-  function populateChatMessages() {
-    console.log('populating chat messages');
-  }
-
-  /**
-   * Show all of the user's chats on the chats page.
-   *
-   * @param {Array} chats - List of all of the chats the current user has.
-   */
-  function populateChatList(chats) {
-    let chatTemplate;
-
-    if (chats.length > 0) {
-      for (let i = 0, len = chats.length; i < len; i += 1) {
-        chatTemplate = createChatListItem(chats[i]);
-        $('#page-content').append(chatTemplate);
-      }
-    } else {
-      $('.no-chats-text').removeClass('hide');
-    }
-    initChatListItems();
-  }
-
-  /**
-   * Show all users own events and events s/he is currently attending.
-   *
-   * @param {Array} events - List of events to be shown on the users own events page.
-   */
-  function populateOwnEvents(events) {
-    let eventTemplate;
-
-    if (events.length > 0) {
-      for (let i = 0, len = events.length; i < len; i += 1) {
-        eventTemplate = createEventListItem(events[i]);
-        $('#page-content').append(eventTemplate);
-      }
-    } else {
-      $('.no-events-text').removeClass('hide');
-    }
-    initNavigationBtns();
-  }
-
-  /**
-   * Populates event list with search results.
-   *
-   * @param {Array} events - List of events to be shown on the list.
-   * @param {String} location - Location where events should be appended.
-   */
-  function populateSearchEvents(events, location) {
-    let eventTemplate;
-
-    $(location).html('');
-
-    for (let i = 0, len = events.length; i < len; i += 1) {
-      const event = events[i];
-      event.addJoinBtn = true;
-      eventTemplate = createEventListItem(event);
-      $(location).append(eventTemplate);
-    }
-    initSearchEventBtns(location);
-  }
-
-  /**
    * Initialize searched event list items and their buttons.
    *
    * @param {String} element - Element string determining what elements buttons should be initialized.
@@ -518,6 +397,159 @@ const PageController = function (mainCtrl) {
   }
 
   /**
+   * Create chat list item template.
+   *
+   * @param {Object} chat - Contains all the needed chat information.
+   * @returns HTML text with all of the correct texts inserted to it.
+   */
+  function createChatListItem(chat, messages) {
+    const chatTemplate = `
+        <article class="list-item white-bg go-to-chat" data-page="chat" data-id="${chat.id}">
+          <div class="list-item-image">
+            <img src="build/img/chats/${chat.id}.jpg" alt="list-item-thumbnail">
+          </div>
+          <div class="list-item-texts">
+            <h4 class="list-item-title darkestGreen-text">${chat.name}</h4>
+            <p class="list-item-location darkGreen-text">${messages.slice(-1)[0].content}</p>
+            <p class="list-item-date darkGreen-text">${messages.slice(-1)[0].date}</p>
+          </div>
+        </article>
+    `;
+    return chatTemplate;
+  }
+
+  /**
+   * Create HTML template for event list item.
+   *
+   * @param {Object} event - Object containing all needed event information.
+   * @returns HTML text with all needed data inserted to it.
+   */
+  function createEventListItem(event) {
+    let ownText = '';
+    let joinBtn = '';
+    if (event.owner === mainCtrl.getUserData().id) {
+      ownText = `<h4 class="owner green-text ${event.own}">Own</h4>`;
+    }
+    if (event.addJoinBtn === true) {
+      joinBtn = `
+        <button class="main-btn green-bg join-btn" data-id="${event.id}">
+          <h4 class="white-text">Join</h4>
+        </button>
+      `;
+    }
+
+    const template = `
+        <article class="list-item white-bg go-to-page-with-id" data-page="event_info" data-id="${event.id}">
+          <div class="list-item-image">
+            <img src="${event.eventImg}" alt="list-item-thumbnail">
+          </div>
+          <div class="list-item-texts">
+            <h4 class="list-item-title darkestGreen-text">${event.title}</h4>
+            <p class="list-item-location darkGreen-text">${event.location}</p>
+            <p class="list-item-date darkGreen-text">${event.date}</p>
+            ${ownText}
+          </div>
+          ${joinBtn}
+        </article>
+      `;
+    return template;
+  }
+
+  /**
+   * Creates HTML code for the chat message element.
+   *
+   * @param {Object} message - Object which has all needed chat information.
+   * @returns HTML template
+   */
+  function createMessageItem(message) {
+    const template = `
+        <article class="list-item white-bg go-to-page-with-id" data-page="event_info" data-id="${event.id}">
+          <div class="list-item-image">
+            <img src="build/img/users/${message.sender}.jpg" alt="list-item-thumbnail">
+          </div>
+          <div class="list-item-texts">
+            <h4 class="list-item-content">${message.content}</h4>
+            <p class="list-item-date">${message.date}</p>
+          </div>
+        </article>
+    `;
+    return template;
+  }
+
+  /**
+   * Puts chat messages to the DOM.
+   *
+   * @param {Array} messages - Array of the chats messages.
+   */
+  function populateChatMessages(messages) {
+    let messageTemplate = [];
+    console.log(messages);
+    for (let i = 0, len = messages.length; i < len; i++) {
+      messageTemplate = createMessageItem(messages[i]);
+      $('#chat-messages').append(messageTemplate);
+    }
+    initChatInput();
+  }
+
+  /**
+   * Show all of the user's chats on the chats page.
+   *
+   * @param {Array} chats - List of all of the chats the current user has.
+   */
+  function populateChatList(chatData) {
+    let chatTemplate;
+
+    if (chatData.chats.length > 0) {
+      for (let i = 0, len = chatData.chats.length; i < len; i += 1) {
+        chatTemplate = createChatListItem(chatData.chats[i], chatData.messages[chatData.chats[i].id]);
+        $('#page-content').append(chatTemplate);
+      }
+    } else {
+      $('.no-chats-text').removeClass('hide');
+    }
+    initChatListItems();
+  }
+
+  /**
+   * Show all users own events and events s/he is currently attending.
+   *
+   * @param {Array} events - List of events to be shown on the users own events page.
+   */
+  function populateOwnEvents(events) {
+    let eventTemplate;
+
+    if (events.length > 0) {
+      for (let i = 0, len = events.length; i < len; i += 1) {
+        eventTemplate = createEventListItem(events[i]);
+        $('#page-content').append(eventTemplate);
+      }
+    } else {
+      $('.no-events-text').removeClass('hide');
+    }
+    initNavigationBtns();
+  }
+
+  /**
+   * Populates event list with search results.
+   *
+   * @param {Array} events - List of events to be shown on the list.
+   * @param {String} location - Location where events should be appended.
+   */
+  function populateSearchEvents(events, location) {
+    let eventTemplate;
+
+    $(location).html('');
+
+    for (let i = 0, len = events.length; i < len; i += 1) {
+      const event = events[i];
+      event.addJoinBtn = true;
+      eventTemplate = createEventListItem(event);
+      $(location).append(eventTemplate);
+    }
+    initSearchEventBtns(location);
+  }
+
+  /**
    * Initialize the given page.
    *
    * @param {String} page - Current page and possibly an id for an event or chat (i.e. "event_info:event1234").
@@ -574,7 +606,7 @@ const PageController = function (mainCtrl) {
         break;
       }
       case 'chat': {
-        mainCtrl.getChatMessages(pageId);
+        mainCtrl.getChatMessages(pageId, populateChatMessages);
         initNavigationBtns();
         break;
       }

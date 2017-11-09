@@ -62,8 +62,8 @@ const MainController = (function () {
     getSearchResults(searchInput) {
       dataCtrl.getSearchResults(searchInput);
     },
-    getChatMessages(id) {
-      dataCtrl.getChatMessages(id);
+    getChatMessages(id, callback) {
+      dataCtrl.getChatMessages(id, callback);
     },
     getChatList() {
       dataCtrl.getChatList();

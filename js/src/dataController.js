@@ -253,22 +253,27 @@ const DataController = function (mainCtrl) {
     }
   }
 
-  function getChatMessages(id) {
-    // TODO: Add callback function, so this can be used by other functions as well.
-    if (allChats === 'empty') {
-      const url = 'data/messages.json';
-      $.ajax({
-        url,
-        success: (content) => {
-          const chatMessages = content[id];
-          console.log(chatMessages);
-          mainCtrl.populateChatMessages(chatMessages);
-        },
-        error: () => {
-          console.log('Error: Couldn\'t get messages');
-        },
-      });
+  function getChatMessages(id, callback) {
+    const url = 'data/messages.json';
+    $.ajax({
+      url,
+      success: (allMessages) => {
+        const chatMessages = allMessages[id];
+        callback(chatMessages);
+        return chatMessages;
+      },
+      error: () => {
+        console.log('Error: Couldn\'t get messages');
+      },
+    });
+  }
+
+  function filterChatMessages(chats, allMessages) {
+    const messages = {};
+    for (let i = 0, len = chats.length; i < len; i++) {
+      messages[chats[i].id] = allMessages[chats[i].id];
     }
+    return messages;
   }
 
   /**
@@ -278,16 +283,23 @@ const DataController = function (mainCtrl) {
    */
   function addMessages(chats, callback) {
     const chatData = {};
+    const url = 'data/messages.json';
     chatData.chats = chats;
     chatData.messages = {};
 
-    for (let i = 0, len = chats.length; i < len; i += 1) {
-      chatData.messages[chats[i].id] = getChatMessages(chats[i].id);
-    }
-    // FIXME: tarkista että kaikki tiedot menevät populatechatlistiin
-
-    callback(chatData);
-    return chatData;
+    $.ajax({
+      url,
+      success: (allMessages) => {
+        const chatMessages = filterChatMessages(chats, allMessages);
+        console.log(chatMessages);
+        chatData.messages = chatMessages;
+        callback(chatData);
+        return chatData;
+      },
+      error: () => {
+        console.log('Error: Couldn\'t get messages');
+      },
+    });
   }
 
   function getChatList(callback) {
@@ -309,7 +321,8 @@ const DataController = function (mainCtrl) {
     } else {
       const ownChats = filterChats(allChats);
       console.log(ownChats);
-      mainCtrl.populateChatList(ownChats);
+      callback(ownChats, mainCtrl.populateChatList);
+      return ownChats;
     }
   }
 
@@ -402,8 +415,8 @@ const DataController = function (mainCtrl) {
     getSearchResults(searchInput) {
       getSearchResults(searchInput);
     },
-    getChatMessages() {
-      getChatMessages();
+    getChatMessages(id, callback) {
+      getChatMessages(id, callback);
     },
     getChatList() {
       getChatList(addMessages);

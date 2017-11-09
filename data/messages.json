@@ -1,12 +1,16 @@
 {
-    "chat123": {
-        "messages": [
-            {
-                "sender": "ducky101_123",
-                "nickname": "Ducky101",
-                "content": "Quack! Quack!",
-                "date": "01-11-2017 12.00"
-            }
-        ]
-    }
+    "chat123": [
+        {
+            "sender": "ducky101_123",
+            "nickname": "Ducky101",
+            "content": "Quack! Quack!",
+            "date": "01-11-2017 12.00"
+        },
+        {
+            "sender": "ducky101_123",
+            "nickname": "Ducky101",
+            "content": "Quack!",
+            "date": "01-11-2017 13.00"
+        }
+    ]
 }

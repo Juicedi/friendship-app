@@ -14,6 +14,23 @@
     background: url(../img/bg/default-chat.jpg);
     background-size: cover;
   }
+
+  .list-item {
+    background-color: rgba(0, 161, 75, 0.33);
+
+    img {
+      border-radius: 50%;
+    }
+  }
+
+  .list-item-content,
+  .list-item-date {
+    color: white;
+  }
+
+  .list-item-date {
+
+  }
 }
 
 #chat-input-container {
