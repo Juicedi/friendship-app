@@ -33,7 +33,7 @@ const MainController = (function () {
   function startApplication() {
     console.log('Starting application');
     dataCtrl.getUserInfo('testeri');
-    navCtrl.getContent('chat_list');
+    navCtrl.getContent('profile');
   }
 
   return {
