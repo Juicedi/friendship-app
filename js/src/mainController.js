@@ -32,7 +32,7 @@ const MainController = (function () {
    */
   function startApplication() {
     console.log('Starting application');
-    dataCtrl.getUserInfo('testeri');
+    dataCtrl.setCurrentUser('testeri');
     navCtrl.getContent('profile');
   }
 
@@ -50,8 +50,8 @@ const MainController = (function () {
     getSuggestedEvents() {
       dataCtrl.getSuggestedEvents();
     },
-    getUserData() {
-      return dataCtrl.getUserData();
+    getCurrentUserData() {
+      return dataCtrl.getCurrentUserData();
     },
     getEventInfo(id, callback) {
       return dataCtrl.getEventInfo(id, callback);

@@ -161,7 +161,7 @@ const DataController = function (mainCtrl) {
    * @param {String} userName - Username which user information will be fetched.
    * @return {Object} - Returns all of the user information
    */
-  function getUserInfo(username) {
+  function setCurrentUser(username) {
     const url = 'data/users.json';
     $.ajax({
       url,
@@ -441,10 +441,10 @@ const DataController = function (mainCtrl) {
     getCategories(callback) {
       return getCategories(callback);
     },
-    getUserInfo(user) {
-      return getUserInfo(user);
+    setCurrentUser(user) {
+      return setCurrentUser(user);
     },
-    getUserData() {
+    getCurrentUserData() {
       return userData;
     },
     getUserEvents() {

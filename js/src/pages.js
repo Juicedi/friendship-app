@@ -82,7 +82,7 @@ const PageController = function (mainCtrl) {
    * @param {Object} evtInfo - Current pages event information.
    */
   function fillEventInfo(evtInfo) {
-    const uData = mainCtrl.getUserData();
+    const uData = mainCtrl.getCurrentUserData();
     $('#header-image img').attr('src', evtInfo.eventImg);
     $('#event-title').html(evtInfo.title);
     $('#event-location').html(evtInfo.location);
@@ -111,6 +111,10 @@ const PageController = function (mainCtrl) {
     if (evtInfo.large === true) {
       $('#join-squad').removeClass('hide');
     }
+  }
+
+  function fillUserData() {
+    console.log('filling info');
   }
 
   /**
@@ -216,7 +220,7 @@ const PageController = function (mainCtrl) {
       mainCtrl.leaveEvent(id);
     });
     $('.tag').on('dblclick', (event) => {
-      if (mainCtrl.getEventInfo(id).owner === mainCtrl.getUserData().id) {
+      if (mainCtrl.getEventInfo(id).owner === mainCtrl.getCurrentUserData().id) {
         const tag = event.currentTarget.innerHTML;
         event.currentTarget.parentNode.removeChild(event.currentTarget);
         mainCtrl.removeTag(id, tag);
@@ -300,7 +304,7 @@ const PageController = function (mainCtrl) {
         eventObj.description = $('#event-description').val();
         eventObj.tags = getTags();
         eventObj.eventImg = $('#event-image').attr('src');
-        eventObj.owner = mainCtrl.getUserData().id;
+        eventObj.owner = mainCtrl.getCurrentUserData().id;
         eventObj.attending = [];
         eventObj.large = false;
         eventObj.private = false;
@@ -452,7 +456,7 @@ const PageController = function (mainCtrl) {
   function createEventListItem(event) {
     let ownText = '';
     let joinBtn = '';
-    if (event.owner === mainCtrl.getUserData().id) {
+    if (event.owner === mainCtrl.getCurrentUserData().id) {
       ownText = `<h4 class="owner green-text ${event.own}">Own</h4>`;
     }
     if (event.addJoinBtn === true) {
@@ -605,7 +609,7 @@ const PageController = function (mainCtrl) {
         mainCtrl.getSuggestedEvents();
         initNavigationBtns();
         initSearchbar();
-        // TODO: Filter function
+        // TODO: Filter by date function
         break;
       }
       case 'event_info': {
@@ -627,6 +631,7 @@ const PageController = function (mainCtrl) {
         break;
       }
       case 'profile': {
+        mainCtrl.getCurrentUserData(fillUserData;
         initNavigationBtns();
         break;
       }
