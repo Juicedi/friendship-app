@@ -113,8 +113,19 @@ const PageController = function (mainCtrl) {
     }
   }
 
-  function fillUserData() {
-    console.log('filling info');
+  function fillProfileInfo(profileData) {
+    console.log(profileData);
+    const currentDate = new Date();
+    const birthDate = new Date(profileData.birth);
+    const age = currentDate.getFullYear() - birthDate.getFullYear();
+
+    $('#username').html(profileData.nickname);
+    $('#age-text span').html(age);
+    $('#gender-text span').html(profileData.gender);
+    $('#location p span').html(profileData.location);
+    $('#about-container p').html(profileData.description);
+
+    populateLovesHates(profileData);
   }
 
   /**
@@ -245,6 +256,27 @@ const PageController = function (mainCtrl) {
       console.log('Sent invitation');
     });
     // TODO: Add tags function
+  }
+
+  /**
+   * Initiates profile navigation bar.
+   */
+  function initProfileNav() {
+    $('.prof-nav-btn').on('click', (e) => {
+      const tab = e.currentTarget.dataset.tab;
+
+      $('.selected').removeClass('selected');
+      $(e.currentTarget).addClass('selected');
+      $('#detailed-information>div').addClass("hide");
+
+      if (tab === 'about') {
+        $('#about-container').removeClass("hide");
+      } else if (tab === 'loves') {
+        $('#loves-container').removeClass("hide");
+      } else if (tab === 'hates') {
+        $('#hates-container').removeClass("hide");
+      }
+    });
   }
 
   /**
@@ -578,6 +610,23 @@ const PageController = function (mainCtrl) {
     initSearchEventBtns(location);
   }
 
+  /**
+   * Fills profilepages loves and hates lists.
+   *
+   * @param {Object} profileData - Users profile data.
+   */
+  function populateLovesHates(profileData) {
+    const loves = profileData.loves;
+    const hates = profileData.hates;
+
+    for (let i = 0, len = loves.length; i < len; i++) {
+      $('#loves-container').append(`<div class="interest">${loves[i]}</div)`);
+    }
+    for (let i = 0, len = hates.length; i < len; i++) {
+      $('#hates-container').append(`<div class="interest">${hates[i]}</div)`);
+    }
+  }
+
   function updateChat(receivedMessage) {
     const message = createMessageItem(receivedMessage);
     $('#chat-messages').append(message);
@@ -631,7 +680,8 @@ const PageController = function (mainCtrl) {
         break;
       }
       case 'profile': {
-        mainCtrl.getCurrentUserData(fillUserData;
+        mainCtrl.getProfileInfo(pageId, fillProfileInfo);
+        initProfileNav();
         initNavigationBtns();
         break;
       }

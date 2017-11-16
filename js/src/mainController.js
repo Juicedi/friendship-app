@@ -33,7 +33,7 @@ const MainController = (function () {
   function startApplication() {
     console.log('Starting application');
     dataCtrl.setCurrentUser('testeri');
-    navCtrl.getContent('profile');
+    navCtrl.getContent('profile:own');
   }
 
   return {
@@ -55,6 +55,9 @@ const MainController = (function () {
     },
     getEventInfo(id, callback) {
       return dataCtrl.getEventInfo(id, callback);
+    },
+    getProfileInfo(userId, callback) {
+      dataCtrl.getProfileInfo(userId, callback);
     },
     getCategories(callback) {
       return dataCtrl.getCategories(callback);

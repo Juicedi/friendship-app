@@ -3,6 +3,8 @@
       "id":"ducky101_123",
       "nickname":"Ducky101",
       "email":"ducky@mail.fi",
+      "gender": "male",
+      "birth": 658752430464,
       "loves":[
          "camping",
          "fishing",
@@ -31,6 +33,8 @@
       "id":"user123",
       "nickname":"asdpasd",
       "email":"ducky@mail.fi",
+      "gender": "female",
+      "birth": 911213240222,
       "loves":[
          "camping",
          "fishing",
@@ -59,6 +63,8 @@
       "id":"user234",
       "nickname":"qwerty",
       "email":"ducky@mail.fi",
+      "gender": "female",
+      "birth": 469450065693,
       "loves":[
          "camping",
          "fishing",
@@ -87,6 +93,8 @@
       "id":"user345",
       "nickname":"dworak",
       "email":"ducky@mail.fi",
+      "birth": 311597271093,
+      "gender": "male",
       "loves":[
          "camping",
          "fishing",
@@ -115,6 +123,8 @@
       "id":"testeri",
       "nickname":"Topi",
       "email":"test@mail.fi",
+      "birth": 690288476845,
+      "gender": "male",
       "loves":[
          "camping",
          "fishing",

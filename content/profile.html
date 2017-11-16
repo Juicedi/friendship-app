@@ -10,33 +10,33 @@
   </article>
 
   <article id="profile-content">
-    <h2 id="username">Kimmo</h2>
+    <h2 id="username"></h2>
     <div id="general-information">
       <div id="age-and-gender">
-        <p id="age-text">Age: <span>21</span></p>
+        <p id="age-text">Age: <span>--</span></p>
         <p class="pipe">|</p>
-        <p id="gender-text">Gender: <span>Male</span></p>
+        <p id="gender-text">Gender: <span>--</span></p>
       </div>
       <div id="location">
-        <p>Location: <span>Helsinki</span></p>
+        <p>Location: <span>--</span></p>
       </div>
     </div>
 
     <div id="profile-navbar">
-      <h4>About</h4>
+      <h4 class="prof-nav-btn selected" data-tab="about">About</h4>
       <h4 class="pipe">|</h4>
-      <h4 class="selected">Loves</h4>
+      <h4 class="prof-nav-btn" data-tab="loves">Loves</h4>
       <h4 class="pipe">|</h4>
-      <h4>Hates</h4>
+      <h4 class="prof-nav-btn" data-tab="hates">Hates</h4>
     </div>
 
     <div id="detailed-information">
-      <div id="about-container" class="hide">
+      <div id="about-container">
         <h4>About me:</h4>
         <p></p>
       </div>
-      <div id="loves-container"></div>
-      <div id="hates-container"></div>
+      <div id="loves-container" class="hide"></div>
+      <div id="hates-container" class="hide"></div>
     </div>
   </article>
 </main>
@@ -46,7 +46,7 @@
     <img src="build/img/ui/zoom-out.png" alt="event-search" class="go-to-page" data-page="event_search">
     <img src="build/img/ui/calendar.png" alt="own-events" class="go-to-page" data-page="own_events">
     <img src="build/img/ui/email.png" alt="chats" class="go-to-page" data-page="chat_list">
-    <img src="build/img/ui/user_active.png" alt="profile" class="go-to-page" data-page="profile">
+    <img src="build/img/ui/user_active.png" alt="profile" class="go-to-page-with-id" data-page="profile" data-id="own">
     <img src="build/img/ui/bell.png" alt="notifications" class="go-to-page" data-page="notifications">
   </nav>
 </footer>

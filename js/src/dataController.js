@@ -167,7 +167,7 @@ const DataController = function (mainCtrl) {
       url,
       success: (content) => {
         userData = content[username];
-        console.log(userData);
+        console.log('current user: ' + userData.id);
         return userData;
       },
       error: () => {
@@ -199,6 +199,38 @@ const DataController = function (mainCtrl) {
       const events = filterUserEvents(allEvents);
       console.log(events);
       mainCtrl.populateOwnEvents(events);
+    }
+  }
+
+  function getProfileInfo(userId, callback) {
+    const url = 'data/users.json';
+    let user = userId;
+
+    if (userId) {
+      user = userData.id;
+    }
+
+    if (allUsers === 'empty') {
+      $.ajax({
+        url,
+        success: (content) => {
+          allUsers = content;
+          if (typeof callback === 'function') {
+            callback(allUsers[user]);
+          } else {
+            return allUsers[user];
+          }
+        },
+        error: () => {
+          console.log('Error: Couldn\'t get event informations');
+        },
+      });
+    } else {
+      if (typeof callback === 'function') {
+        callback(allUsers[user]);
+      } else {
+        return allUsers[user];
+      }
     }
   }
 
@@ -425,12 +457,13 @@ const DataController = function (mainCtrl) {
    * @param {String} message - Message content
    */
   function sendMessage(id, message) {
+    const currentDate = new Date();
     const newMessage = {
       id: Math.floor(Math.random() * 1000000),
       content: message,
       sender: userData.id,
       nickname: userData.nickname,
-      date: Date()
+      date: currentDate.getTime()
     };
 
     allMessages[id].push(newMessage);
@@ -452,6 +485,9 @@ const DataController = function (mainCtrl) {
     },
     getEventInfo(eventId, callback) {
       return getEventInfo(eventId, callback);
+    },
+    getProfileInfo(userId, callback) {
+      getProfileInfo(userId, callback);
     },
     getSuggestedEvents() {
       return getSuggestedEvents();
