@@ -8,12 +8,27 @@
     height: 15em;
   }
 
+  #profile-content {
+    position: relative;
+  }
+
   #username {
     margin: 1em 0 0 0;
   }
 
   #general-information {
     padding: 1em 0;
+  }
+
+  #contact-btn {
+    position: absolute;
+    height: 4em;
+    width: 4em;
+    background-color: $mainGreen;
+    top: 8em;
+    right: 2em;
+    border-radius: 50%;
+    color: white;
   }
 
   #location p,
@@ -47,6 +62,11 @@
   #about-container {
     text-align: left;
     padding: 1em 2em;
+
+    h4,
+    p {
+      margin: 0;
+    }
   }
 
   .interest {
