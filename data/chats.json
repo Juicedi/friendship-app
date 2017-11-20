@@ -13,5 +13,20 @@
                 "nicname": "Ducky_101"
             }
         ]
+    },
+    "event34534534;0": {
+        "id": "event34534534;0",
+        "name": "Sting",
+        "image": "build/chat/chat123.jpg",
+        "partisipants": [
+            {
+                "id": "testeri",
+                "nickname": "Topi"
+            },
+            {
+                "id": "ducky101_123",
+                "nicname": "Ducky_101"
+            }
+        ]
     }
 }

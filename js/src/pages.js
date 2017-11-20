@@ -108,8 +108,9 @@ const PageController = function (mainCtrl) {
       $('#leave-btn').addClass('hide');
     }
 
-    if (evtInfo.large === true) {
+    if (evtInfo.large === true && uData.chats.indexOf(evtInfo.id)) {
       $('#join-squad').removeClass('hide');
+      initSquadJoinBtn(evtInfo);
     }
   }
 
@@ -259,6 +260,17 @@ const PageController = function (mainCtrl) {
   }
 
   /**
+   * Initiates join squad button.
+   */
+  function initSquadJoinBtn(evtInfo) {
+    $('#join-squad').on('click', () => {
+      console.log('joining squad', evtInfo);
+      mainCtrl.joinSquad(evtInfo);
+      mainCtrl.changePage('chat_list');
+    });
+  }
+
+  /**
    * Initiates profile navigation bar.
    */
   function initProfileNav() {
@@ -400,19 +412,12 @@ const PageController = function (mainCtrl) {
    *
    * @param {String} element - Element string determining what elements buttons should be initialized.
    */
-  function initSearchEventBtns(element) {
-    $(`${element} .join-btn`).on('click', (event) => {
+  function initSearchEventBtns() {
+    initGotoEventBtns();
+    $('.join-btn').on('click', (event) => {
       event.stopPropagation();
       $(event.currentTarget).parent().addClass('hide');
       mainCtrl.attendEvent(event.currentTarget.dataset.id);
-    });
-    $(`${element} .go-to-page-with-id`).one('click', (event) => {
-      const id = event.currentTarget.dataset.id;
-      const filename = event.currentTarget.dataset.page;
-      const nextPage = `${filename}:${id}`;
-
-      console.log(`going to page: ${nextPage}`);
-      mainCtrl.changePage(nextPage);
     });
     $('#interests-btn').on('click', () => {
       mainCtrl.changePage('category_list');
@@ -425,6 +430,17 @@ const PageController = function (mainCtrl) {
         mainCtrl.changePage('event_search');
       });
     }
+  }
+
+  function initGotoEventBtns() {
+    $('.go-to-event-with-id').one('click', (event) => {
+      const id = event.currentTarget.dataset.id;
+      const filename = event.currentTarget.dataset.page;
+      const nextPage = `${filename}:${id}`;
+
+      console.log(`going to page: ${nextPage}`);
+      mainCtrl.changePage(nextPage);
+    });
   }
 
   /**
@@ -461,9 +477,18 @@ const PageController = function (mainCtrl) {
    * Create chat list item template.
    *
    * @param {Object} chat - Contains all the needed chat information.
+   * @param {Object} messages - Contains all the chat messages. Used to show the lates message.
    * @returns HTML text with all of the correct texts inserted to it.
    */
   function createChatListItem(chat, messages) {
+    let messageContent = '';
+    let messageDate = '';
+
+    if (messages.length > 0) {
+      messageContent = messages.slice(-1)[0].content;
+      messageDate = messages.slice(-1)[0].date;
+    }
+
     const chatTemplate = `
         <article class="list-item white-bg go-to-chat" data-page="chat" data-id="${chat.id}">
           <div class="list-item-image">
@@ -471,8 +496,8 @@ const PageController = function (mainCtrl) {
           </div>
           <div class="list-item-texts">
             <h4 class="list-item-title darkestGreen-text">${chat.name}</h4>
-            <p class="list-item-location darkGreen-text">${messages.slice(-1)[0].content}</p>
-            <p class="list-item-date darkGreen-text">${messages.slice(-1)[0].date}</p>
+            <p class="list-item-location darkGreen-text">${messageContent}</p>
+            <p class="list-item-date darkGreen-text">${messageDate}</p>
           </div>
         </article>
     `;
@@ -500,7 +525,7 @@ const PageController = function (mainCtrl) {
     }
 
     const template = `
-        <article class="list-item white-bg go-to-page-with-id" data-page="event_info" data-id="${event.id}">
+        <article class="list-item white-bg go-to-event-with-id" data-page="event_info" data-id="${event.id}">
           <div class="list-item-image">
             <img src="${event.eventImg}" alt="list-item-thumbnail">
           </div>
@@ -581,13 +606,15 @@ const PageController = function (mainCtrl) {
 
     if (events.length > 0) {
       for (let i = 0, len = events.length; i < len; i += 1) {
-        eventTemplate = createEventListItem(events[i]);
+        const event = events[i];
+        event.addJoinBtn = false;
+        eventTemplate = createEventListItem(event);
         $('#page-content').append(eventTemplate);
       }
     } else {
       $('.no-events-text').removeClass('hide');
     }
-    initNavigationBtns();
+    initGotoEventBtns();
   }
 
   /**
@@ -607,7 +634,7 @@ const PageController = function (mainCtrl) {
       eventTemplate = createEventListItem(event);
       $(location).append(eventTemplate);
     }
-    initSearchEventBtns(location);
+    initSearchEventBtns();
   }
 
   /**
@@ -641,6 +668,8 @@ const PageController = function (mainCtrl) {
     let pageName;
     let pageId;
 
+    initNavigationBtns();
+
     if (page.indexOf(':') !== -1) {
       pageName = page.split(':')[0];
       pageId = page.split(':')[1];
@@ -656,7 +685,6 @@ const PageController = function (mainCtrl) {
       }
       case 'event_search': {
         mainCtrl.getSuggestedEvents();
-        initNavigationBtns();
         initSearchbar();
         // TODO: Filter by date function
         break;
@@ -664,40 +692,33 @@ const PageController = function (mainCtrl) {
       case 'event_info': {
         mainCtrl.getEventInfo(pageId, initEventInfoBtns);
         initModalBtns();
-        initNavigationBtns();
         initEventInfoBtns(pageId);
         break;
       }
       case 'create_event': {
         initCreateEventBtns();
         initModalBtns();
-        initNavigationBtns();
         break;
       }
       case 'category_list': {
         mainCtrl.getCategories(addAllDropdowns);
-        initNavigationBtns();
         break;
       }
       case 'profile': {
         mainCtrl.getProfileInfo(pageId, fillProfileInfo);
         initProfileNav();
-        initNavigationBtns();
         break;
       }
       case 'chat_list': {
         mainCtrl.getChatList();
-        initNavigationBtns();
         break;
       }
       case 'chat': {
         currentChat = pageId;
         mainCtrl.getChatMessages(pageId, populateChatMessages);
-        initNavigationBtns();
         break;
       }
       default: {
-        initNavigationBtns();
         break;
       }
     }

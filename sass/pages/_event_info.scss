@@ -4,7 +4,7 @@
   .positioning {
     min-height: 100%;
   }
-  article {
+  article:not(#image-top-bar) {
     padding: 0.3em 0.8em;
   }
 

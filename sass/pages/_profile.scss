@@ -44,6 +44,9 @@
 
   #profile-navbar {
     background-color: $lightGreen;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 
     h4 {
       display: inline-block;

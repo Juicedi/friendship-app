@@ -401,6 +401,60 @@ const DataController = function (mainCtrl) {
     mainCtrl.populateSearchEvents(found, '#search-results');
   }
 
+  /**
+   * Join or create chat for an event or squad.
+   */
+  function joinEventChat(eventId) {
+    const userInfo = {
+      id: userData.id,
+      name: userData.name
+    };
+    console.log('joining event chat');
+
+    if (allChats === 'empty') {
+      const url = 'data/chats.json';
+
+      $.ajax({
+        url,
+        success: (content) => {
+          allChats = content;
+
+          if (typeof allChats[eventId] === 'undefined') {
+            allChats[eventId] = {
+              id: eventId,
+              name: allEvents[eventId].name,
+              image: `build/chat/${eventId}.jpg`,
+              partisipants: []
+            };
+            allMessages[eventId] = [];
+          }
+
+          userData.chats.push(eventId);
+          allChats[eventId].partisipants.push(userInfo);
+        },
+        error: () => {
+          console.log('Error: Couldn\'t get event informations');
+        },
+      });
+    } else {
+      if (typeof allChats[eventId] === 'undefined') {
+        allChats[eventId] = {
+          id: eventId,
+          name: allEvents[eventId].name,
+          image: `build/chat/${eventId}.jpg`,
+          partisipants: []
+        };
+      }
+
+      userData.chats.push(eventId);
+      allChats[eventId].partisipants.push(userInfo);
+    }
+  }
+
+  /**
+   * Adds user to the event participant list and eventChat.
+   * @param {String} id - Event id given as a string.
+   */
   function attendEvent(id) {
     const index = userData.eventsAttending.indexOf(id);
 
@@ -408,6 +462,8 @@ const DataController = function (mainCtrl) {
       userData.eventsAttending.push(id);
       allEvents[id].attending.push(userData.id);
     }
+
+    joinEventChat(id);
     console.log(userData.eventsAttending);
   }
 
@@ -426,6 +482,10 @@ const DataController = function (mainCtrl) {
     console.log('Added attendee' + name);
   }
 
+  /**
+   * Removes user from given event.
+   * @param {String} id - Event id given as a string.
+   */
   function leaveEvent(id) {
     const index = userData.eventsAttending.indexOf(id);
     userData.eventsAttending.splice(index, 1);
@@ -469,6 +529,7 @@ const DataController = function (mainCtrl) {
     allMessages[id].push(newMessage);
     mainCtrl.updateChat(newMessage);
   }
+
 
   return {
     getCategories(callback) {
