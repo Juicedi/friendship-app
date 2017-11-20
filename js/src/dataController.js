@@ -335,23 +335,32 @@ const DataController = function (mainCtrl) {
    */
   function addMessages(chats, callback) {
     const chatData = {};
-    const url = 'data/messages.json';
     chatData.chats = chats;
     chatData.messages = {};
 
-    $.ajax({
-      url,
-      success: (allMessages) => {
-        const chatMessages = filterChatMessages(chats, allMessages);
-        console.log(chatMessages);
-        chatData.messages = chatMessages;
-        callback(chatData);
-        return chatData;
-      },
-      error: () => {
-        console.log('Error: Couldn\'t get messages');
-      },
-    });
+    if (allMessages === 'empty') {
+      const url = 'data/messages.json';
+      $.ajax({
+        url,
+        success: (content) => {
+          allMessages = content;
+          const chatMessages = filterChatMessages(chats, allMessages);
+          console.log(chatMessages);
+          chatData.messages = chatMessages;
+          callback(chatData);
+          return chatData;
+        },
+        error: () => {
+          console.log('Error: Couldn\'t get messages');
+        },
+      });
+    } else {
+      const chatMessages = filterChatMessages(chats, allMessages);
+      console.log(chatMessages);
+      chatData.messages = chatMessages;
+      callback(chatData);
+      return chatData;
+    }
   }
 
   /**
@@ -402,7 +411,7 @@ const DataController = function (mainCtrl) {
   }
 
   /**
-   * Join or create chat for an event or squad.
+   * Join or create chat for an event.
    */
   function joinEventChat(eventId) {
     const userInfo = {
@@ -440,10 +449,11 @@ const DataController = function (mainCtrl) {
       if (typeof allChats[eventId] === 'undefined') {
         allChats[eventId] = {
           id: eventId,
-          name: allEvents[eventId].name,
-          image: `build/chat/${eventId}.jpg`,
+          name: allEvents[eventId].title,
+          image: `build/chats/${eventId}.jpg`,
           partisipants: []
         };
+        allMessages[eventId] = [];
       }
 
       userData.chats.push(eventId);
@@ -488,7 +498,16 @@ const DataController = function (mainCtrl) {
    */
   function leaveEvent(id) {
     const index = userData.eventsAttending.indexOf(id);
+    const cIndex = userData.chats.indexOf(id);
     userData.eventsAttending.splice(index, 1);
+
+    // Also leave the event chat
+    userData.chats.splice(cIndex, 1);
+    for (let i = 0, len = allChats[id].partisipants.length; i < len; i++) {
+      if (allChats[id].partisipants[i].id === userData.id) {
+        allChats[id].partisipants.splice(i, 1);
+      }
+    }
     console.log(userData.eventsAttending);
   }
 
@@ -530,8 +549,38 @@ const DataController = function (mainCtrl) {
     mainCtrl.updateChat(newMessage);
   }
 
-
   return {
+    initTempData() {
+      const url = [
+        'data/categories.json',
+        'data/events.json',
+        'data/chats.json',
+        'data/users.json',
+        'data/messages.json'
+      ];
+
+      for (let i = 0, len = url.length; i < len; i++) {
+        $.ajax({
+          url: url[i],
+          success: (content) => {
+            if (i === 0) {
+              categories = content;
+            } else if (i === 1) {
+              allEvents = content;
+            } else if (i === 2) {
+              allChats = content;
+            } else if (i === 3) {
+              allUsers = content;
+            } else if (i === 4) {
+              allMessages = content;
+            }
+          },
+          error: () => {
+            console.log('Error: Couldn\'t get event informations');
+          },
+        });
+      }
+    },
     getCategories(callback) {
       return getCategories(callback);
     },

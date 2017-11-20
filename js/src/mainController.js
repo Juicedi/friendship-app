@@ -33,6 +33,7 @@ const MainController = (function () {
   function startApplication() {
     console.log('Starting application');
     dataCtrl.setCurrentUser('testeri');
+    dataCtrl.initTempData();
     navCtrl.getContent('profile:own');
   }
 
