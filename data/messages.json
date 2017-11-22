@@ -1,19 +1,27 @@
 {
-    "chat123": [
-        {
-            "id": "123456789",
-            "sender": "ducky101_123",
-            "nickname": "Ducky101",
-            "content": "Quack! Quack!",
-            "date": "01-11-2017 12.00"
-        },
-        {
-            "id": "234567891",
-            "sender": "ducky101_123",
-            "nickname": "Ducky101",
-            "content": "Quack!",
-            "date": "01-11-2017 13.00"
-        }
-    ],
-    "event34534534;0": []
+  "chat123": [
+    {
+      "messageId": "123456789",
+      "sender": "ducky101_123",
+      "nickname": "Ducky101",
+      "content": "Quack! Quack!",
+      "date": "01-11-2017 12.00"
+    },
+    {
+      "messageId": "234567891",
+      "sender": "ducky101_123",
+      "nickname": "Ducky101",
+      "content": "Quack!",
+      "date": "01-11-2017 13.00"
+    }
+  ],
+  "squad12344567": [
+    {
+      "messageId": "234567891",
+      "sender": "ducky101_123",
+      "nickname": "Ducky101",
+      "content": "Quack!",
+      "date": "01-11-2017 13.00"
+    }
+  ]
 }

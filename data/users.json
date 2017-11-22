@@ -1,154 +1,154 @@
 {
-   "ducky101_123":{
-      "id":"ducky101_123",
-      "nickname":"Ducky101",
-      "email":"ducky@mail.fi",
-      "gender": "male",
-      "birth": 658752430464,
-      "loves":[
-         "camping",
-         "fishing",
-         "rock"
-      ],
-      "hates":[
-         "pop"
-      ],
-      "description":"Hello I'm Ducky101",
-      "location":"Helsinki",
-      "friends":[
-         234,
-         1234,
-         4356
-      ],
-      "searchRange":12,
-      "eventsAttending":[
-         "event123"
-      ],
-      "chatMute":false,
-      "chats":[
-         "chat123"
-      ]
-   },
-   "user123":{
-      "id":"user123",
-      "nickname":"asdpasd",
-      "email":"ducky@mail.fi",
-      "gender": "female",
-      "birth": 911213240222,
-      "loves":[
-         "camping",
-         "fishing",
-         "rock"
-      ],
-      "hates":[
-         "pop"
-      ],
-      "description":"Hello I'm Ducky101",
-      "location":"Helsinki",
-      "friends":[
-         234,
-         1234,
-         4356
-      ],
-      "searchRange":12,
-      "eventsAttending":[
-         "event123"
-      ],
-      "chatMute":false,
-      "chats":[
-         "chat123"
-      ]
-   },
-   "user234":{
-      "id":"user234",
-      "nickname":"qwerty",
-      "email":"ducky@mail.fi",
-      "gender": "female",
-      "birth": 469450065693,
-      "loves":[
-         "camping",
-         "fishing",
-         "rock"
-      ],
-      "hates":[
-         "pop"
-      ],
-      "description":"Hello I'm Ducky101",
-      "location":"Helsinki",
-      "friends":[
-         234,
-         1234,
-         4356
-      ],
-      "searchRange":12,
-      "eventsAttending":[
-         "event123"
-      ],
-      "chatMute":false,
-      "chats":[
-         "chat123"
-      ]
-   },
-   "user345":{
-      "id":"user345",
-      "nickname":"dworak",
-      "email":"ducky@mail.fi",
-      "birth": 311597271093,
-      "gender": "male",
-      "loves":[
-         "camping",
-         "fishing",
-         "rock"
-      ],
-      "hates":[
-         "pop"
-      ],
-      "description":"Hello I'm Ducky101",
-      "location":"Helsinki",
-      "friends":[
-         234,
-         1234,
-         4356
-      ],
-      "searchRange":12,
-      "eventsAttending":[
-         "event123"
-      ],
-      "chatMute":false,
-      "chats":[
-         "chat123"
-      ]
-   },
-   "testeri":{
-      "id":"testeri",
-      "nickname":"Topi",
-      "email":"test@mail.fi",
-      "birth": 690288476845,
-      "gender": "male",
-      "loves":[
-         "camping",
-         "fishing",
-         "rock"
-      ],
-      "hates":[
-         "pop"
-      ],
-      "description":"Hello I'm Ducky101",
-      "location":"Helsinki",
-      "friends":[
-         234,
-         1234,
-         4356
-      ],
-      "searchRange":12,
-      "eventsAttending":[
-         "event123",
-         "event34534534"
-      ],
-      "chatMute":false,
-      "chats":[
-         "chat123",
-         "event34534534;0"
-      ]
-   }
+  "ducky101_123": {
+    "id": "ducky101_123",
+    "nickname": "Ducky101",
+    "email": "ducky@mail.fi",
+    "gender": "male",
+    "birth": 658752430464,
+    "loves": [
+      "camping",
+      "fishing",
+      "rock"
+    ],
+    "hates": [
+      "pop"
+    ],
+    "description": "Hello I'm Ducky101",
+    "location": "Helsinki",
+    "friends": [
+      234,
+      1234,
+      4356
+    ],
+    "searchRange": 12,
+    "eventsAttending": [
+      "event123"
+    ],
+    "chatMute": false,
+    "chats": [
+      "chat123"
+    ]
+  },
+  "user123": {
+    "id": "user123",
+    "nickname": "asdpasd",
+    "email": "ducky@mail.fi",
+    "gender": "female",
+    "birth": 911213240222,
+    "loves": [
+      "camping",
+      "fishing",
+      "rock"
+    ],
+    "hates": [
+      "pop"
+    ],
+    "description": "Hello I'm Ducky101",
+    "location": "Helsinki",
+    "friends": [
+      234,
+      1234,
+      4356
+    ],
+    "searchRange": 12,
+    "eventsAttending": [
+      "event123"
+    ],
+    "chatMute": false,
+    "chats": [
+      "chat123"
+    ]
+  },
+  "user234": {
+    "id": "user234",
+    "nickname": "qwerty",
+    "email": "ducky@mail.fi",
+    "gender": "female",
+    "birth": 469450065693,
+    "loves": [
+      "camping",
+      "fishing",
+      "rock"
+    ],
+    "hates": [
+      "pop"
+    ],
+    "description": "Hello I'm Ducky101",
+    "location": "Helsinki",
+    "friends": [
+      234,
+      1234,
+      4356
+    ],
+    "searchRange": 12,
+    "eventsAttending": [
+      "event123"
+    ],
+    "chatMute": false,
+    "chats": [
+      "chat123"
+    ]
+  },
+  "user345": {
+    "id": "user345",
+    "nickname": "dworak",
+    "email": "ducky@mail.fi",
+    "birth": 311597271093,
+    "gender": "male",
+    "loves": [
+      "camping",
+      "fishing",
+      "rock"
+    ],
+    "hates": [
+      "pop"
+    ],
+    "description": "Hello I'm Ducky101",
+    "location": "Helsinki",
+    "friends": [
+      234,
+      1234,
+      4356
+    ],
+    "searchRange": 12,
+    "eventsAttending": [
+      "event123"
+    ],
+    "chatMute": false,
+    "chats": [
+      "chat123"
+    ]
+  },
+  "testeri": {
+    "id": "testeri",
+    "nickname": "Topi",
+    "email": "test@mail.fi",
+    "birth": 690288476845,
+    "gender": "male",
+    "loves": [
+      "camping",
+      "fishing",
+      "rock"
+    ],
+    "hates": [
+      "pop"
+    ],
+    "description": "Hello I'm Ducky101",
+    "location": "Helsinki",
+    "friends": [
+      234,
+      1234,
+      4356
+    ],
+    "searchRange": 12,
+    "eventsAttending": [
+      "event123",
+      "event34534534"
+    ],
+    "chatMute": false,
+    "chats": [
+      "chat123",
+      "squad12344567"
+    ]
+  }
 }

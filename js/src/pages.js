@@ -17,13 +17,13 @@ const PageController = function (mainCtrl) {
    */
   function createDropdown(dropdownCategory, dropdownData) {
     let dropdownTemplate = `<div class="dropdown">
-    
+
     <h3 class="dropdown-text green-bg white-text">
       ${dropdownCategory}
       <i class="fa fa-chevron-down white-text dropdown-arrow down" aria-hidden="true"></i>
       <i class="fa fa-chevron-right white-text dropdown-arrow right" aria-hidden="true"></i>
     </h3>
-      
+
     <ul class="dropdown-list">`;
 
     dropdownData.forEach(function (interest) {
@@ -265,7 +265,7 @@ const PageController = function (mainCtrl) {
   function initSquadJoinBtn(evtInfo) {
     $('#join-squad').on('click', () => {
       console.log('joining squad', evtInfo);
-      mainCtrl.joinSquad(evtInfo);
+      mainCtrl.joinSquadChat(evtInfo);
       mainCtrl.changePage('chat_list');
     });
   }
@@ -490,9 +490,9 @@ const PageController = function (mainCtrl) {
     }
 
     const chatTemplate = `
-        <article class="list-item white-bg go-to-chat" data-page="chat" data-id="${chat.id}">
+        <article class="list-item white-bg go-to-chat" data-page="chat" data-id="${chat.chatId}">
           <div class="list-item-image">
-            <img src="build/img/chats/${chat.id}.jpg" alt="list-item-thumbnail">
+            <img src="build/img/chats/${chat.chatId}.jpg" alt="list-item-thumbnail">
           </div>
           <div class="list-item-texts">
             <h4 class="list-item-title darkestGreen-text">${chat.name}</h4>

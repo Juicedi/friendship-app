@@ -323,7 +323,7 @@ const DataController = function (mainCtrl) {
   function filterChatMessages(chats, allMessages) {
     const messages = {};
     for (let i = 0, len = chats.length; i < len; i++) {
-      messages[chats[i].id] = allMessages[chats[i].id];
+      messages[chats[i].id] = allMessages[chats[i].chatId];
     }
     return messages;
   }
@@ -411,6 +411,50 @@ const DataController = function (mainCtrl) {
   }
 
   /**
+   * Check if event has available squads.
+   *
+   * @param {String} eventId - Events id.
+   */
+  function checkEventChats(eventInfo) {
+    for (let i = 0, len = eventInfo.chats.length; i < len; i++) {
+      const userNum = allChats[eventInfo.chats[i]].partisipants.length;
+
+      if (userNum > 0 && userNum < 6) {
+        return allChats[eventInfo.chats[i]];
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Join or create squad for an event.
+   */
+  function joinSquadChat(eventInfo) {
+    const randomNum = Math.floor(Math.random() * 1000000);
+    let squad = checkEventChats(eventInfo).chatId;
+    const userInfo = {
+      id: userData.id,
+      name: userData.name
+    };
+
+    if (squad === null) {
+      squad = eventInfo.id + randomNum;
+      allChats[squad] = {
+        eventId: eventInfo.id,
+        chatId: squad,
+        name: eventInfo.title,
+        image: `build/chats/${eventInfo.id}.jpg`,
+        partisipants: []
+      };
+      allMessages[squad] = [];
+    }
+
+    userData.chats.push(squad);
+    allChats[squad].partisipants.push(userInfo);
+  }
+
+  /**
    * Join or create chat for an event.
    */
   function joinEventChat(eventId) {
@@ -448,7 +492,8 @@ const DataController = function (mainCtrl) {
     } else {
       if (typeof allChats[eventId] === 'undefined') {
         allChats[eventId] = {
-          id: eventId,
+          eventId,
+          chatId: eventId,
           name: allEvents[eventId].title,
           image: `build/chats/${eventId}.jpg`,
           partisipants: []
@@ -473,7 +518,9 @@ const DataController = function (mainCtrl) {
       allEvents[id].attending.push(userData.id);
     }
 
-    joinEventChat(id);
+    if (allEvents[id].large === false) {
+      joinEventChat(id);
+    }
     console.log(userData.eventsAttending);
   }
 
@@ -498,14 +545,32 @@ const DataController = function (mainCtrl) {
    */
   function leaveEvent(id) {
     const index = userData.eventsAttending.indexOf(id);
-    const cIndex = userData.chats.indexOf(id);
-    userData.eventsAttending.splice(index, 1);
+    const chatKeys = Object.keys(allChats);
+    const chatIndex = userData.chats.indexOf(id);
+
+    if (index !== -1) {
+      userData.eventsAttending.splice(index, 1);
+    }
 
     // Also leave the event chat
-    userData.chats.splice(cIndex, 1);
-    for (let i = 0, len = allChats[id].partisipants.length; i < len; i++) {
-      if (allChats[id].partisipants[i].id === userData.id) {
-        allChats[id].partisipants.splice(i, 1);
+    if (chatIndex !== -1) {
+      userData.chats.splice(chatIndex, 1);
+    }
+
+    for (let i = 0, len = chatKeys.length; i < len; i++) {
+      if (allChats[chatKeys[i]].eventId === id) {
+        const bigChatIndex = userData.chats.indexOf(chatKeys[i]);
+        const partisipants = allChats[chatKeys[i]].partisipants;
+
+        if (chatIndex === -1 && bigChatIndex !== -1) {
+          userData.chats.splice(bigChatIndex, 1);
+        }
+
+        for (let j = 0; j < partisipants.length; j++) {
+          if (partisipants[j].id === userData.id) {
+            partisipants.splice(j, 1);
+          }
+        }
       }
     }
     console.log(userData.eventsAttending);
@@ -628,6 +693,9 @@ const DataController = function (mainCtrl) {
     },
     clearFilters() {
       clearFilters();
+    },
+    joinSquadChat(eventInfo) {
+      joinSquadChat(eventInfo);
     },
     attendEvent(id) {
       attendEvent(id);

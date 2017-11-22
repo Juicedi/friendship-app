@@ -75,6 +75,9 @@ const MainController = (function () {
     createEvent(data) {
       dataCtrl.createEvent(data);
     },
+    joinSquadChat(eventInfo) {
+      dataCtrl.joinSquadChat(eventInfo);
+    },
     eventPrivacyToggle(id) {
       dataCtrl.eventPrivacyToggle(id);
     },

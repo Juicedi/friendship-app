@@ -1,43 +1,42 @@
 {
   "event34534534": {
     "id": "event34534534",
-    "title":"Sting",
-    "eventImg":"build/img/content/sting.jpg",
-    "date":"28.09.2017",
-    "location":"Helsinki",
+    "title": "Sting",
+    "eventImg": "build/img/content/sting.jpg",
+    "date": "28.09.2017",
+    "location": "Helsinki",
     "description": "Buy tickets for an upcoming Sting concert near you. List of all Sting tickets and tour dates for 2017.",
     "tickets": "www.ticketmaster.com",
-    "private":false,
-    "large":true,
-    "attending":[
+    "private": false,
+    "large": true,
+    "attending": [
       "testeri",
       "ducky101",
       "alan"
     ],
-    "tags":[
+    "owner": "someone",
+    "chats": [
+      "squad12344567"
+    ],
+    "tags": [
       "music",
       "rock",
       "pop"
-    ],
-    "owner":"someone",
-    "groupsIds":[
-      "sting_123",
-      "sting_54395"
     ]
   },
   "event345": {
     "id": "event345",
-    "title":"LARP",
-    "eventImg":"https://i.ytimg.com/vi/cTJjdjn7QPc/maxresdefault.jpg",
-    "date":"28.11.2017",
-    "location":"Espoo",
+    "title": "LARP",
+    "eventImg": "https://i.ytimg.com/vi/cTJjdjn7QPc/maxresdefault.jpg",
+    "date": "28.11.2017",
+    "location": "Espoo",
     "description": "Feast your eyes on 30 minutes of League of Legends Larp Footage!",
     "private": false,
-    "large":false,
-    "attending":[
-    ],
-    "owner":"alan",
-    "tags":[
+    "large": false,
+    "attending": [],
+    "owner": "alan",
+    "chats": [],
+    "tags": [
       "larp",
       "roleplaying",
       "outdoors",
@@ -48,69 +47,70 @@
   },
   "eventArch": {
     "id": "eventArch",
-    "title":"Archery training",
-    "eventImg":"//img.grouponcdn.com/iam/nkKNf9vTEzfS65GM8jYy/5n-2048x1229/v1/c700x420.jpg",
-    "date":"12.11.2017",
-    "location":"Tampere",
+    "title": "Archery training",
+    "eventImg": "//img.grouponcdn.com/iam/nkKNf9vTEzfS65GM8jYy/5n-2048x1229/v1/c700x420.jpg",
+    "date": "12.11.2017",
+    "location": "Tampere",
     "description": "The October NCEA Training Camp will start on Friday, October 20th at noon (for those who can be there at that time).  We will be training at the Minnesota Sportsman Club in Zimmerman, MN all three days (Friday Noon - 6, Saturday 9-5, Sunday 8-2 or as decided by coaches).  Please go to the Minnesota Sportsman club website (www.minnesotasportsmensclub.com) for directions & you can also check our venues on NCEA page here for the location.  There is a block of rooms at the Country Inn & Suites in Elk River under NCEA for Friday & Saturday nights.",
     "private": false,
-    "large":false,
-    "attending":[
-    ],
-    "owner":"alan",
-    "tags":[
+    "large": false,
+    "attending": [],
+    "owner": "alan",
+    "chats": [],
+    "tags": [
       "outdoors",
       "archery"
     ]
   },
   "eventBas": {
     "id": "eventBas",
-    "title":"Basketballin",
-    "eventImg":"//thecatholicspirit.com/wp-content/uploads/2012/03/basketball.jpg",
-    "date":"15.12.2017",
-    "location":"Tampere",
+    "title": "Basketballin",
+    "eventImg": "//thecatholicspirit.com/wp-content/uploads/2012/03/basketball.jpg",
+    "date": "15.12.2017",
+    "location": "Tampere",
     "description": "The Basketball Tournament is a 5-on-5, winner take all tournament with a grand prize of $2 million.",
     "private": false,
-    "large":false,
-    "attending":[
-    ],
-    "owner":"alan",
-    "tags":[
+    "large": false,
+    "attending": [],
+    "owner": "alan",
+    "chats": [],
+    "tags": [
       "basketball",
       "sports"
     ]
   },
   "event234": {
     "id": "event234",
-    "title":"Chess match",
-    "eventImg":"//upload.wikimedia.org/wikipedia/commons/thumb/6/6f/ChessSet.jpg/375px-ChessSet.jpg",
-    "date":"28.11.2017",
-    "location":"Tampere",
+    "title": "Chess match",
+    "eventImg": "//upload.wikimedia.org/wikipedia/commons/thumb/6/6f/ChessSet.jpg/375px-ChessSet.jpg",
+    "date": "28.11.2017",
+    "location": "Tampere",
     "description": "Top favorite Globus and sixth seed Odlar Yurdu started with four wins and will face each other in round five of the European Club Cup in Göynük/Antalya, Turkey.",
     "private": false,
-    "large":false,
-    "attending":[
-    ],
-    "owner":"alan",
-    "tags":[
+    "large": false,
+    "attending": [],
+    "owner": "alan",
+    "chats": [],
+    "tags": [
       "chess",
       "boardgames"
     ]
   },
   "event123": {
     "id": "event123",
-    "title":"Camping",
-    "eventImg":"build/img/content/tent.jpg",
-    "date":"28.10.2017",
-    "location":"Hämeenlinna",
+    "title": "Camping",
+    "eventImg": "build/img/content/tent.jpg",
+    "date": "28.10.2017",
+    "location": "Hämeenlinna",
     "description": "Weekend long camping trip in a forest near Hämeenlinna. Everyone has to bring their own things. We will take the group to the camping spot from a parking lot by the forest. Be there!",
-    "private":true,
-    "large":false,
-    "attending":[
+    "private": true,
+    "large": false,
+    "attending": [
       "Alan"
     ],
-    "owner":"testeri",
-    "tags":[
+    "owner": "testeri",
+    "chats": [],
+    "tags": [
       "outdoors",
       "camping",
       "fishing"

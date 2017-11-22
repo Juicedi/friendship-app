@@ -1,32 +1,34 @@
 {
-    "chat123": {
-        "id": "chat123",
-        "name": "testing chat",
-        "image": "build/chat/chat123.jpg",
-        "partisipants": [
-            {
-                "id": "testeri",
-                "nickname": "Topi"
-            },
-            {
-                "id": "ducky101_123",
-                "nicname": "Ducky_101"
-            }
-        ]
-    },
-    "event34534534;0": {
-        "id": "event34534534;0",
-        "name": "Sting",
-        "image": "build/chat/chat123.jpg",
-        "partisipants": [
-            {
-                "id": "testeri",
-                "nickname": "Topi"
-            },
-            {
-                "id": "ducky101_123",
-                "nicname": "Ducky_101"
-            }
-        ]
-    }
+  "chat123": {
+    "eventId": "chat123",
+    "chatId": "chat123",
+    "name": "testing chat",
+    "image": "build/chat/chat123.jpg",
+    "partisipants": [
+      {
+        "id": "testeri",
+        "nickname": "Topi"
+      },
+      {
+        "id": "ducky101_123",
+        "nickname": "Ducky_101"
+      }
+    ]
+  },
+  "squad12344567": {
+    "eventId": "event34534534",
+    "chatId": "squad12344567",
+    "name": "Sting",
+    "image": "build/chat/chat123.jpg",
+    "partisipants": [
+      {
+        "id": "testeri",
+        "nickname": "Topi"
+      },
+      {
+        "id": "ducky101_123",
+        "nickname": "Ducky_101"
+      }
+    ]
+  }
 }
