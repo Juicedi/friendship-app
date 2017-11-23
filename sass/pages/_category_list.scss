@@ -1,8 +1,18 @@
+.edit-interests-page,
 .category-page {
+  h2 {
+    text-align: center;
+    color: $mainGreen;
+  }
+
+  > p {
+    text-align: center;
+    color: $darkestGreen;
+  }
 
   .dropdown-list {
     transform-origin: top;
-    transition: max-height 0.333s ease-in-out;
+    transition: max-height 0.4s ease-in-out;
     overflow: hidden;
   }
 
@@ -51,6 +61,15 @@
     display: none;
     float: right;
     margin-right: 1em;
+  }
+
+  .dropdown-list-item.hated {
+    background-color: $red;
+    color: white;
+  }
+  .dropdown-list-item.loved {
+    background-color: $darkGreen;
+    color: white;
   }
 
   .dropdown-list-item.selected {

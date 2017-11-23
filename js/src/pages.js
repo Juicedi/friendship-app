@@ -55,6 +55,7 @@ const PageController = function (mainCtrl) {
     for (let i = 0, len = currentFilters.length; i < len; i += 1) {
       $(`.dropdown-list-item[data-interest="${currentFilters[i]}"]`).addClass('selected');
     }
+    initLoveAndHateSwipe();
 
     $('.dropdown-list-item').on('click', (event) => {
       if ($(event.currentTarget).hasClass('selected')) {
@@ -135,6 +136,30 @@ const PageController = function (mainCtrl) {
     $('#about-container p').html(profileData.description);
 
     populateLovesHates(profileData);
+  }
+
+  function initLoveAndHateSwipe() {
+    let mouseDown = false;
+    let posX = 0;
+    let elem = '';
+
+    // TODO: hiiren liikkeiden tunnistaminen
+    $('.dropdown-list-item').on('mousedown, touchstart', (e) => {
+      mouseDown = true;
+      posX = e.offsetX;
+      elem = e.currentTarget;
+      console.log(e);
+    });
+
+    $('.dropdown-list-item').on('mouseup, touchend', (e) => {
+      mouseDown = false;
+      console.log(e.offsetX);
+      if (mouseDown && e.offsetX - posX > 0) {
+        $(elem).addClass('loved');
+      } else if (mouseDown && e.offsetX - posX < 0) {
+        $(elem).addClass('loved');
+      }
+    });
   }
 
   /**
@@ -764,6 +789,10 @@ const PageController = function (mainCtrl) {
         break;
       }
       case 'category_list': {
+        mainCtrl.getCategories(addAllDropdowns);
+        break;
+      }
+      case 'edit_interests': {
         mainCtrl.getCategories(addAllDropdowns);
         break;
       }
