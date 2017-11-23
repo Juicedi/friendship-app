@@ -4,7 +4,7 @@
     "nickname": "Ducky101",
     "email": "ducky@mail.fi",
     "gender": "male",
-    "birth": 658752430464,
+    "birth": 648752430464,
     "loves": [
       "camping",
       "fishing",
@@ -26,7 +26,8 @@
     ],
     "chatMute": false,
     "chats": [
-      "chat123"
+      "event123",
+      "squad12344567"
     ]
   },
   "user123": {
@@ -133,8 +134,8 @@
     "hates": [
       "pop"
     ],
-    "description": "Hello I'm Ducky101",
-    "location": "Helsinki",
+    "description": "Hello I'm Topi",
+    "location": "Espoo",
     "friends": [
       234,
       1234,
@@ -147,7 +148,7 @@
     ],
     "chatMute": false,
     "chats": [
-      "chat123",
+      "event123",
       "squad12344567"
     ]
   }

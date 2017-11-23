@@ -115,9 +115,10 @@ const PageController = function (mainCtrl) {
         $('#join-squad').addClass('hide');
         $('#leave-squad').removeClass('hide');
       }
-      initEventInfoBtns(evtInfo);
       initSquadJoinBtn(evtInfo);
     }
+
+    initEventInfoBtns(evtInfo);
   }
 
   function fillProfileInfo(profileData) {
@@ -127,6 +128,8 @@ const PageController = function (mainCtrl) {
 
     $('#username').html(profileData.nickname);
     $('#age-text span').html(age);
+    $('#profile-picture-container').css('background-image', 'url(../img/users/' + profileData.id + '.jpg)');
+    $('#header-image img').attr('src', '../img/users/' + profileData.id + '_bg.jpg');
     $('#gender-text span').html(profileData.gender);
     $('#location p span').html(profileData.location);
     $('#about-container p').html(profileData.description);
@@ -456,6 +459,17 @@ const PageController = function (mainCtrl) {
   }
 
   /**
+   * Initializes messages to take user to the profile pages of the message sender.
+   */
+  function initGotoProfile() {
+    $('.list-item').on('click', (e) => {
+      console.log('asdpasd');
+
+      mainCtrl.changePage(e.currentTarget.dataset.page + ':' + e.currentTarget.dataset.id);
+    });
+  }
+
+  /**
    * Initialize the basic navigation buttons.
    */
   function initNavigationBtns() {
@@ -495,10 +509,12 @@ const PageController = function (mainCtrl) {
   function createChatListItem(chat, messages) {
     let messageContent = '';
     let messageDate = '';
+    let time = '';
 
     if (messages.length > 0) {
       messageContent = messages.slice(-1)[0].content;
-      messageDate = messages.slice(-1)[0].date;
+      messageDate = new Date(parseFloat(messages.slice(-1)[0].date));
+      time = timeDifference(messageDate);
     }
 
     const chatTemplate = `
@@ -509,7 +525,7 @@ const PageController = function (mainCtrl) {
           <div class="list-item-texts">
             <h4 class="list-item-title darkestGreen-text">${chat.name}</h4>
             <p class="list-item-location darkGreen-text">${messageContent}</p>
-            <p class="list-item-date darkGreen-text">${messageDate}</p>
+            <p class="list-item-date darkGreen-text">${time}</p>
           </div>
         </article>
     `;
@@ -560,17 +576,20 @@ const PageController = function (mainCtrl) {
    * @returns HTML template
    */
   function createMessageItem(message) {
+    const messageDate = new Date(parseFloat(message.date));
+    const time = timeDifference(messageDate);
     const template = `
-        <article class="list-item white-bg go-to-page-with-id" data-page="profile" data-id="${message.id}">
+        <article class="list-item white-bg" data-page="profile" data-id="${message.sender}">
           <div class="list-item-image">
             <img src="build/img/users/${message.sender}.jpg" alt="list-item-thumbnail">
           </div>
           <div class="list-item-texts">
             <h4 class="list-item-content">${message.content}</h4>
-            <p class="list-item-date">${message.date}</p>
+            <p class="list-item-date">${time}</p>
           </div>
         </article>
     `;
+
     return template;
   }
 
@@ -587,6 +606,7 @@ const PageController = function (mainCtrl) {
       $('#chat-messages').append(messageTemplate);
     }
     initChatInput();
+    initGotoProfile();
   }
 
   /**
@@ -599,7 +619,7 @@ const PageController = function (mainCtrl) {
 
     if (chatData.chats.length > 0) {
       for (let i = 0, len = chatData.chats.length; i < len; i += 1) {
-        chatTemplate = createChatListItem(chatData.chats[i], chatData.messages[chatData.chats[i].id]);
+        chatTemplate = createChatListItem(chatData.chats[i], chatData.messages[chatData.chats[i].chatId]);
         $('#page-content').append(chatTemplate);
       }
     } else {
@@ -669,6 +689,38 @@ const PageController = function (mainCtrl) {
   function updateChat(receivedMessage) {
     const message = createMessageItem(receivedMessage);
     $('#chat-messages').append(message);
+  }
+
+  /**
+   * Returns value that tells how long ago the given date was from current date.
+   * @param {Number} messageDate - Message date given in milliseconds from 1970
+   * @returns {String} result - String which tell how long ago message was sent
+   */
+  function timeDifference(messageDate) {
+    let result = '';
+    const currentDate = new Date();
+    const timeDiff = Math.floor((currentDate.getTime() - messageDate.getTime()) / 1000);
+
+    if (timeDiff < 60) {
+      result = 'Just now';
+    } else if (timeDiff < 3600) {
+      result = Math.round(timeDiff / 60);
+      result = result === 1 ? '1 minute ago' : `${result} minutes ago`;
+    } else if (timeDiff < 216000) {
+      result = Math.round(timeDiff / 60 / 60);
+      result = result === 1 ? '1 hour ago' : `${result} hours ago`;
+    } else if (timeDiff < 1512000) {
+      result = Math.round(timeDiff / 60 / 60 / 24);
+      result = result === 1 ? '1 day ago' : `${result} days ago`;
+    } else if (timeDiff < 10584000) {
+      result = Math.round(timeDiff / 60 / 60 / 24 / 7);
+      result = result === 1 ? '1 week ago' : `${result} weeks ago`;
+    } else if (timeDiff < 42336000) {
+      result = Math.round(timeDiff / 60 / 60 / 24 / 7 / 4);
+      result = result === 1 ? '1 month ago' : `${result} months ago`;
+    }
+
+    return result;
   }
 
   /**

@@ -204,7 +204,7 @@ const DataController = function (mainCtrl) {
     const url = 'data/users.json';
     let user = userId;
 
-    if (userId) {
+    if (userId === 'own') {
       user = userData.id;
     }
 
@@ -318,7 +318,7 @@ const DataController = function (mainCtrl) {
   function filterChatMessages(chats, allMessages) {
     const messages = {};
     for (let i = 0, len = chats.length; i < len; i++) {
-      messages[chats[i].id] = allMessages[chats[i].chatId];
+      messages[chats[i].chatId] = allMessages[chats[i].chatId];
     }
     return messages;
   }
@@ -392,10 +392,12 @@ const DataController = function (mainCtrl) {
     for (let i = 0; i < length; i += 1) {
       const id = keys[i];
 
-      if (allEvents[id].title.toLowerCase() === inputLower) {
-        found.push(allEvents[id]);
-      } else if (allEvents[id].tags.indexOf(inputLower) !== -1) {
-        found.push(allEvents[id]);
+      if (allEvents[id].owner !== userData.id) {
+        if (allEvents[id].title.toLowerCase() === inputLower) {
+          found.push(allEvents[id]);
+        } else if (allEvents[id].tags.indexOf(inputLower) !== -1) {
+          found.push(allEvents[id]);
+        }
       }
     }
     mainCtrl.populateSearchEvents(found, '#search-results');
@@ -746,6 +748,9 @@ const DataController = function (mainCtrl) {
     },
     checkSquad(eventInfo) {
       return checkSquad(eventInfo);
+    },
+    sendMessage(id, message) {
+      sendMessage(id, message);
     },
     changeEventOwner(id, newOwner) {
       changeEventOwner(id, newOwner);

@@ -1,18 +1,18 @@
 {
-  "chat123": [
+  "event123": [
     {
       "messageId": "123456789",
       "sender": "ducky101_123",
       "nickname": "Ducky101",
       "content": "Quack! Quack!",
-      "date": "01-11-2017 12.00"
+      "date": "1511424741812"
     },
     {
       "messageId": "234567891",
       "sender": "ducky101_123",
       "nickname": "Ducky101",
       "content": "Quack!",
-      "date": "01-11-2017 13.00"
+      "date": "1511424842812"
     }
   ],
   "squad12344567": [
@@ -21,7 +21,7 @@
       "sender": "ducky101_123",
       "nickname": "Ducky101",
       "content": "Quack!",
-      "date": "01-11-2017 13.00"
+      "date": "1511424941912"
     }
   ]
 }

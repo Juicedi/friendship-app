@@ -1,8 +1,8 @@
 {
-  "chat123": {
-    "eventId": "chat123",
-    "chatId": "chat123",
-    "name": "testing chat",
+  "event123": {
+    "eventId": "event123",
+    "chatId": "event123",
+    "name": "Camping",
     "image": "build/chat/chat123.jpg",
     "partisipants": [
       {
