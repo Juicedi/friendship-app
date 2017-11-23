@@ -115,6 +115,7 @@ const PageController = function (mainCtrl) {
         $('#join-squad').addClass('hide');
         $('#leave-squad').removeClass('hide');
       }
+      initEventInfoBtns(evtInfo);
       initSquadJoinBtn(evtInfo);
     }
   }
@@ -214,7 +215,7 @@ const PageController = function (mainCtrl) {
    *
    * @param {String} id - Current pages event id.
    */
-  function initEventInfoBtns(id) {
+  function initEventInfoBtns(evtInfo) {
     $('.slider-checkbox').on('click', (event) => {
       if ($(event.currentTarget).hasClass('off')) {
         $(event.currentTarget).addClass('on');
@@ -223,40 +224,43 @@ const PageController = function (mainCtrl) {
         $(event.currentTarget).addClass('off');
         $(event.currentTarget).removeClass('on');
       }
-      mainCtrl.eventPrivacyToggle(id);
+      mainCtrl.eventPrivacyToggle(evtInfo.id);
     });
     $('#attend-btn').on('click', () => {
       $('#attend-btn').addClass('hide');
       $('#leave-btn').removeClass('hide');
-      // TODO: Show "Join a Squad" button when joining a larger event
-      mainCtrl.attendEvent(id);
+
+      if (evtInfo.large) {
+        $('#join-squad').removeClass('hide');
+      }
+      mainCtrl.attendEvent(evtInfo.id);
     });
     $('#leave-btn').on('click', () => {
       $('#leave-btn').addClass('hide');
       $('#attend-btn').removeClass('hide');
       $('#leave-squad').addClass('hide');
-      $('#join-squad').removeClass('hide');
-      mainCtrl.leaveEvent(id);
+      $('#join-squad').addClass('hide');
+      mainCtrl.leaveEvent(evtInfo.id);
     });
     $('.tag').on('dblclick', (event) => {
-      if (mainCtrl.getEventInfo(id).owner === mainCtrl.getCurrentUserData().id) {
+      if (evtInfo.owner === mainCtrl.getCurrentUserData().id) {
         const tag = event.currentTarget.innerHTML;
         event.currentTarget.parentNode.removeChild(event.currentTarget);
-        mainCtrl.removeTag(id, tag);
+        mainCtrl.removeTag(evtInfo.id, tag);
       }
     });
     $('#confirm-change').on('click', () => {
       const inputVal = $('#owner-input').val();
 
       if (inputVal.length > 0) {
-        mainCtrl.changeEventOwner(id, inputVal);
+        mainCtrl.changeEventOwner(evtInfo.id, inputVal);
         mainCtrl.changePage('own_events');
       } else {
         $('#owner-modal').find('.warning-text').removeClass('hide');
       }
     });
     $('#confirm-remove').on('click', () => {
-      mainCtrl.removeEvent(id);
+      mainCtrl.removeEvent(evtInfo.id);
       mainCtrl.changePage('own_events');
     });
     $('#confirm-invite').on('click', () => {
@@ -698,9 +702,8 @@ const PageController = function (mainCtrl) {
         break;
       }
       case 'event_info': {
-        mainCtrl.getEventInfo(pageId, initEventInfoBtns);
+        mainCtrl.getEventInfo(pageId, fillEventInfo);
         initModalBtns();
-        initEventInfoBtns(pageId);
         break;
       }
       case 'create_event': {
