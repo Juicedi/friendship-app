@@ -44,7 +44,6 @@ const PageController = function (mainCtrl) {
    */
   function addAllDropdowns(data) {
     const categories = data.categories;
-    console.log(categories);
     const catKeys = Object.keys(categories);
     const currentFilters = mainCtrl.getInterestFilters();
 
@@ -108,14 +107,19 @@ const PageController = function (mainCtrl) {
       $('#leave-btn').addClass('hide');
     }
 
-    if (evtInfo.large === true && uData.chats.indexOf(evtInfo.id)) {
-      $('#join-squad').removeClass('hide');
+    if (evtInfo.large === true && uData.eventsAttending.indexOf(evtInfo.id) > -1) {
+      if (mainCtrl.checkSquad(evtInfo) === null) {
+        $('#join-squad').removeClass('hide');
+        $('#leave-squad').addClass('hide');
+      } else {
+        $('#join-squad').addClass('hide');
+        $('#leave-squad').removeClass('hide');
+      }
       initSquadJoinBtn(evtInfo);
     }
   }
 
   function fillProfileInfo(profileData) {
-    console.log(profileData);
     const currentDate = new Date();
     const birthDate = new Date(profileData.birth);
     const age = currentDate.getFullYear() - birthDate.getFullYear();
@@ -224,11 +228,14 @@ const PageController = function (mainCtrl) {
     $('#attend-btn').on('click', () => {
       $('#attend-btn').addClass('hide');
       $('#leave-btn').removeClass('hide');
+      // TODO: Show "Join a Squad" button when joining a larger event
       mainCtrl.attendEvent(id);
     });
     $('#leave-btn').on('click', () => {
       $('#leave-btn').addClass('hide');
       $('#attend-btn').removeClass('hide');
+      $('#leave-squad').addClass('hide');
+      $('#join-squad').removeClass('hide');
       mainCtrl.leaveEvent(id);
     });
     $('.tag').on('dblclick', (event) => {
@@ -256,7 +263,6 @@ const PageController = function (mainCtrl) {
       // TODO: Finish invitation function
       console.log('Sent invitation');
     });
-    // TODO: Add tags function
   }
 
   /**
@@ -264,9 +270,13 @@ const PageController = function (mainCtrl) {
    */
   function initSquadJoinBtn(evtInfo) {
     $('#join-squad').on('click', () => {
-      console.log('joining squad', evtInfo);
       mainCtrl.joinSquadChat(evtInfo);
       mainCtrl.changePage('chat_list');
+    });
+    $('#leave-squad').on('click', () => {
+      mainCtrl.leaveSquadChat(evtInfo);
+      $('#leave-squad').addClass('hide');
+      $('#join-squad').removeClass('hide');
     });
   }
 
@@ -338,7 +348,6 @@ const PageController = function (mainCtrl) {
       check = checkCreateInputs();
 
       if (check) {
-        console.log('event added');
         const eventObj = {};
 
         eventObj.id = $('#title-field').val() + Math.floor(Math.random() * 100);
@@ -371,7 +380,6 @@ const PageController = function (mainCtrl) {
       let tagTemplate = '';
 
       if (keycode === 13 && inputValue.length > 0) {
-        console.log('added tag');
         tagTemplate = `<div class="tag">${inputValue}</div>`;
         $('#tag-container').append(tagTemplate);
       }
@@ -569,7 +577,7 @@ const PageController = function (mainCtrl) {
    */
   function populateChatMessages(messages) {
     let messageTemplate = [];
-    console.log(messages);
+
     for (let i = 0, len = messages.length; i < len; i++) {
       messageTemplate = createMessageItem(messages[i]);
       $('#chat-messages').append(messageTemplate);

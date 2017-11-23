@@ -188,7 +188,6 @@ const DataController = function (mainCtrl) {
         success: (content) => {
           allEvents = content;
           const events = filterUserEvents(content);
-          console.log(events);
           mainCtrl.populateOwnEvents(events);
         },
         error: () => {
@@ -197,7 +196,6 @@ const DataController = function (mainCtrl) {
       });
     } else {
       const events = filterUserEvents(allEvents);
-      console.log(events);
       mainCtrl.populateOwnEvents(events);
     }
   }
@@ -242,7 +240,6 @@ const DataController = function (mainCtrl) {
         url,
         success: (content) => {
           allEvents = content;
-          console.log(content[eventId]);
           if (typeof callback === 'function') {
             mainCtrl.fillEventInfo(content[eventId]);
           } else {
@@ -272,7 +269,6 @@ const DataController = function (mainCtrl) {
         success: (content) => {
           allEvents = content;
           const suggestedEvents = filterSuggestedEvents(content);
-          console.log(suggestedEvents);
           mainCtrl.populateSearchEvents(suggestedEvents, '#suggested-events');
         },
         error: () => {
@@ -281,7 +277,6 @@ const DataController = function (mainCtrl) {
       });
     } else {
       const suggestedEvents = filterSuggestedEvents(allEvents);
-      console.log(suggestedEvents);
       mainCtrl.populateSearchEvents(suggestedEvents, '#suggested-events');
     }
   }
@@ -345,7 +340,6 @@ const DataController = function (mainCtrl) {
         success: (content) => {
           allMessages = content;
           const chatMessages = filterChatMessages(chats, allMessages);
-          console.log(chatMessages);
           chatData.messages = chatMessages;
           callback(chatData);
           return chatData;
@@ -356,7 +350,6 @@ const DataController = function (mainCtrl) {
       });
     } else {
       const chatMessages = filterChatMessages(chats, allMessages);
-      console.log(chatMessages);
       chatData.messages = chatMessages;
       callback(chatData);
       return chatData;
@@ -376,7 +369,6 @@ const DataController = function (mainCtrl) {
         success: (content) => {
           allChats = content;
           const ownChats = filterChats(content);
-          console.log(ownChats);
           callback(ownChats, mainCtrl.populateChatList);
           return ownChats;
         },
@@ -386,7 +378,6 @@ const DataController = function (mainCtrl) {
       });
     } else {
       const ownChats = filterChats(allChats);
-      console.log(ownChats);
       callback(ownChats, mainCtrl.populateChatList);
       return ownChats;
     }
@@ -462,7 +453,6 @@ const DataController = function (mainCtrl) {
       id: userData.id,
       name: userData.name
     };
-    console.log('joining event chat');
 
     if (allChats === 'empty') {
       const url = 'data/chats.json';
@@ -521,14 +511,12 @@ const DataController = function (mainCtrl) {
     if (allEvents[id].large === false) {
       joinEventChat(id);
     }
-    console.log(userData.eventsAttending);
   }
 
   function createEvent(data) {
     allEvents[data.id] = data;
     attendEvent(data.id);
     mainCtrl.changePage('own_events');
-    console.log(allEvents);
   }
 
   function eventPrivacyToggle(id) {
@@ -537,6 +525,33 @@ const DataController = function (mainCtrl) {
 
   function addAttendee(name) {
     console.log('Added attendee' + name);
+  }
+
+  /**
+   * Removes user from squad chat they are currently in.
+   *
+   * @param {Object} eventInfo - All information of the event the users squad is in
+   */
+  function leaveSquadChat(eventInfo) {
+    const id = eventInfo.id;
+    const chatKeys = Object.keys(allChats);
+
+    for (let i = 0, len = chatKeys.length; i < len; i++) {
+      if (allChats[chatKeys[i]].eventId === id) {
+        const bigChatIndex = userData.chats.indexOf(chatKeys[i]);
+        const partisipants = allChats[chatKeys[i]].partisipants;
+
+        if (bigChatIndex !== -1) {
+          userData.chats.splice(bigChatIndex, 1);
+        }
+
+        for (let j = 0; j < partisipants.length; j++) {
+          if (partisipants[j].id === userData.id) {
+            partisipants.splice(j, 1);
+          }
+        }
+      }
+    }
   }
 
   /**
@@ -557,6 +572,7 @@ const DataController = function (mainCtrl) {
       userData.chats.splice(chatIndex, 1);
     }
 
+    // If left event is a larger one, check what chat is user on and remove him from there
     for (let i = 0, len = chatKeys.length; i < len; i++) {
       if (allChats[chatKeys[i]].eventId === id) {
         const bigChatIndex = userData.chats.indexOf(chatKeys[i]);
@@ -573,14 +589,12 @@ const DataController = function (mainCtrl) {
         }
       }
     }
-    console.log(userData.eventsAttending);
   }
 
   function removeEvent(id) {
     console.log('removed event' + id);
     leaveEvent(id);
     delete allEvents[id];
-    console.log(allEvents);
   }
 
   function removeTag(id, tag) {
@@ -592,6 +606,21 @@ const DataController = function (mainCtrl) {
     console.log('changed ' + id + ' event\'s owner to ' + newOwner);
     leaveEvent(id);
     allEvents[id].owner = newOwner;
+  }
+
+  /**
+   * Check if already on a squad chat.
+   */
+  function checkSquad(eventInfo) {
+    const userChats = userData.chats;
+
+    for (let i = 0, len = userChats.length; i < len; i++) {
+      if (eventInfo.chats.indexOf(userChats[i]) > -1) {
+        return eventInfo.chats.indexOf(userChats[i]);
+      }
+    }
+
+    return null;
   }
 
   /**
@@ -700,6 +729,9 @@ const DataController = function (mainCtrl) {
     attendEvent(id) {
       attendEvent(id);
     },
+    leaveSquadChat(eventInfo) {
+      leaveSquadChat(eventInfo);
+    },
     leaveEvent(id) {
       leaveEvent(id);
     },
@@ -712,11 +744,11 @@ const DataController = function (mainCtrl) {
     removeTag(id, tag) {
       removeTag(id, tag);
     },
+    checkSquad(eventInfo) {
+      return checkSquad(eventInfo);
+    },
     changeEventOwner(id, newOwner) {
       changeEventOwner(id, newOwner);
     },
-    sendMessage(id, message) {
-      sendMessage(id, message);
-    }
   };
 };

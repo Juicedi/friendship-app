@@ -78,6 +78,12 @@ const MainController = (function () {
     joinSquadChat(eventInfo) {
       dataCtrl.joinSquadChat(eventInfo);
     },
+    leaveSquadChat(eventInfo) {
+      dataCtrl.leaveSquadChat(eventInfo);
+    },
+    checkSquad(eventInfo) {
+      return dataCtrl.checkSquad(eventInfo);
+    },
     eventPrivacyToggle(id) {
       dataCtrl.eventPrivacyToggle(id);
     },
