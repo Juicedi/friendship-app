@@ -530,6 +530,38 @@ const DataController = function (mainCtrl) {
   }
 
   /**
+   * Removes interest from user data.
+   *
+   * @param {String} value - Interests value.
+   * @param {String} alignment - Is the interest loved or hated.
+   */
+  function removeInterest(value, alignment) {
+    const valIndex = alignment === 'loved' ? userData.loves.indexOf(value) : userData.hates.indexOf(value);
+
+    if (alignment === 'loved' && valIndex > -1) {
+      userData.loves.splice(valIndex, 1);
+    } else if (alignment === 'hated' && valIndex > -1) {
+      userData.hates.splice(valIndex, 1);
+    }
+  }
+
+  /**
+   * Adds interest to user data.
+   *
+   * @param {String} value - Interests value.
+   * @param {String} alignment - Is the interest loved or hated.
+   */
+  function addInterest(value, alignment) {
+    if (alignment === 'loved') {
+      userData.loves.push();
+      removeInterest(value, 'hated');
+    } else if (alignment === 'hated') {
+      userData.hates.push(value);
+      removeInterest(value, 'loved');
+    }
+  }
+
+  /**
    * Removes user from squad chat they are currently in.
    *
    * @param {Object} eventInfo - All information of the event the users squad is in
@@ -710,6 +742,9 @@ const DataController = function (mainCtrl) {
     createEvent(data) {
       createEvent(data);
     },
+    addInterest(value, alignment) {
+      addInterest(value, alignment);
+    },
     addAttendee(id) {
       addAttendee(id);
     },
@@ -739,6 +774,9 @@ const DataController = function (mainCtrl) {
     },
     eventPrivacyToggle(id) {
       eventPrivacyToggle(id);
+    },
+    removeInterest(value, alignment) {
+      removeInterest(value, alignment);
     },
     removeEvent(id) {
       removeEvent(id);

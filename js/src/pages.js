@@ -28,6 +28,8 @@ const PageController = function (mainCtrl) {
 
     dropdownData.forEach(function (interest) {
       dropdownTemplate += `<li class="dropdown-list-item" data-interest="${interest.toLowerCase()}">
+        <span class="love-color"></span>
+        <span class="hate-color"></span>
         ${interest}
         <i class="fa fa-check black-text dropdown-list-checkmark" aria-hidden="true"></i>
       </li>`;
@@ -55,17 +57,6 @@ const PageController = function (mainCtrl) {
     for (let i = 0, len = currentFilters.length; i < len; i += 1) {
       $(`.dropdown-list-item[data-interest="${currentFilters[i]}"]`).addClass('selected');
     }
-    initLoveAndHateSwipe();
-
-    $('.dropdown-list-item').on('click', (event) => {
-      if ($(event.currentTarget).hasClass('selected')) {
-        $(event.currentTarget).removeClass('selected');
-        mainCtrl.removeFilter(event.currentTarget.dataset.interest);
-      } else {
-        $(event.currentTarget).addClass('selected');
-        mainCtrl.addFilter(event.currentTarget.dataset.interest);
-      }
-    });
 
     $('.dropdown-text').on('click', (event) => {
       if ($(event.currentTarget).parent().hasClass('opened')) {
@@ -74,6 +65,20 @@ const PageController = function (mainCtrl) {
         $(event.currentTarget).parent().addClass('opened');
       }
     });
+
+    if ($('.category-page').length > 0) {
+      $('.dropdown-list-item').on('click', (event) => {
+        if ($(event.currentTarget).hasClass('selected')) {
+          $(event.currentTarget).removeClass('selected');
+          mainCtrl.removeFilter(event.currentTarget.dataset.interest);
+        } else {
+          $(event.currentTarget).addClass('selected');
+          mainCtrl.addFilter(event.currentTarget.dataset.interest);
+        }
+      });
+    } else {
+      initSwipe();
+    }
   }
 
   /**
@@ -138,27 +143,63 @@ const PageController = function (mainCtrl) {
     populateLovesHates(profileData);
   }
 
-  function initLoveAndHateSwipe() {
+  /**
+   * Marks currently used element as loved or hated. Sends that information to database.
+   *
+   * @param {Object} elem - Element which is currently being used.
+   * @param {String} alignment - String which is either "loved" or "hated".
+   */
+  function addInterest(elem, alignment) {
+    const opposite = alignment === 'loved' ? 'hated' : 'loved';
+    const value = elem.dataset.interest;
+
+    $(elem).addClass(alignment);
+    $(elem).removeClass(opposite);
+    mainCtrl.addInterest(value, alignment);
+  }
+
+  /**
+   * Initializes swiping functions on the interests selection page.
+   */
+  function initSwipe() {
+    const travelDistance = 50;
     let mouseDown = false;
-    let posX = 0;
+    let posXstart = 0;
+    let posXdelta = 0;
     let elem = '';
 
-    // TODO: hiiren liikkeiden tunnistaminen
-    $('.dropdown-list-item').on('mousedown, touchstart', (e) => {
+    $('.dropdown-list-item').on('mousedown touchstart', (e) => {
+      if (e.handleObj.type === 'mousedown') {
+        posXstart = e.offsetX;
+      } else {
+        posXstart = e.originalEvent.changedTouches[0].pageX - posXstart;
+      }
+
       mouseDown = true;
-      posX = e.offsetX;
       elem = e.currentTarget;
-      console.log(e);
     });
 
-    $('.dropdown-list-item').on('mouseup, touchend', (e) => {
-      mouseDown = false;
-      console.log(e.offsetX);
-      if (mouseDown && e.offsetX - posX > 0) {
-        $(elem).addClass('loved');
-      } else if (mouseDown && e.offsetX - posX < 0) {
-        $(elem).addClass('loved');
+    $('.dropdown-list-item').on('mousemove touchmove', (e) => {
+      if (mouseDown) {
+        if (e.handleObj.type === 'mousemove') {
+          posXdelta = e.offsetX - posXstart;
+        } else {
+          posXdelta = e.originalEvent.changedTouches[0].pageX - posXstart;
+        }
       }
+    });
+
+    $('.dropdown-list-item').on('mouseup touchend', () => {
+      mouseDown = false;
+
+      if (posXdelta > travelDistance) {
+        addInterest(elem, 'loved');
+      } else if (posXdelta < -travelDistance) {
+        addInterest(elem, 'hated');
+      }
+
+      posXstart = 0;
+      posXdelta = 0;
     });
   }
 

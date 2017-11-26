@@ -87,6 +87,9 @@ const MainController = (function () {
     eventPrivacyToggle(id) {
       dataCtrl.eventPrivacyToggle(id);
     },
+    addInterest(value, alignment) {
+      dataCtrl.addInterest(value, alignment);
+    },
     addAttendee(name) {
       dataCtrl.addAttendee(name);
     },
@@ -98,6 +101,9 @@ const MainController = (function () {
     },
     removeEvent(id) {
       dataCtrl.removeEvent(id);
+    },
+    removeInterest(value, alignment) {
+      dataCtrl.removeInterest(value, alignment);
     },
     removeTag(eventId, tag) {
       dataCtrl.removeTag(eventId, tag);
