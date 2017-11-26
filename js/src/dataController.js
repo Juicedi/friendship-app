@@ -223,12 +223,10 @@ const DataController = function (mainCtrl) {
           console.log('Error: Couldn\'t get event informations');
         },
       });
+    } else if (typeof callback === 'function') {
+      callback(allUsers[user]);
     } else {
-      if (typeof callback === 'function') {
-        callback(allUsers[user]);
-      } else {
-        return allUsers[user];
-      }
+      return allUsers[user];
     }
   }
 
@@ -536,12 +534,11 @@ const DataController = function (mainCtrl) {
    * @param {String} alignment - Is the interest loved or hated.
    */
   function removeInterest(value, alignment) {
-    const valIndex = alignment === 'loved' ? userData.loves.indexOf(value) : userData.hates.indexOf(value);
+    const valIndex = alignment === 'loves' ? userData.loves.indexOf(value) : userData.hates.indexOf(value);
 
-    if (alignment === 'loved' && valIndex > -1) {
-      userData.loves.splice(valIndex, 1);
-    } else if (alignment === 'hated' && valIndex > -1) {
-      userData.hates.splice(valIndex, 1);
+    if (valIndex > -1) {
+      userData[alignment].splice(valIndex, 1);
+      allUsers[userData.id][alignment].splice(valIndex, 1);
     }
   }
 
@@ -553,11 +550,13 @@ const DataController = function (mainCtrl) {
    */
   function addInterest(value, alignment) {
     if (alignment === 'loved') {
-      userData.loves.push();
-      removeInterest(value, 'hated');
+      userData.loves.push(value);
+      allUsers[userData.id].loves.push(value);
+      removeInterest(value, 'hates');
     } else if (alignment === 'hated') {
       userData.hates.push(value);
-      removeInterest(value, 'loved');
+      allUsers[userData.id].hates.push(value);
+      removeInterest(value, 'loves');
     }
   }
 
