@@ -116,6 +116,7 @@
   }
 }
 
+.btnForward,
 .btnBack {
   position: absolute;
   left: 1.8em;
@@ -128,6 +129,12 @@
   vertical-align: middle;
   z-index: 1;
   cursor: pointer;
+}
+
+.btnForward {
+  transform: translate(-50%, -50%);
+  left: auto;
+  right: 0em;
 }
 
 .main-btn,
