@@ -78,6 +78,7 @@ const PageController = function (mainCtrl) {
       });
     } else {
       initSwipe();
+      colorInterests();
     }
   }
 
@@ -736,6 +737,22 @@ const PageController = function (mainCtrl) {
   }
 
   /**
+   * Add interest correct classes depending on if they are loved or hated already.
+   */
+  function colorInterests() {
+    const loves = mainCtrl.getCurrentUserData().loves;
+    const hates = mainCtrl.getCurrentUserData().hates;
+
+    for (let i = 0, len = loves.length; i < len; i++) {
+      $(`[data-interest="${loves[i]}"]`).addClass('loved');
+    }
+
+    for (let i = 0, len = hates.length; i < len; i++) {
+      $(`[data-interest="${hates[i]}"]`).addClass('hated');
+    }
+  }
+
+  /**
    * Fills profilepages loves and hates lists.
    *
    * @param {Object} profileData - Users profile data.
@@ -747,6 +764,7 @@ const PageController = function (mainCtrl) {
     for (let i = 0, len = loves.length; i < len; i++) {
       $('#loves-container').append(`<div class="interest">${loves[i]}</div)`);
     }
+
     for (let i = 0, len = hates.length; i < len; i++) {
       $('#hates-container').append(`<div class="interest">${hates[i]}</div)`);
     }
