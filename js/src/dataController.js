@@ -19,6 +19,28 @@ const DataController = function (mainCtrl) {
     }
   }
 
+  /**
+   * Adds a new user and assigns it as current user.
+   * @param {Obeject} data - Login data
+   */
+  function addUser(data) {
+    allUsers[data.id] = {};
+    allUsers[data.id].id = data.id;
+    allUsers[data.id].nickname = data.id;
+    allUsers[data.id].password = data.password;
+    allUsers[data.id].birth = NaN;
+    allUsers[data.id].gender = 'not telling';
+    allUsers[data.id].loves = [];
+    allUsers[data.id].hates = [];
+    allUsers[data.id].description = 'Something about you...';
+    allUsers[data.id].location = 'not assigned';
+    allUsers[data.id].eventsAttending = [];
+    allUsers[data.id].chatMute = false;
+    allUsers[data.id].searchRange = 10;
+    allUsers[data.id].chats = [];
+    setCurrentUser(data.id);
+  }
+
   function removeFilter(item) {
     if (selectedFilters.indexOf(item) !== -1) {
       selectedFilters.splice(selectedFilters.indexOf(item), 1);
@@ -163,17 +185,23 @@ const DataController = function (mainCtrl) {
    */
   function setCurrentUser(username) {
     const url = 'data/users.json';
-    $.ajax({
-      url,
-      success: (content) => {
-        userData = content[username];
-        console.log('current user: ' + userData.id);
-        return userData;
-      },
-      error: () => {
-        console.log('Error: Couldn\'t get user informations');
-      },
-    });
+    if (allUsers === 'empty') {
+      $.ajax({
+        url,
+        success: (content) => {
+          userData = content[username];
+          console.log('current user: ' + userData.id);
+          return userData;
+        },
+        error: () => {
+          console.log('Error: Couldn\'t get user informations');
+        },
+      });
+    } else {
+      userData = allUsers[username];
+      console.log('current user: ' + userData.id);
+      return userData;
+    }
   }
 
   /**
@@ -551,11 +579,11 @@ const DataController = function (mainCtrl) {
   function addInterest(value, alignment) {
     if (alignment === 'loved') {
       userData.loves.push(value);
-      allUsers[userData.id].loves.push(value);
+      // allUsers[userData.id].loves.push(value);
       removeInterest(value, 'hates');
     } else if (alignment === 'hated') {
       userData.hates.push(value);
-      allUsers[userData.id].hates.push(value);
+      // allUsers[userData.id].hates.push(value);
       removeInterest(value, 'loves');
     }
   }
@@ -787,6 +815,9 @@ const DataController = function (mainCtrl) {
     },
     addFilter(item) {
       addFilter(item);
+    },
+    addUser(data) {
+      addUser(data);
     },
     removeFilter(item) {
       removeFilter(item);

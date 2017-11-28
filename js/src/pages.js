@@ -175,12 +175,12 @@ const PageController = function (mainCtrl) {
     } else {
       username = $('#signup-username').val();
       password = sha1($('#signup-password').val());
-      confirm = $('#signup-confirm').val();
+      confirm = sha1($('#signup-confirm').val());
     }
 
     if (method === 'login' && !mainCtrl.checkLoginInput(username, password)) result = false;
     if (method === 'signup') {
-      result = mainCtrl.checkNameAvailability();
+      result = mainCtrl.checkNameAvailability(username);
       if (password.length === 0) result = false;
       if (confirm !== password && method === 'signup') result = false;
     }
@@ -208,9 +208,8 @@ const PageController = function (mainCtrl) {
     $('#signup-submit').on('click', () => {
       if (checkLoginInput('signup')) {
         const signupData = {};
-        signupData.username = $('#signup-username').val();
-        signupData.password = $('#signup-password').val();
-        signupData.confirm = $('#signup-confirm').val();
+        signupData.id = $('#signup-username').val();
+        signupData.password = sha1($('#signup-password').val());
         mainCtrl.signUp(signupData);
       } else {
         alert('check your inputs');

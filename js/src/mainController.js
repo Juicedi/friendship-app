@@ -13,8 +13,6 @@ const MainController = (function () {
   let self = null;
   let pageCtrl;
   let dataCtrl;
-  let animCtrl;
-  let ajaxCtrl;
   let navCtrl;
 
   /**
@@ -23,7 +21,6 @@ const MainController = (function () {
   function initControllers() {
     pageCtrl = new PageController(self);
     dataCtrl = new DataController(self);
-    animCtrl = new AnimationController(self);
     navCtrl = new Navigation(self);
   }
 
@@ -134,6 +131,10 @@ const MainController = (function () {
     },
     setCurrentUser(user) {
       dataCtrl.setCurrentUser(user);
+    },
+    signUp(data) {
+      dataCtrl.addUser(data);
+      navCtrl.getContent('edit_interests');
     },
 
     // Navigation functions
