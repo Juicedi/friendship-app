@@ -32,7 +32,7 @@ const MainController = (function () {
    */
   function startApplication() {
     console.log('Starting application');
-    dataCtrl.setCurrentUser('testeri');
+    // dataCtrl.setCurrentUser('testeri');
     dataCtrl.initTempData();
     navCtrl.getContent('lander');
   }
@@ -81,6 +81,12 @@ const MainController = (function () {
     leaveSquadChat(eventInfo) {
       dataCtrl.leaveSquadChat(eventInfo);
     },
+    checkLoginInput(id, hash) {
+      return dataCtrl.checkLoginInput(id, hash);
+    },
+    checkNameAvailability(name) {
+      return dataCtrl.checkNameAvailability(name);
+    },
     checkSquad(eventInfo) {
       return dataCtrl.checkSquad(eventInfo);
     },
@@ -125,6 +131,9 @@ const MainController = (function () {
     },
     sendMessage(id, message) {
       dataCtrl.sendMessage(id, message);
+    },
+    setCurrentUser(user) {
+      dataCtrl.setCurrentUser(user);
     },
 
     // Navigation functions

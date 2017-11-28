@@ -642,6 +642,41 @@ const DataController = function (mainCtrl) {
   }
 
   /**
+   * Checks if the login information is correct.
+   *
+   * @param {String} id - User id.
+   * @param {String} hash - Hash password.
+   * @returns {Boolean}
+   */
+  function checkLoginInput(id, hash) {
+    let result = true;
+
+    if (typeof allUsers[id] === 'undefined') {
+      result = false;
+    } else if (allUsers[id].password !== hash) {
+      result = false;
+    }
+
+    return result;
+  }
+
+  /**
+   * Checks if the username is already taken.
+   *
+   * @param {String} name - Given username to be checked.
+   * @returns {Boolean} Returns true if the username is not yet taken.
+   */
+  function checkNameAvailability(name) {
+    let result = true;
+
+    if (typeof allUsers[name] !== 'undefined') {
+      result = false;
+    }
+
+    return result;
+  }
+
+  /**
    * Check if already on a squad chat.
    */
   function checkSquad(eventInfo) {
@@ -782,6 +817,12 @@ const DataController = function (mainCtrl) {
     },
     removeTag(id, tag) {
       removeTag(id, tag);
+    },
+    checkLoginInput(id, hash) {
+      return checkLoginInput(id, hash);
+    },
+    checkNameAvailability(name) {
+      return checkNameAvailability(name);
     },
     checkSquad(eventInfo) {
       return checkSquad(eventInfo);

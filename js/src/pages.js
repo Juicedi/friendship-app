@@ -135,8 +135,8 @@ const PageController = function (mainCtrl) {
 
     $('#username').html(profileData.nickname);
     $('#age-text span').html(age);
-    $('#profile-picture-container').css('background-image', 'url(../img/users/' + profileData.id + '.jpg)');
-    $('#header-image img').attr('src', '../img/users/' + profileData.id + '_bg.jpg');
+    $('#profile-picture-container').css('background-image', 'url(build/img/users/' + profileData.id + '.jpg)');
+    $('#header-image img').attr('src', 'build/img/users/' + profileData.id + '_bg.jpg');
     $('#gender-text span').html(profileData.gender);
     $('#location p span').html(profileData.location);
     $('#about-container p').html(profileData.description);
@@ -159,12 +159,73 @@ const PageController = function (mainCtrl) {
     mainCtrl.addInterest(value, alignment);
   }
 
+  /**
+   * Checks login and signup inputs if they have correct format.
+   * @returns {Boolean} Result of input check.
+   */
+  function checkLoginInput(method) {
+    let result = true;
+    let username = '';
+    let password = '';
+    let confirm = '';
+
+    if (method === 'login') {
+      username = $('#username').val();
+      password = sha1($('#password').val());
+    } else {
+      username = $('#signup-username').val();
+      password = sha1($('#signup-password').val());
+      confirm = $('#signup-confirm').val();
+    }
+
+    if (method === 'login' && !mainCtrl.checkLoginInput(username, password)) result = false;
+    if (method === 'signup') {
+      result = mainCtrl.checkNameAvailability();
+      if (password.length === 0) result = false;
+      if (confirm !== password && method === 'signup') result = false;
+    }
+
+    return result;
+  }
+
+  /**
+   * Initializes buttons on lander page.
+   */
   function initLanderBtn() {
-    $('open-login-btn').on('click', () => {
-      console.log('open login');
+    $('#open-login-btn').on('click', () => {
+      $('#login-field-container').removeClass('hide');
+      $('#login-btn-container').addClass('hide');
     });
-    $('open-signup-btn').on('click', () => {
-      console.log('open sign');
+    $('#open-signup-btn').on('click', () => {
+      $('#sign-up-field-container').removeClass('hide');
+      $('#login-btn-container').addClass('hide');
+    });
+    $('.btnPrev').on('click', () => {
+      $('#login-field-container').addClass('hide');
+      $('#sign-up-field-container').addClass('hide');
+      $('#login-btn-container').removeClass('hide');
+    });
+    $('#signup-submit').on('click', () => {
+      if (checkLoginInput('signup')) {
+        const signupData = {};
+        signupData.username = $('#signup-username').val();
+        signupData.password = $('#signup-password').val();
+        signupData.confirm = $('#signup-confirm').val();
+        mainCtrl.signUp(signupData);
+      } else {
+        alert('check your inputs');
+      }
+    });
+    $('#login-submit').on('click', () => {
+      if (checkLoginInput('login')) {
+        const loginData = {};
+        loginData.username = $('#username').val();
+        loginData.password = $('#password').val();
+        mainCtrl.setCurrentUser(loginData.username);
+        mainCtrl.changePage('profile:own');
+      } else {
+        alert('check your inputs');
+      }
     });
   }
 
@@ -539,8 +600,6 @@ const PageController = function (mainCtrl) {
    */
   function initGotoProfile() {
     $('.list-item').on('click', (e) => {
-      console.log('asdpasd');
-
       mainCtrl.changePage(e.currentTarget.dataset.page + ':' + e.currentTarget.dataset.id);
     });
   }

@@ -3,6 +3,7 @@
     "id": "ducky101_123",
     "nickname": "Ducky101",
     "email": "ducky@mail.fi",
+    "password": "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3",
     "gender": "male",
     "birth": 648752430464,
     "loves": [
@@ -34,6 +35,7 @@
     "id": "user123",
     "nickname": "asdpasd",
     "email": "ducky@mail.fi",
+    "password": "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3",
     "gender": "female",
     "birth": 911213240222,
     "loves": [
@@ -64,6 +66,7 @@
     "id": "user234",
     "nickname": "qwerty",
     "email": "ducky@mail.fi",
+    "password": "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3",
     "gender": "female",
     "birth": 469450065693,
     "loves": [
@@ -94,6 +97,7 @@
     "id": "user345",
     "nickname": "dworak",
     "email": "ducky@mail.fi",
+    "password": "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3",
     "birth": 311597271093,
     "gender": "male",
     "loves": [
@@ -124,6 +128,7 @@
     "id": "testeri",
     "nickname": "Topi",
     "email": "test@mail.fi",
+    "password": "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3",
     "birth": 690288476845,
     "gender": "male",
     "loves": [

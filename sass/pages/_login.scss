@@ -36,6 +36,7 @@
   margin-top: 13em;
 }
 
+#sign-up-field-container,
 #login-field-container {
   display: inline-block;
   margin-top: 10em;
@@ -43,14 +44,16 @@
 
 #login-submit {
   margin: auto;
-  margin-top: 8em;
+  margin-top: 2em;
 }
 
+.signup-btn,
 .login-btn {
   display: block;
   margin: 1em 0;
   border: 0.1em solid white;
   color: white;
+  margin: 1em auto;
 
   &:hover {
     color: black;
