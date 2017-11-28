@@ -34,7 +34,7 @@ const MainController = (function () {
     console.log('Starting application');
     dataCtrl.setCurrentUser('testeri');
     dataCtrl.initTempData();
-    navCtrl.getContent('edit_interests');
+    navCtrl.getContent('lander');
   }
 
   return {

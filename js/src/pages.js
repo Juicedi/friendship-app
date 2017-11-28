@@ -159,6 +159,15 @@ const PageController = function (mainCtrl) {
     mainCtrl.addInterest(value, alignment);
   }
 
+  function initLanderBtn() {
+    $('open-login-btn').on('click', () => {
+      console.log('open login');
+    });
+    $('open-signup-btn').on('click', () => {
+      console.log('open sign');
+    });
+  }
+
   /**
    * Initializes swiping functions on the interests selection page.
    */
@@ -868,6 +877,9 @@ const PageController = function (mainCtrl) {
         currentChat = pageId;
         mainCtrl.getChatMessages(pageId, populateChatMessages);
         break;
+      }
+      case 'lander': {
+        initLanderBtn();
       }
       default: {
         break;
