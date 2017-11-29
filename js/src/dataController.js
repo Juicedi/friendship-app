@@ -418,7 +418,7 @@ const DataController = function (mainCtrl) {
     for (let i = 0; i < length; i += 1) {
       const id = keys[i];
 
-      if (allEvents[id].owner !== userData.id) {
+      if (allEvents[id].owner !== userData.id && userData.eventsAttending.indexOf(id) === -1) {
         if (allEvents[id].title.toLowerCase() === inputLower) {
           found.push(allEvents[id]);
         } else if (allEvents[id].tags.indexOf(inputLower) !== -1) {
