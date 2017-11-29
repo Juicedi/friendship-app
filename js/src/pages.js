@@ -229,6 +229,22 @@ const PageController = function (mainCtrl) {
   }
 
   /**
+   * Initialize profile info edit buttons on users own profile page.
+   */
+  function initProfInfoEdit() {
+    $('#general-information').on('click', () => {
+    });
+    $('#username').on('click', () => {
+    });
+    $('#description').on('click', () => {
+    });
+    $('#profile-picture-container').on('click', () => {
+    });
+    $('#header img').on('click', () => {
+    });
+  }
+
+  /**
    * Initializes the interests so user can edit them.
    */
   function initInterestEdit() {
