@@ -229,6 +229,16 @@ const PageController = function (mainCtrl) {
   }
 
   /**
+   * Initializes the interests so user can edit them.
+   */
+  function initInterestEdit() {
+    $('.interest').addClass('own-interest');
+    $('.own-interest').on('click', () => {
+      mainCtrl.changePage('edit_interests');
+    });
+  }
+
+  /**
    * Initializes swiping functions on the interests selection page.
    */
   function initSwipe() {
@@ -925,6 +935,9 @@ const PageController = function (mainCtrl) {
       case 'profile': {
         mainCtrl.getProfileInfo(pageId, fillProfileInfo);
         initProfileNav();
+        if (pageId === 'own') {
+          initInterestEdit();
+        }
         break;
       }
       case 'chat_list': {

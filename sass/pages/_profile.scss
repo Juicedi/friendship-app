@@ -51,6 +51,7 @@
     h4 {
       display: inline-block;
       font-weight: normal;
+      cursor: pointer;
 
       &.selected {
         color: white;
@@ -80,6 +81,10 @@
 
     &:nth-child(2n+2) {
       background-color: $darkGreen;
+    }
+
+    &.own-interest {
+      cursor: pointer;
     }
   }
 
