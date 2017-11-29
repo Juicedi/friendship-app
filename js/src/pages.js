@@ -135,8 +135,8 @@ const PageController = function (mainCtrl) {
 
     $('#username').html(profileData.nickname);
     $('#age-text span').html(age);
-    $('#profile-picture-container').css('background-image', 'url(build/img/users/' + profileData.id + '.jpg)');
-    $('#header-image img').attr('src', 'build/img/users/' + profileData.id + '_bg.jpg');
+    $('#profile-picture-container').css('background-image', 'url(' + profileData.picture + ')');
+    $('#header-image img').attr('src', profileData.bg);
     $('#gender-text span').html(profileData.gender);
     $('#location p span').html(profileData.location);
     $('#about-container p').html(profileData.description);
@@ -229,23 +229,59 @@ const PageController = function (mainCtrl) {
   }
 
   /**
+   * Opens profile information editor on the profile page.
+   */
+  function openEditor() {
+    $('.profile-edit').addClass('hide');
+    $('.modal').removeClass('hide');
+  }
+
+  /**
    * Initialize profile info edit buttons on users own profile page.
    */
   function initProfInfoEdit() {
     $('#general-information').on('click', () => {
+      openEditor();
+      $('#birth-edit').removeClass('hide');
+      $('#gender-edit').removeClass('hide');
+      $('#location-edit').removeClass('hide');
     });
     $('#username').on('click', () => {
+      openEditor();
+      $('#nickname-edit').removeClass('hide');
     });
     $('#description').on('click', () => {
+      openEditor();
+      $('#nickname-edit').removeClass('hide');
     });
     $('#profile-picture-container').on('click', () => {
+      openEditor();
+      $('#nickname-edit').removeClass('hide');
     });
     $('#header img').on('click', () => {
+      openEditor();
+      $('#nickname-edit').removeClass('hide');
+    });
+    $('#cancel-edit').on('click', () => {
+      $('.modal').addClass('hide');
+    });
+    $('#confirm-edit').on('click', () => {
+      const inputs = $('.profile-edit');
+      const data = {};
+
+      for (let i = 0; i < inputs.length; i++) {
+        const key = $(inputs[i]).attr('name');
+        const value = $(inputs[i]).val();
+        data[key] = value;
+      }
+
+      $('.modal').addClass('hide');
+      mainCtrl.editProfileData(data);
     });
   }
 
   /**
-   * Initializes the interests so user can edit them.
+   * Initializes the interests so user can go to the edit page.
    */
   function initInterestEdit() {
     $('.interest').addClass('own-interest');
@@ -953,6 +989,7 @@ const PageController = function (mainCtrl) {
         initProfileNav();
         if (pageId === 'own') {
           initInterestEdit();
+          initProfInfoEdit();
         }
         break;
       }

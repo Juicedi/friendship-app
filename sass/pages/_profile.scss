@@ -103,9 +103,16 @@
   border: 0.1em solid white;
   border-radius: 1em;
   background-color: white;
-  background-image: url(../img/users/testeri.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   overflow: hidden;
+}
+
+#modify-profile {
+  padding: 1em 2em;
+
+  textarea {
+    resize: none;
+  }
 }

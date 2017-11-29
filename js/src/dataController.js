@@ -29,6 +29,9 @@ const DataController = function (mainCtrl) {
     allUsers[data.id].nickname = data.id;
     allUsers[data.id].password = data.password;
     allUsers[data.id].birth = NaN;
+    allUsers[data.id].picture = '../build/img/users/placeholder.png';
+    allUsers[data.id].bg = '../build/img/users/placeholder.png';
+    allUsers[data.id].birth = NaN;
     allUsers[data.id].gender = 'not telling';
     allUsers[data.id].loves = [];
     allUsers[data.id].hates = [];
@@ -739,6 +742,20 @@ const DataController = function (mainCtrl) {
     mainCtrl.updateChat(newMessage);
   }
 
+  /**
+   * Modifies the current users profile data.
+   *
+   * @param {Object} data - Object containing the edited profile data.
+   */
+  function editProfileData(data) {
+    if (typeof data.nickname !== 'undefined') userData.nickname = data.nickname;
+    if (typeof data.gender !== 'undefined') userData.gender = data.gender;
+    if (typeof data.location !== 'undefined') userData.location = data.location;
+    if (typeof data.description !== 'undefined') userData.description = data.description;
+    if (typeof data.birth !== 'undefined') userData.birth = data.birth;
+    console.log(userData);
+  }
+
   return {
     initTempData() {
       const url = [
@@ -860,6 +877,9 @@ const DataController = function (mainCtrl) {
     },
     sendMessage(id, message) {
       sendMessage(id, message);
+    },
+    editProfileData(data) {
+      editProfileData(data);
     },
     changeEventOwner(id, newOwner) {
       changeEventOwner(id, newOwner);

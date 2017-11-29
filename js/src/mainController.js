@@ -126,6 +126,9 @@ const MainController = (function () {
     changeEventOwner(id, newOwner) {
       dataCtrl.changeEventOwner(id, newOwner);
     },
+    editProfileData(data) {
+      dataCtrl.editProfileData(data);
+    },
     sendMessage(id, message) {
       dataCtrl.sendMessage(id, message);
     },

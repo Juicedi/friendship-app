@@ -6,6 +6,8 @@
     "password": "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3",
     "gender": "male",
     "birth": 648752430464,
+    "picture": "../build/img/users/ducky101_123.jpg",
+    "bg": "../build/img/users/ducky101_123_bg.jpg",
     "loves": [
       "camping",
       "fishing",
@@ -38,6 +40,8 @@
     "password": "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3",
     "gender": "female",
     "birth": 911213240222,
+    "picture": "../build/img/users/placeholder.png",
+    "bg": "../build/img/users/placeholder.png",
     "loves": [
       "camping",
       "fishing",
@@ -69,6 +73,8 @@
     "password": "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3",
     "gender": "female",
     "birth": 469450065693,
+    "picture": "../build/img/users/placeholder.png",
+    "bg": "../build/img/users/placeholder.png",
     "loves": [
       "camping",
       "fishing",
@@ -99,6 +105,8 @@
     "email": "ducky@mail.fi",
     "password": "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3",
     "birth": 311597271093,
+    "picture": "../build/img/users/placeholder.png",
+    "bg": "../build/img/users/placeholder.png",
     "gender": "male",
     "loves": [
       "camping",
@@ -130,6 +138,8 @@
     "email": "test@mail.fi",
     "password": "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3",
     "birth": 690288476845,
+    "picture": "../build/img/users/testeri.jpg",
+    "bg": "../build/img/users/testeri_bg.jpg",
     "gender": "male",
     "loves": [
       "camping",
