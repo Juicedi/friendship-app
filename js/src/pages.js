@@ -122,9 +122,9 @@ const PageController = function (mainCtrl) {
         $('#join-squad').addClass('hide');
         $('#leave-squad').removeClass('hide');
       }
-      initSquadJoinBtn(evtInfo);
     }
 
+    initSquadJoinBtn(evtInfo);
     initEventInfoBtns(evtInfo);
   }
 
@@ -901,6 +901,14 @@ const PageController = function (mainCtrl) {
   function populateLovesHates(profileData) {
     const loves = profileData.loves;
     const hates = profileData.hates;
+
+    if (loves.length > 0) {
+      $('#loves-container').html('');
+    }
+
+    if (hates.length > 0) {
+      $('#hates-container').html('');
+    }
 
     for (let i = 0, len = loves.length; i < len; i++) {
       $('#loves-container').append(`<div class="interest">${loves[i]}</div)`);
