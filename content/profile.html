@@ -53,17 +53,18 @@
 </footer>
 
 <article id="modify-profile" class="modal white-bg hide">
-  <input type="text" name="picture" id="profile-picture-edit" class="profile-edit hide" placeholder="picture url">
+  <input type="text" name="picture" id="profile-picture-edit" class="profile-edit hide" placeholder="Picture url">
   <input type="text" name="nickname" id="nickname-edit" class="profile-edit hide" placeholder="Your nickname">
-  <input type="text" name="bg" id="bg-picture-edit" class="profile-edit hide" placeholder="background url">
+  <input type="text" name="bg" id="bg-picture-edit" class="profile-edit hide" placeholder="Background url">
   <textarea name="description" id="description-edit" class="profile-edit hide" cols="30" rows="10" placeholder="Something about me"></textarea>
   <input type="date" name="birth" id="birth-edit" class="profile-edit hide">
   <input type="text" name="location" id="location-edit" class="profile-edit hide" placeholder="Helsinki">
   <select name="gender" id="gender-edit" class="profile-edit hide">
+    <option disabled hidden selected>Select</option>
     <option value="male">Male</option>
     <option value="female">Female</option>
     <option value="other">Othere</option>
   </select>
-  <button id="cancel-edit" class="large-btn red-bg">Cancel</button>
-  <button id="confirm-edit" class="large-btn green-bg">Confirm</button>
+  <button id="cancel-edit" class="large-btn red-bg white-text">Cancel</button>
+  <button id="confirm-edit" class="large-btn green-bg white-text">Confirm</button>
 </article>

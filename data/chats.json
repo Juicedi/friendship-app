@@ -3,7 +3,7 @@
     "eventId": "event123",
     "chatId": "event123",
     "name": "Camping",
-    "image": "build/chat/chat123.jpg",
+    "image": "build/img/chat/chat123.jpg",
     "partisipants": [
       {
         "id": "testeri",
@@ -19,7 +19,7 @@
     "eventId": "event34534534",
     "chatId": "squad12344567",
     "name": "Sting",
-    "image": "build/chat/chat123.jpg",
+    "image": "build/img/chat/chat123.jpg",
     "partisipants": [
       {
         "id": "testeri",

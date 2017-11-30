@@ -734,6 +734,7 @@ const DataController = function (mainCtrl) {
       id: Math.floor(Math.random() * 1000000),
       content: message,
       sender: userData.id,
+      picture: userData.picture,
       nickname: userData.nickname,
       date: currentDate.getTime()
     };
@@ -747,13 +748,16 @@ const DataController = function (mainCtrl) {
    *
    * @param {Object} data - Object containing the edited profile data.
    */
-  function editProfileData(data) {
+  function editProfileData(data, callback) {
     if (typeof data.nickname !== 'undefined') userData.nickname = data.nickname;
     if (typeof data.gender !== 'undefined') userData.gender = data.gender;
     if (typeof data.location !== 'undefined') userData.location = data.location;
     if (typeof data.description !== 'undefined') userData.description = data.description;
     if (typeof data.birth !== 'undefined') userData.birth = data.birth;
-    console.log(userData);
+    if (typeof data.picture !== 'undefined') userData.picture = data.picture;
+    if (typeof data.bg !== 'undefined') userData.bg = data.bg;
+    console.log(callback, typeof callback);
+    if (typeof callback === 'function') callback();
   }
 
   return {
@@ -878,8 +882,8 @@ const DataController = function (mainCtrl) {
     sendMessage(id, message) {
       sendMessage(id, message);
     },
-    editProfileData(data) {
-      editProfileData(data);
+    editProfileData(data, callback) {
+      editProfileData(data, callback);
     },
     changeEventOwner(id, newOwner) {
       changeEventOwner(id, newOwner);

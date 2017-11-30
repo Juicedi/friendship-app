@@ -36,6 +36,8 @@
     height: 66%;
     width: 100%;
     background: linear-gradient(rgba(255, 255, 255, 0), #000);
+    opacity: 0.3;
+    pointer-events: none;
   }
 
   .btnBack {

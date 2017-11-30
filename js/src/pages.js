@@ -250,17 +250,17 @@ const PageController = function (mainCtrl) {
       openEditor();
       $('#nickname-edit').removeClass('hide');
     });
-    $('#description').on('click', () => {
+    $('#about-container').on('click', () => {
       openEditor();
-      $('#nickname-edit').removeClass('hide');
+      $('#description-edit').removeClass('hide');
     });
     $('#profile-picture-container').on('click', () => {
       openEditor();
-      $('#nickname-edit').removeClass('hide');
+      $('#profile-picture-edit').removeClass('hide');
     });
-    $('#header img').on('click', () => {
+    $('#header-image').on('click', () => {
       openEditor();
-      $('#nickname-edit').removeClass('hide');
+      $('#bg-picture-edit').removeClass('hide');
     });
     $('#cancel-edit').on('click', () => {
       $('.modal').addClass('hide');
@@ -271,12 +271,20 @@ const PageController = function (mainCtrl) {
 
       for (let i = 0; i < inputs.length; i++) {
         const key = $(inputs[i]).attr('name');
-        const value = $(inputs[i]).val();
-        data[key] = value;
+        let value = $(inputs[i]).val();
+
+        if (key === 'birth') value = $(inputs[i])[0].valueAsNumber;
+
+        if (value !== '' && value !== null) {
+          data[key] = value;
+        }
       }
 
       $('.modal').addClass('hide');
-      mainCtrl.editProfileData(data);
+      mainCtrl.editProfileData(data, () => {
+        console.log('test');
+        mainCtrl.getProfileInfo('own', fillProfileInfo);
+      });
     });
   }
 
@@ -705,18 +713,22 @@ const PageController = function (mainCtrl) {
   function createChatListItem(chat, messages) {
     let messageContent = '';
     let messageDate = '';
+    let messagePicture = '';
     let time = '';
 
     if (messages.length > 0) {
       messageContent = messages.slice(-1)[0].content;
+      messagePicture = messages.slice(-1)[0].picture;
       messageDate = new Date(parseFloat(messages.slice(-1)[0].date));
       time = timeDifference(messageDate);
+    } else {
+      messagePicture = '../build/img/users/placeholder.png';
     }
 
     const chatTemplate = `
         <article class="list-item white-bg go-to-chat" data-page="chat" data-id="${chat.chatId}">
           <div class="list-item-image">
-            <img src="build/img/chats/${chat.chatId}.jpg" alt="list-item-thumbnail">
+            <img src="${messagePicture}" alt="list-item-thumbnail">
           </div>
           <div class="list-item-texts">
             <h4 class="list-item-title darkestGreen-text">${chat.name}</h4>
@@ -777,7 +789,7 @@ const PageController = function (mainCtrl) {
     const template = `
         <article class="list-item white-bg" data-page="profile" data-id="${message.sender}">
           <div class="list-item-image">
-            <img src="build/img/users/${message.sender}.jpg" alt="list-item-thumbnail">
+            <img src="${message.picture}" alt="list-item-thumbnail">
           </div>
           <div class="list-item-texts">
             <h4 class="list-item-content">${message.content}</h4>
