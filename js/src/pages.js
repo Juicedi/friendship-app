@@ -9,48 +9,148 @@ const PageController = function (mainCtrl) {
   let currentChat = 'empty';
 
   /**
-   * Creates a dropdown HTML string.
-   *
-   * @param {String} dropdownCategory - Dropdown category as a string.
-   * @param {Array} dropdownData - List of all items in the dropdown.
-   * @returns HTML string with all correct dropdown data in it.
+   * Contains functions for template creation.
+   * @namespace createTemp
    */
-  function createDropdown(dropdownCategory, dropdownData) {
-    let dropdownTemplate = `<div class="dropdown">
+  const createTemp = {
+    /**
+     * Creates dropdown template.
+     * @param {String} dropdownCategory - Gives the dropdown category name.
+     * @param {Object} dropdownData - Gives the dropdown other data.
+     * @memberof createTemp
+     * @method dropdown
+     */
+    dropdown: (dropdownCategory, dropdownData) => {
+      let dropdownTemplate = `<div class="dropdown">
+      <h3 class="dropdown-text green-bg white-text">
+        ${dropdownCategory}
+        <i class="fa fa-chevron-down white-text dropdown-arrow down" aria-hidden="true"></i>
+        <i class="fa fa-chevron-right white-text dropdown-arrow right" aria-hidden="true"></i>
+      </h3>
+      <ul class="dropdown-list">`;
 
-    <h3 class="dropdown-text green-bg white-text">
-      ${dropdownCategory}
-      <i class="fa fa-chevron-down white-text dropdown-arrow down" aria-hidden="true"></i>
-      <i class="fa fa-chevron-right white-text dropdown-arrow right" aria-hidden="true"></i>
-    </h3>
-
-    <ul class="dropdown-list">`;
-
-    dropdownData.forEach(function (interest) {
-      dropdownTemplate += `<li class="dropdown-list-item" data-interest="${interest.toLowerCase()}">
+      dropdownData.forEach(function (interest) {
+        dropdownTemplate += `<li class="dropdown-list-item" data-interest="${interest.toLowerCase()}">
         <span class="love-color"></span>
         <span class="hate-color"></span>
         ${interest}
         <i class="fa fa-check black-text dropdown-list-checkmark" aria-hidden="true"></i>
       </li>`;
-    }, this);
+      }, this);
 
-    dropdownTemplate += '</ul></div>';
-    return dropdownTemplate;
-  }
+      dropdownTemplate += '</ul></div>';
+      return dropdownTemplate;
+    },
+    /**
+     * Creates chatlist item template.
+     * @param {Object} chat - Gives the chat data.
+     * @param {Array} messages - List of chat message objects.
+     * @memberof createTemp
+     * @method chatListItem
+     */
+    chatListItem: (chat, messages) => {
+      let messageContent = '';
+      let messageDate = '';
+      let messagePicture = '';
+      let time = '';
+
+      if (messages.length > 0) {
+        messageContent = messages.slice(-1)[0].content;
+        messagePicture = messages.slice(-1)[0].picture;
+        messageDate = new Date(parseFloat(messages.slice(-1)[0].date));
+        time = timeDifference(messageDate);
+      } else {
+        messagePicture = '../build/img/users/placeholder.png';
+      }
+
+      const chatTemplate = `
+        <article class="list-item white-bg go-to-chat" data-page="chat" data-id="${chat.chatId}">
+          <div class="list-item-image">
+            <img src="${messagePicture}" alt="list-item-thumbnail">
+          </div>
+          <div class="list-item-texts">
+            <h4 class="list-item-title darkestGreen-text">${chat.name}</h4>
+            <p class="list-item-location darkGreen-text">${messageContent}</p>
+            <p class="list-item-date darkGreen-text">${time}</p>
+          </div>
+        </article>
+      `;
+      return chatTemplate;
+    },
+    /**
+     * Creates eventlist item template.
+     * @param {Object} event - Gives the event data.
+     * @memberof createTemp
+     * @method eventListItem
+     */
+    eventListItem: (event) => {
+      let ownText = '';
+      let joinBtn = '';
+
+      if (event.owner === mainCtrl.getCurrentUserData().id) {
+        ownText = `<h4 class="owner green-text ${event.own}">Own</h4>`;
+      }
+
+      if (event.addJoinBtn === true) {
+        joinBtn = `
+        <button class="main-btn green-bg join-btn" data-id="${event.id}">
+          <h4 class="white-text">Join</h4>
+        </button>
+      `;
+      }
+
+      const template = `
+        <article class="list-item white-bg go-to-event-with-id" data-page="event_info" data-id="${event.id}">
+          <div class="list-item-image">
+            <img src="${event.eventImg}" alt="list-item-thumbnail">
+          </div>
+          <div class="list-item-texts">
+            <h4 class="list-item-title darkestGreen-text">${event.title}</h4>
+            <p class="list-item-location darkGreen-text">${event.location}</p>
+            <p class="list-item-date darkGreen-text">${event.date}</p>
+            ${ownText}
+          </div>
+          ${joinBtn}
+        </article>
+       `;
+      return template;
+    },
+    /**
+     * Creates message template.
+     * @param {Object} message - Gives the message data.
+     * @memberof createTemp
+     * @method messageItem
+     */
+    messageItem: (message) => {
+      const messageDate = new Date(parseFloat(message.date));
+      const time = timeDifference(messageDate);
+      const template = `
+        <article class="list-item white-bg" data-page="profile" data-id="${message.sender}">
+          <div class="list-item-image">
+            <img src="${message.picture}" alt="list-item-thumbnail">
+          </div>
+          <div class="list-item-texts">
+            <h4 class="list-item-content">${message.content}</h4>
+            <p class="list-item-date">${time}</p>
+          </div>
+        </article>
+      `;
+      return template;
+    }
+  };
 
   /**
    * Adds all dropdowns to the page and initializes their functionalities.
    *
    * @param {Object} data - All of the interest categories and their items.
    */
-  function addAllDropdowns(data) {
+  const addAllDropdowns = (data) => {
     const categories = data.categories;
     const catKeys = Object.keys(categories);
     const currentFilters = mainCtrl.getInterestFilters();
 
     for (let i = 0, len = catKeys.length; i < len; i += 1) {
-      const dropdown = createDropdown(catKeys[i], categories[catKeys[i]]);
+      const dropdown = createTemp.dropdown(catKeys[i], categories[catKeys[i]]);
       $('#dropdowns').append(dropdown);
     }
 
@@ -704,104 +804,6 @@ const PageController = function (mainCtrl) {
   }
 
   /**
-   * Create chat list item template.
-   *
-   * @param {Object} chat - Contains all the needed chat information.
-   * @param {Object} messages - Contains all the chat messages. Used to show the lates message.
-   * @returns HTML text with all of the correct texts inserted to it.
-   */
-  function createChatListItem(chat, messages) {
-    let messageContent = '';
-    let messageDate = '';
-    let messagePicture = '';
-    let time = '';
-
-    if (messages.length > 0) {
-      messageContent = messages.slice(-1)[0].content;
-      messagePicture = messages.slice(-1)[0].picture;
-      messageDate = new Date(parseFloat(messages.slice(-1)[0].date));
-      time = timeDifference(messageDate);
-    } else {
-      messagePicture = '../build/img/users/placeholder.png';
-    }
-
-    const chatTemplate = `
-        <article class="list-item white-bg go-to-chat" data-page="chat" data-id="${chat.chatId}">
-          <div class="list-item-image">
-            <img src="${messagePicture}" alt="list-item-thumbnail">
-          </div>
-          <div class="list-item-texts">
-            <h4 class="list-item-title darkestGreen-text">${chat.name}</h4>
-            <p class="list-item-location darkGreen-text">${messageContent}</p>
-            <p class="list-item-date darkGreen-text">${time}</p>
-          </div>
-        </article>
-    `;
-    return chatTemplate;
-  }
-
-  /**
-   * Create HTML template for event list item.
-   *
-   * @param {Object} event - Object containing all needed event information.
-   * @returns HTML text with all needed data inserted to it.
-   */
-  function createEventListItem(event) {
-    let ownText = '';
-    let joinBtn = '';
-    if (event.owner === mainCtrl.getCurrentUserData().id) {
-      ownText = `<h4 class="owner green-text ${event.own}">Own</h4>`;
-    }
-    if (event.addJoinBtn === true) {
-      joinBtn = `
-        <button class="main-btn green-bg join-btn" data-id="${event.id}">
-          <h4 class="white-text">Join</h4>
-        </button>
-      `;
-    }
-
-    const template = `
-        <article class="list-item white-bg go-to-event-with-id" data-page="event_info" data-id="${event.id}">
-          <div class="list-item-image">
-            <img src="${event.eventImg}" alt="list-item-thumbnail">
-          </div>
-          <div class="list-item-texts">
-            <h4 class="list-item-title darkestGreen-text">${event.title}</h4>
-            <p class="list-item-location darkGreen-text">${event.location}</p>
-            <p class="list-item-date darkGreen-text">${event.date}</p>
-            ${ownText}
-          </div>
-          ${joinBtn}
-        </article>
-      `;
-    return template;
-  }
-
-  /**
-   * Creates HTML code for the chat message element.
-   *
-   * @param {Object} message - Object which has all needed chat information.
-   * @returns HTML template
-   */
-  function createMessageItem(message) {
-    const messageDate = new Date(parseFloat(message.date));
-    const time = timeDifference(messageDate);
-    const template = `
-        <article class="list-item white-bg" data-page="profile" data-id="${message.sender}">
-          <div class="list-item-image">
-            <img src="${message.picture}" alt="list-item-thumbnail">
-          </div>
-          <div class="list-item-texts">
-            <h4 class="list-item-content">${message.content}</h4>
-            <p class="list-item-date">${time}</p>
-          </div>
-        </article>
-    `;
-
-    return template;
-  }
-
-  /**
    * Puts chat messages to the DOM.
    *
    * @param {Array} messages - Array of the chats messages.
@@ -810,7 +812,7 @@ const PageController = function (mainCtrl) {
     let messageTemplate = [];
 
     for (let i = 0, len = messages.length; i < len; i++) {
-      messageTemplate = createMessageItem(messages[i]);
+      messageTemplate = createTemp.messageItem(messages[i]);
       $('#chat-messages').append(messageTemplate);
     }
     initChatInput();
@@ -827,7 +829,7 @@ const PageController = function (mainCtrl) {
 
     if (chatData.chats.length > 0) {
       for (let i = 0, len = chatData.chats.length; i < len; i += 1) {
-        chatTemplate = createChatListItem(chatData.chats[i], chatData.messages[chatData.chats[i].chatId]);
+        chatTemplate = createTemp.chatListItem(chatData.chats[i], chatData.messages[chatData.chats[i].chatId]);
         $('#page-content').append(chatTemplate);
       }
     } else {
@@ -848,7 +850,7 @@ const PageController = function (mainCtrl) {
       for (let i = 0, len = events.length; i < len; i += 1) {
         const event = events[i];
         event.addJoinBtn = false;
-        eventTemplate = createEventListItem(event);
+        eventTemplate = createTemp.eventListItem(event);
         $('#page-content').append(eventTemplate);
       }
     } else {
@@ -871,7 +873,7 @@ const PageController = function (mainCtrl) {
     for (let i = 0, len = events.length; i < len; i += 1) {
       const event = events[i];
       event.addJoinBtn = true;
-      eventTemplate = createEventListItem(event);
+      eventTemplate = createTemp.eventListItem(event);
       $(location).append(eventTemplate);
     }
     initSearchEventBtns();
@@ -920,7 +922,7 @@ const PageController = function (mainCtrl) {
   }
 
   function updateChat(receivedMessage) {
-    const message = createMessageItem(receivedMessage);
+    const message = createTemp.messageItem(receivedMessage);
     $('#chat-messages').append(message);
   }
 
@@ -1032,29 +1034,13 @@ const PageController = function (mainCtrl) {
   }
 
   return {
-    initPage(page) {
-      initPage(page);
-    },
-    addAllDropdowns(categories) {
-      addAllDropdowns(categories);
-    },
-    fillEventInfo(evtInfo) {
-      fillEventInfo(evtInfo);
-    },
-    populateOwnEvents(events) {
-      populateOwnEvents(events);
-    },
-    populateSearchEvents(events, location) {
-      populateSearchEvents(events, location);
-    },
-    populateChatMessages(messages) {
-      populateChatMessages(messages);
-    },
-    populateChatList(chats) {
-      populateChatList(chats);
-    },
-    updateChat(receivedMessage) {
-      updateChat(receivedMessage);
-    }
-  };
+    initPage: initPage,
+    addAllDropdowns: addAllDropdowns,
+    fillEventInfo: fillEventInfo,
+    populateOwnEvents: populateOwnEvents,
+    populateSearchEvents: populateSearchEvents,
+    populateChatMessages: populateChatMessages,
+    populateChatList: populateChatList,
+    updateChat: updateChat
+  }
 };

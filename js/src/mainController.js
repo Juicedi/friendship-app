@@ -49,7 +49,7 @@ const MainController = (function () {
       dataCtrl.getSuggestedEvents();
     },
     getCurrentUserData() {
-      return dataCtrl.getCurrentUserData();
+      return dataCtrl.getCurrentUserData;
     },
     getEventInfo(id, callback) {
       return dataCtrl.getEventInfo(id, callback);
@@ -112,7 +112,7 @@ const MainController = (function () {
       dataCtrl.removeTag(eventId, tag);
     },
     getInterestFilters() {
-      return dataCtrl.getInterestFilters();
+      return dataCtrl.getInterestFilters;
     },
     addFilter(item) {
       dataCtrl.addFilter(item);

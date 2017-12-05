@@ -760,133 +760,71 @@ const DataController = function (mainCtrl) {
     if (typeof callback === 'function') callback();
   }
 
-  return {
-    initTempData() {
-      const url = [
-        'data/categories.json',
-        'data/events.json',
-        'data/chats.json',
-        'data/users.json',
-        'data/messages.json'
-      ];
+  function initTempData() {
+    const url = [
+      'data/categories.json',
+      'data/events.json',
+      'data/chats.json',
+      'data/users.json',
+      'data/messages.json'
+    ];
 
-      for (let i = 0, len = url.length; i < len; i++) {
-        $.ajax({
-          url: url[i],
-          success: (content) => {
-            if (i === 0) {
-              categories = content;
-            } else if (i === 1) {
-              allEvents = content;
-            } else if (i === 2) {
-              allChats = content;
-            } else if (i === 3) {
-              allUsers = content;
-            } else if (i === 4) {
-              allMessages = content;
-            }
-          },
-          error: () => {
-            console.log('Error: Couldn\'t get event informations');
-          },
-        });
-      }
-    },
-    getCategories(callback) {
-      return getCategories(callback);
-    },
-    setCurrentUser(user) {
-      return setCurrentUser(user);
-    },
-    getCurrentUserData() {
-      return userData;
-    },
-    getUserEvents() {
-      return getUserEvents();
-    },
-    getEventInfo(eventId, callback) {
-      return getEventInfo(eventId, callback);
-    },
-    getProfileInfo(userId, callback) {
-      getProfileInfo(userId, callback);
-    },
-    getSuggestedEvents() {
-      return getSuggestedEvents();
-    },
-    getSearchResults(searchInput) {
-      getSearchResults(searchInput);
-    },
-    getChatMessages(id, callback) {
-      getChatMessages(id, callback);
-    },
-    getChatList() {
-      getChatList(addMessages);
-    },
-    createEvent(data) {
-      createEvent(data);
-    },
-    addInterest(value, alignment) {
-      addInterest(value, alignment);
-    },
-    addAttendee(id) {
-      addAttendee(id);
-    },
-    getInterestFilters() {
-      return selectedFilters;
-    },
-    addFilter(item) {
-      addFilter(item);
-    },
-    addUser(data) {
-      addUser(data);
-    },
-    removeFilter(item) {
-      removeFilter(item);
-    },
-    clearFilters() {
-      clearFilters();
-    },
-    joinSquadChat(eventInfo) {
-      joinSquadChat(eventInfo);
-    },
-    attendEvent(id) {
-      attendEvent(id);
-    },
-    leaveSquadChat(eventInfo) {
-      leaveSquadChat(eventInfo);
-    },
-    leaveEvent(id) {
-      leaveEvent(id);
-    },
-    eventPrivacyToggle(id) {
-      eventPrivacyToggle(id);
-    },
-    removeInterest(value, alignment) {
-      removeInterest(value, alignment);
-    },
-    removeEvent(id) {
-      removeEvent(id);
-    },
-    removeTag(id, tag) {
-      removeTag(id, tag);
-    },
-    checkLoginInput(id, hash) {
-      return checkLoginInput(id, hash);
-    },
-    checkNameAvailability(name) {
-      return checkNameAvailability(name);
-    },
-    checkSquad(eventInfo) {
-      return checkSquad(eventInfo);
-    },
-    sendMessage(id, message) {
-      sendMessage(id, message);
-    },
-    editProfileData(data, callback) {
-      editProfileData(data, callback);
-    },
-    changeEventOwner(id, newOwner) {
-      changeEventOwner(id, newOwner);
-    },
+    for (let i = 0, len = url.length; i < len; i++) {
+      $.ajax({
+        url: url[i],
+        success: (content) => {
+          if (i === 0) {
+            categories = content;
+          } else if (i === 1) {
+            allEvents = content;
+          } else if (i === 2) {
+            allChats = content;
+          } else if (i === 3) {
+            allUsers = content;
+          } else if (i === 4) {
+            allMessages = content;
+          }
+        },
+        error: () => {
+          console.log('Error: Couldn\'t get event informations');
+        },
+      });
+    }
+  }
+
+  return {
+    initTempData: initTempData,
+    getCategories: getCategories,
+    setCurrentUser: setCurrentUser,
+    getCurrentUserData: userData,
+    getUserEvents: getUserEvents,
+    getEventInfo: getEventInfo,
+    getProfileInfo: getProfileInfo,
+    getSuggestedEvents: getSuggestedEvents,
+    getSearchResults: getSearchResults,
+    getChatMessages: getChatMessages,
+    getChatList: getChatList,
+    createEvent: createEvent,
+    addInterest: addInterest,
+    addAttendee: addAttendee,
+    getInterestFilters: selectedFilters,
+    addFilter: addFilter,
+    addUser: addUser,
+    removeFilter: removeFilter,
+    clearFilters: clearFilters,
+    joinSquadChat: joinSquadChat,
+    attendEvent: attendEvent,
+    leaveSquadChat: leaveSquadChat,
+    leaveEvent: leaveEvent,
+    eventPrivacyToggle: eventPrivacyToggle,
+    removeInterest: removeInterest,
+    removeEvent: removeEvent,
+    removeTag: removeTag,
+    checkLoginInput: checkLoginInput,
+    checkNameAvailability: checkNameAvailability,
+    checkSquad: checkSquad,
+    sendMessage: sendMessage,
+    editProfileData: editProfileData,
+    changeEventOwner: changeEventOwner,
   };
 };
