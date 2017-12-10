@@ -566,10 +566,10 @@ const DataController = function (mainCtrl) {
    */
   function removeInterest(value, alignment) {
     const valIndex = alignment === 'loves' ? userData.loves.indexOf(value) : userData.hates.indexOf(value);
+    console.log('removing');
 
     if (valIndex > -1) {
       userData[alignment].splice(valIndex, 1);
-      allUsers[userData.id][alignment].splice(valIndex, 1);
     }
   }
 
@@ -582,12 +582,16 @@ const DataController = function (mainCtrl) {
   function addInterest(value, alignment) {
     if (alignment === 'loved') {
       userData.loves.push(value);
-      // allUsers[userData.id].loves.push(value);
-      removeInterest(value, 'hates');
+
+      if (userData.hates.indexOf(value) > -1) {
+        removeInterest(value, 'hates');
+      }
     } else if (alignment === 'hated') {
       userData.hates.push(value);
-      // allUsers[userData.id].hates.push(value);
-      removeInterest(value, 'loves');
+
+      if (userData.loves.indexOf(value) > -1) {
+        removeInterest(value, 'loves');
+      }
     }
   }
 

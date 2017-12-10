@@ -306,6 +306,7 @@ const PageController = function (mainCtrl) {
     let mouseDown = false;
     let posXstart = 0;
     let posXdelta = 0;
+    let prevTap;
     let elem = '';
 
     $('.dropdown-list-item').on('mousedown touchstart', (e) => {
@@ -340,6 +341,21 @@ const PageController = function (mainCtrl) {
 
       posXstart = 0;
       posXdelta = 0;
+    });
+
+    $('.dropdown-list-item').on('click touchtap', (e) => {
+      const tapTime = new Date().getTime();
+      const tapDiff = tapTime - prevTap;
+      prevTap = tapTime;
+
+      if (tapDiff < 300) {
+        const interest = e.currentTarget.dataset.interest;
+        const alignment = e.currentTarget.classList.contains('loved') === true ? 'loves' : 'hates';
+        mainCtrl.removeInterest(interest, alignment);
+        $(e.currentTarget).removeClass('loved');
+        $(e.currentTarget).removeClass('hated');
+      }
+      console.log(tapDiff);
     });
   }
 
@@ -1024,6 +1040,7 @@ const PageController = function (mainCtrl) {
       }
       case 'lander': {
         initLanderBtn();
+        break;
       }
       default: {
         break;
