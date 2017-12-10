@@ -4,8 +4,8 @@
  * @param {Object} mainCtrl - The applications main controller
  * @return {Object} - All of the controllers functions that are shared with other controllers
  */
-const DataController = function (mainCtrl) {
-  let userData = {};
+const DataController = (mainCtrl) => {
+  this.userData = {};
   let categories = 'empty';
   let allEvents = 'empty';
   let allChats = 'empty';
@@ -13,17 +13,43 @@ const DataController = function (mainCtrl) {
   let allMessages = 'empty';
   let selectedFilters = [];
 
-  function addFilter(item) {
+  const addFilter = (item) => {
     if (selectedFilters.indexOf(item) === -1) {
       selectedFilters.push(item);
     }
-  }
+  };
+
+  /**
+   * Gets user information from database.
+   * @param {String} userName - Username which user information will be fetched.
+   * @return {Object} - Returns all of the user information
+   */
+  const setCurrentUser = (username) => {
+    const url = 'data/users.json';
+    if (allUsers === 'empty') {
+      $.ajax({
+        url,
+        success: (content) => {
+          userData = content[username];
+          console.log('current user: ' + userData.id);
+          return userData;
+        },
+        error: () => {
+          console.log('Error: Couldn\'t get user informations');
+        },
+      });
+    } else {
+      this.userData = allUsers[username];
+    }
+    console.log(`current user: ${this.userData.id}`);
+    return this.userData;
+  };
 
   /**
    * Adds a new user and assigns it as current user.
    * @param {Obeject} data - Login data
    */
-  function addUser(data) {
+  const addUser = (data) => {
     allUsers[data.id] = {};
     allUsers[data.id].id = data.id;
     allUsers[data.id].nickname = data.id;
@@ -42,19 +68,19 @@ const DataController = function (mainCtrl) {
     allUsers[data.id].searchRange = 10;
     allUsers[data.id].chats = [];
     setCurrentUser(data.id);
-  }
+  };
 
-  function removeFilter(item) {
+  const removeFilter = (item) => {
     if (selectedFilters.indexOf(item) !== -1) {
       selectedFilters.splice(selectedFilters.indexOf(item), 1);
     }
-  }
+  };
 
-  function clearFilters() {
+  const clearFilters = () => {
     selectedFilters = [];
-  }
+  };
 
-  function getCategories(callback) {
+  const getCategories = (callback) => {
     const url = 'data/categories.json';
 
     if (categories === 'empty') {
@@ -78,7 +104,7 @@ const DataController = function (mainCtrl) {
       }
       return categories;
     }
-  }
+  };
 
   /**
    * Will filter througt all the events and put user event informations to a list.
@@ -86,15 +112,15 @@ const DataController = function (mainCtrl) {
    * @param {Object} events - Object that has all event informations.
    * @return {Array} - List of only current user's events.
    */
-  function filterUserEvents(events) {
+  const filterUserEvents = (events) => {
     let eventObjList = [];
     for (let i = 0, len = userData.eventsAttending.length; i < len; i += 1) {
       eventObjList.push(events[userData.eventsAttending[i]]);
     }
     return eventObjList;
-  }
+  };
 
-  function checkLovesAndHates(user) {
+  const checkLovesAndHates = (user) => {
     let result = false;
 
     for (let i = 0, len = userData.loves.length; i < len; i += 1) {
@@ -110,9 +136,9 @@ const DataController = function (mainCtrl) {
     }
 
     return result;
-  }
+  };
 
-  function filterSuggestedUsers(users) {
+  const filterSuggestedUsers = (users) => {
     const userList = [];
     let found = 0;
     for (let i = 0; i < found || i < users.lenght; i += 1) {
@@ -123,15 +149,15 @@ const DataController = function (mainCtrl) {
       }
     }
     return userList;
-  }
+  };
 
-  function filterChats(chats) {
+  const filterChats = (chats) => {
     const ownChats = [];
     for (let i = 0, len = userData.chats.length; i < len; i += 1) {
       ownChats.push(chats[userData.chats[i]]);
     }
     return ownChats;
-  }
+  };
 
   /**
    * Checks if selected filters match with the event tags
@@ -139,7 +165,7 @@ const DataController = function (mainCtrl) {
    * @param {Object} event - Event object which tags will be checked
    * @returns {Boolean} - Returns true if filters matched with the event tags
    */
-  function checkTags(event) {
+  const checkTags = (event) => {
     const tags = event.tags;
     let result = false;
 
@@ -150,7 +176,7 @@ const DataController = function (mainCtrl) {
     }
 
     return result;
-  }
+  };
 
   /**
    * Filters events that are relevant to user
@@ -159,7 +185,7 @@ const DataController = function (mainCtrl) {
    * @param {Object} events - List of all events
    * @returns {Array} - Returns list of relevant event objects
    */
-  function filterSuggestedEvents(events) {
+  const filterSuggestedEvents = (events) => {
     const eventObjList = [];
     const keys = Object.keys(events);
 
@@ -179,39 +205,13 @@ const DataController = function (mainCtrl) {
       }
     }
     return eventObjList;
-  }
-
-  /**
-   * Gets user information from database.
-   * @param {String} userName - Username which user information will be fetched.
-   * @return {Object} - Returns all of the user information
-   */
-  function setCurrentUser(username) {
-    const url = 'data/users.json';
-    if (allUsers === 'empty') {
-      $.ajax({
-        url,
-        success: (content) => {
-          userData = content[username];
-          console.log('current user: ' + userData.id);
-          return userData;
-        },
-        error: () => {
-          console.log('Error: Couldn\'t get user informations');
-        },
-      });
-    } else {
-      userData = allUsers[username];
-      console.log('current user: ' + userData.id);
-      return userData;
-    }
-  }
+  };
 
   /**
    *  Gets current users event informations.
    *  @return {Array} - Returns an array of objects which have the event informations
    */
-  function getUserEvents() {
+  const getUserEvents = () => {
     if (allEvents === 'empty') {
       const url = 'data/events.json';
       $.ajax({
@@ -229,9 +229,9 @@ const DataController = function (mainCtrl) {
       const events = filterUserEvents(allEvents);
       mainCtrl.populateOwnEvents(events);
     }
-  }
+  };
 
-  function getProfileInfo(userId, callback) {
+  const getProfileInfo = (userId, callback) => {
     const url = 'data/users.json';
     let user = userId;
 
@@ -259,9 +259,9 @@ const DataController = function (mainCtrl) {
     } else {
       return allUsers[user];
     }
-  }
+  };
 
-  function getEventInfo(eventId, callback) {
+  const getEventInfo = (eventId, callback) => {
     const url = 'data/events.json';
 
     if (allEvents === 'empty') {
@@ -284,13 +284,13 @@ const DataController = function (mainCtrl) {
     } else {
       return allEvents[eventId];
     }
-  }
+  };
 
   /**
    *  Gets current users event informations.
    *  @return {Array} - Returns an array of objects which have the event informations
    */
-  function getSuggestedEvents() {
+  const getSuggestedEvents = () => {
     if (allEvents === 'empty') {
       const url = 'data/events.json';
       $.ajax({
@@ -308,7 +308,7 @@ const DataController = function (mainCtrl) {
       const suggestedEvents = filterSuggestedEvents(allEvents);
       mainCtrl.populateSearchEvents(suggestedEvents, '#suggested-events');
     }
-  }
+  };
 
   /**
    * Gets messages for a specific chat
@@ -316,7 +316,7 @@ const DataController = function (mainCtrl) {
    * @param {String} id - Chat id
    * @param {Function} callback - Run after messages have been collected
    */
-  function getChatMessages(id, callback) {
+  const getChatMessages = (id, callback) => {
     if (allMessages === 'empty') {
       const url = 'data/messages.json';
       $.ajax({
@@ -336,7 +336,7 @@ const DataController = function (mainCtrl) {
       callback(chatMessages);
       return chatMessages;
     }
-  }
+  };
 
   /**
    * Goes through the chats and combines their information with chat messages.
@@ -344,20 +344,20 @@ const DataController = function (mainCtrl) {
    * @param {Array} chats - Array of chat objects and their information
    * @param {Object} allMessages - Object with properties containing array of chat message objects
    */
-  function filterChatMessages(chats, allMessages) {
+  const filterChatMessages = (chats, allMessages) => {
     const messages = {};
     for (let i = 0, len = chats.length; i < len; i++) {
       messages[chats[i].chatId] = allMessages[chats[i].chatId];
     }
     return messages;
-  }
+  };
 
   /**
    * Attach chat messages to the chat other data
    *
    * @param {Array} chats - Filtered chats in an array
    */
-  function addMessages(chats, callback) {
+  const addMessages = (chats, callback) => {
     const chatData = {};
     chatData.chats = chats;
     chatData.messages = {};
@@ -383,14 +383,14 @@ const DataController = function (mainCtrl) {
       callback(chatData);
       return chatData;
     }
-  }
+  };
 
   /**
    * Gets all chats the user is currently assigned to.
    *
    * @param {Function} callback - Callback function which is run after the data fetch
    */
-  function getChatList(callback) {
+  const getChatList = (callback) => {
     if (allChats === 'empty') {
       const url = 'data/chats.json';
       $.ajax({
@@ -410,9 +410,9 @@ const DataController = function (mainCtrl) {
       callback(ownChats, mainCtrl.populateChatList);
       return ownChats;
     }
-  }
+  };
 
-  function getSearchResults(searchInput) {
+  const getSearchResults = (searchInput) => {
     const inputLower = searchInput.toLowerCase();
     const keys = Object.keys(allEvents);
     const length = keys.length;
@@ -430,14 +430,14 @@ const DataController = function (mainCtrl) {
       }
     }
     mainCtrl.populateSearchEvents(found, '#search-results');
-  }
+  };
 
   /**
    * Check if event has available squads.
    *
    * @param {String} eventId - Events id.
    */
-  function checkEventChats(eventInfo) {
+  const checkEventChats = (eventInfo) => {
     for (let i = 0, len = eventInfo.chats.length; i < len; i++) {
       const userNum = allChats[eventInfo.chats[i]].partisipants.length;
 
@@ -447,12 +447,12 @@ const DataController = function (mainCtrl) {
     }
 
     return null;
-  }
+  };
 
   /**
    * Join or create squad for an event.
    */
-  function joinSquadChat(eventInfo) {
+  const joinSquadChat = (eventInfo) => {
     const randomNum = Math.floor(Math.random() * 1000000);
     let squad = checkEventChats(eventInfo).chatId;
     const userInfo = {
@@ -474,12 +474,12 @@ const DataController = function (mainCtrl) {
 
     userData.chats.push(squad);
     allChats[squad].partisipants.push(userInfo);
-  }
+  };
 
   /**
    * Join or create chat for an event.
    */
-  function joinEventChat(eventId) {
+  const joinEventChat = (eventId) => {
     const userInfo = {
       id: userData.id,
       name: userData.name
@@ -525,13 +525,13 @@ const DataController = function (mainCtrl) {
       userData.chats.push(eventId);
       allChats[eventId].partisipants.push(userInfo);
     }
-  }
+  };
 
   /**
    * Adds user to the event participant list and eventChat.
    * @param {String} id - Event id given as a string.
    */
-  function attendEvent(id) {
+  const attendEvent = (id) => {
     const index = userData.eventsAttending.indexOf(id);
 
     if (index === -1) {
@@ -542,21 +542,21 @@ const DataController = function (mainCtrl) {
     if (allEvents[id].large === false) {
       joinEventChat(id);
     }
-  }
+  };
 
-  function createEvent(data) {
+  const createEvent = (data) => {
     allEvents[data.id] = data;
     attendEvent(data.id);
     mainCtrl.changePage('own_events');
-  }
+  };
 
-  function eventPrivacyToggle(id) {
+  const eventPrivacyToggle = (id) => {
     console.log('toggling privacy');
-  }
+  };
 
-  function addAttendee(name) {
+  const addAttendee = (name) => {
     console.log('Added attendee' + name);
-  }
+  };
 
   /**
    * Removes interest from user data.
@@ -564,14 +564,14 @@ const DataController = function (mainCtrl) {
    * @param {String} value - Interests value.
    * @param {String} alignment - Is the interest loved or hated.
    */
-  function removeInterest(value, alignment) {
+  const removeInterest = (value, alignment) => {
     const valIndex = alignment === 'loves' ? userData.loves.indexOf(value) : userData.hates.indexOf(value);
 
     if (valIndex > -1) {
       userData[alignment].splice(valIndex, 1);
       allUsers[userData.id][alignment].splice(valIndex, 1);
     }
-  }
+  };
 
   /**
    * Adds interest to user data.
@@ -579,7 +579,7 @@ const DataController = function (mainCtrl) {
    * @param {String} value - Interests value.
    * @param {String} alignment - Is the interest loved or hated.
    */
-  function addInterest(value, alignment) {
+  const addInterest = (value, alignment) => {
     if (alignment === 'loved') {
       userData.loves.push(value);
       // allUsers[userData.id].loves.push(value);
@@ -589,14 +589,14 @@ const DataController = function (mainCtrl) {
       // allUsers[userData.id].hates.push(value);
       removeInterest(value, 'loves');
     }
-  }
+  };
 
   /**
    * Removes user from squad chat they are currently in.
    *
    * @param {Object} eventInfo - All information of the event the users squad is in
    */
-  function leaveSquadChat(eventInfo) {
+  const leaveSquadChat = (eventInfo) => {
     const id = eventInfo.id;
     const chatKeys = Object.keys(allChats);
 
@@ -616,13 +616,13 @@ const DataController = function (mainCtrl) {
         }
       }
     }
-  }
+  };
 
   /**
    * Removes user from given event.
    * @param {String} id - Event id given as a string.
    */
-  function leaveEvent(id) {
+  const leaveEvent = (id) => {
     const index = userData.eventsAttending.indexOf(id);
     const chatKeys = Object.keys(allChats);
     const chatIndex = userData.chats.indexOf(id);
@@ -653,24 +653,24 @@ const DataController = function (mainCtrl) {
         }
       }
     }
-  }
+  };
 
-  function removeEvent(id) {
+  const removeEvent = (id) => {
     console.log('removed event' + id);
     leaveEvent(id);
     delete allEvents[id];
-  }
+  };
 
-  function removeTag(id, tag) {
+  const removeTag = (id, tag) => {
     const index = allEvents[id].tags.indexOf(tag);
     allEvents[id].tags.splice(index, 1);
-  }
+  };
 
-  function changeEventOwner(id, newOwner) {
+  const changeEventOwner = (id, newOwner) => {
     console.log('changed ' + id + ' event\'s owner to ' + newOwner);
     leaveEvent(id);
     allEvents[id].owner = newOwner;
-  }
+  };
 
   /**
    * Checks if the login information is correct.
@@ -679,7 +679,7 @@ const DataController = function (mainCtrl) {
    * @param {String} hash - Hash password.
    * @returns {Boolean}
    */
-  function checkLoginInput(id, hash) {
+  const checkLoginInput = (id, hash) => {
     let result = true;
 
     if (typeof allUsers[id] === 'undefined') {
@@ -689,7 +689,7 @@ const DataController = function (mainCtrl) {
     }
 
     return result;
-  }
+  };
 
   /**
    * Checks if the username is already taken.
@@ -697,7 +697,7 @@ const DataController = function (mainCtrl) {
    * @param {String} name - Given username to be checked.
    * @returns {Boolean} Returns true if the username is not yet taken.
    */
-  function checkNameAvailability(name) {
+  const checkNameAvailability = (name) => {
     let result = true;
 
     if (typeof allUsers[name] !== 'undefined') {
@@ -705,12 +705,12 @@ const DataController = function (mainCtrl) {
     }
 
     return result;
-  }
+  };
 
   /**
    * Check if already on a squad chat.
    */
-  function checkSquad(eventInfo) {
+  const checkSquad = (eventInfo) => {
     const userChats = userData.chats;
 
     for (let i = 0, len = userChats.length; i < len; i++) {
@@ -720,7 +720,7 @@ const DataController = function (mainCtrl) {
     }
 
     return null;
-  }
+  };
 
   /**
    * Send message to the database (and other users?)
@@ -728,7 +728,7 @@ const DataController = function (mainCtrl) {
    * @param {String} id - Chat id where the message is sent
    * @param {String} message - Message content
    */
-  function sendMessage(id, message) {
+  const sendMessage = (id, message) => {
     const currentDate = new Date();
     const newMessage = {
       id: Math.floor(Math.random() * 1000000),
@@ -741,14 +741,14 @@ const DataController = function (mainCtrl) {
 
     allMessages[id].push(newMessage);
     mainCtrl.updateChat(newMessage);
-  }
+  };
 
   /**
    * Modifies the current users profile data.
    *
    * @param {Object} data - Object containing the edited profile data.
    */
-  function editProfileData(data, callback) {
+  const editProfileData = (data, callback) => {
     if (typeof data.nickname !== 'undefined') userData.nickname = data.nickname;
     if (typeof data.gender !== 'undefined') userData.gender = data.gender;
     if (typeof data.location !== 'undefined') userData.location = data.location;
@@ -758,9 +758,9 @@ const DataController = function (mainCtrl) {
     if (typeof data.bg !== 'undefined') userData.bg = data.bg;
     console.log(callback, typeof callback);
     if (typeof callback === 'function') callback();
-  }
+  };
 
-  function initTempData() {
+  const initTempData = () => {
     const url = [
       'data/categories.json',
       'data/events.json',
@@ -790,41 +790,41 @@ const DataController = function (mainCtrl) {
         },
       });
     }
-  }
+  };
 
   return {
-    initTempData: initTempData,
-    getCategories: getCategories,
-    setCurrentUser: setCurrentUser,
-    getCurrentUserData: userData,
-    getUserEvents: getUserEvents,
-    getEventInfo: getEventInfo,
-    getProfileInfo: getProfileInfo,
-    getSuggestedEvents: getSuggestedEvents,
-    getSearchResults: getSearchResults,
-    getChatMessages: getChatMessages,
-    getChatList: getChatList,
-    createEvent: createEvent,
-    addInterest: addInterest,
-    addAttendee: addAttendee,
+    initTempData,
+    getCategories,
+    setCurrentUser,
+    getCurrentUserData: this.userData,
+    getUserEvents,
+    getEventInfo,
+    getProfileInfo,
+    getSuggestedEvents,
+    getSearchResults,
+    getChatMessages,
+    getChatList,
+    createEvent,
+    addInterest,
+    addAttendee,
     getInterestFilters: selectedFilters,
-    addFilter: addFilter,
-    addUser: addUser,
-    removeFilter: removeFilter,
-    clearFilters: clearFilters,
-    joinSquadChat: joinSquadChat,
-    attendEvent: attendEvent,
-    leaveSquadChat: leaveSquadChat,
-    leaveEvent: leaveEvent,
-    eventPrivacyToggle: eventPrivacyToggle,
-    removeInterest: removeInterest,
-    removeEvent: removeEvent,
-    removeTag: removeTag,
-    checkLoginInput: checkLoginInput,
-    checkNameAvailability: checkNameAvailability,
-    checkSquad: checkSquad,
-    sendMessage: sendMessage,
-    editProfileData: editProfileData,
-    changeEventOwner: changeEventOwner,
+    addFilter,
+    addUser,
+    removeFilter,
+    clearFilters,
+    joinSquadChat,
+    attendEvent,
+    leaveSquadChat,
+    leaveEvent,
+    eventPrivacyToggle,
+    removeInterest,
+    removeEvent,
+    removeTag,
+    checkLoginInput,
+    checkNameAvailability,
+    checkSquad,
+    sendMessage,
+    editProfileData,
+    changeEventOwner,
   };
 };

@@ -5,7 +5,7 @@
  * @param {Object} mainCtrl - The applications main controller
  * @return {Object} - All of the controllers functions that are shared with other controllers
  */
-const PageController = function (mainCtrl) {
+const PageController = (mainCtrl) => {
   let currentChat = 'empty';
 
   /**
@@ -1034,13 +1034,13 @@ const PageController = function (mainCtrl) {
   }
 
   return {
-    initPage: initPage,
-    addAllDropdowns: addAllDropdowns,
-    fillEventInfo: fillEventInfo,
-    populateOwnEvents: populateOwnEvents,
-    populateSearchEvents: populateSearchEvents,
-    populateChatMessages: populateChatMessages,
-    populateChatList: populateChatList,
-    updateChat: updateChat
-  }
+    initPage,
+    addAllDropdowns,
+    fillEventInfo,
+    populateOwnEvents,
+    populateSearchEvents,
+    populateChatMessages,
+    populateChatList,
+    updateChat
+  };
 };

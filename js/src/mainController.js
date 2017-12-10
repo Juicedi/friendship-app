@@ -9,7 +9,7 @@ preload([]);
  * Runs the application and controls all of the application controllers
  * @return {Object} - All of the main controller functions that are shared with other controllers
  */
-const MainController = (function () {
+const MainController = () => {
   let self = null;
   let pageCtrl;
   let dataCtrl;
@@ -180,12 +180,14 @@ const MainController = (function () {
       pageCtrl.updateChat(receivedMessage);
     }
   };
-})();
+};
+
+const mCtrl = new MainController();
 
 // Launches the application after the page has loaded.
 $(window).load(() => {
   $('.loading').fadeOut(500, () => {
-    MainController.init(MainController);
+    mCtrl.init(mCtrl);
     $('.loaded').fadeIn(1000);
   });
 });
