@@ -738,7 +738,7 @@ const PageController = function (mainCtrl) {
       messageDate = new Date(parseFloat(messages.slice(-1)[0].date));
       time = timeDifference(messageDate);
     } else {
-      messagePicture = '../build/img/users/placeholder.png';
+      messagePicture = './build/img/users/placeholder.png';
     }
 
     const chatTemplate = `

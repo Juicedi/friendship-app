@@ -4,7 +4,7 @@
       "messageId": "123456789",
       "sender": "ducky101_123",
       "nickname": "Ducky101",
-      "picture": "../build/img/users/ducky101_123.jpg",
+      "picture": "./build/img/users/ducky101_123.jpg",
       "content": "Quack! Quack!",
       "date": "1511424741812"
     },
@@ -12,7 +12,7 @@
       "messageId": "234567891",
       "sender": "ducky101_123",
       "nickname": "Ducky101",
-      "picture": "../build/img/users/ducky101_123.jpg",
+      "picture": "./build/img/users/ducky101_123.jpg",
       "content": "Quack!",
       "date": "1511424842812"
     }
@@ -22,7 +22,7 @@
       "messageId": "234567891",
       "sender": "ducky101_123",
       "nickname": "Ducky101",
-      "picture": "../build/img/users/ducky101_123.jpg",
+      "picture": "./build/img/users/ducky101_123.jpg",
       "content": "Quack!",
       "date": "1511424941912"
     }
